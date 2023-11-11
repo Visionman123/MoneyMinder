@@ -1,0 +1,57 @@
+﻿@{
+}
+
+@model LifeChart.Models.MoneyLoverModel;
+
+
+<div class="container">
+	<h1>Expense Tracker</h1> 
+
+	<div class="expense-table"> 
+		<table> 
+            <thead> 
+                <tr> 
+					<th>Expense Name</th> 
+                    <th>Amount</th>
+					<th>Estimated Spending</th>
+                </tr> 
+            </thead> 
+            <tbody id="expense-list">
+				@if (Model != null) {
+					@foreach (var item in Model.ThisMonthExpenses)
+					{
+						<tr>
+							<td id="category-key-@item.Key">@item.Key</td>
+							<td id="category-amount-@item.Key">@item.Value/@Model.ThisMonthLimits[@item.Key]</td>
+							@if (item.Key == "groceries") {
+								<td>@Model.GroceriesEstimation</td>
+							}
+							else if (item.Key == "entertainment")
+							{
+								<td>@Model.EntertainmentEstimation</td>
+							}
+						</tr>
+					}
+				}
+			</tbody> 
+        </table> 
+	</div>
+</div>
+
+
+<style>
+	.container { 
+		max-width: 800px; 
+		margin: 0 auto; 
+		background-color: #f9f9f9; 
+		padding: 20px; 
+		border-radius: 8px; 
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    } 
+
+	  
+    h1 { 
+        text-align: center; 
+        margin-bottom: 20px; 
+    } 
+</style>

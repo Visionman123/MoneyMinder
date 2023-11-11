@@ -1,0 +1,66 @@
+﻿@{
+	 ViewData["Title"] = "Portfolio";
+
+}
+
+@model LifeChart.Models.PortfolioModel;
+
+<div class="portfolio">
+    <form asp-controller="Home" asp-action="EditPortfolio" class="form" method="post">
+        <div class="income">
+            <label for="salary-input" asp-for="Income.Salary">Salary</label>
+            <input type="text" id="salary-input" asp-for="Income.Salary"/>
+            @*@if (Model.Income.Investments.Count != 0) {
+                @for (var i = 0; i < Model.Income.Investments.Count; i++) {
+                    <label for="investment-input" class="label" asp-for="Income.Investments[@i]">Investment @i</label>
+                    <input type="text" id="investment-input" asp-for="Income.Investments[@i]"/>
+                }
+            }*@
+           @* else {
+                <label for="investment-input" class="label" asp-for="Income.Investments[@i]">Investment @i</label>
+                <input type="text" id="investment-input" asp-for="Income.Investments[@i]"/>
+            }*@
+            <label for="others-input" class="label" asp-for="Income.Others">Others</label>
+            <input type="text" id="others-input" asp-for="Income.Others"/>
+         </div>    
+
+         <div class="assets">
+           @* <label for="estate-input" asp-for="Assets.RealEstates[0]">Real Estate</label>
+            <input type="text" id="estate-input" asp-for="Assets.RealEstates[0]"/>*@
+            <label for="account-input" class="label" asp-for="Assets.BankAccount">Bank Account</label>
+            <input type="text" id="account-input" asp-for="Assets.BankAccount"/>
+         </div>   
+
+         <div class="debt">
+            <label for="loans-input" asp-for="Debt.Loans">Loans</label>
+            <input type="text" id="loans-input" asp-for="Debt.Loans"/>
+            <label for="balance-input" class="label" asp-for="Debt.CreditCardBalance">CreditCardBalance</label>
+            <input type="text" id="balance-input" asp-for="Debt.CreditCardBalance"/>
+         </div>   
+
+         <div class="expense-limit">
+            <label for="groceries-input" asp-for="ExpenseLimit.Groceries">Groceries</label>
+            <input type="text" id="groceries-input" asp-for="ExpenseLimit.Groceries"/>
+            <label for="utilities-input" class="label" asp-for="ExpenseLimit.Utilities">Utilities</label>
+            <input type="text" id="utilities-input" asp-for="ExpenseLimit.Utilities"/>
+            <label for="entertainment-input" class="label" asp-for="ExpenseLimit.Entertainment">Entertainment</label>
+            <input type="text" id="entertainment-input" asp-for="ExpenseLimit.Entertainment"/>
+            <label for="rent-input" class="label" asp-for="ExpenseLimit.Rent">Rent</label>
+            <input type="text" id="rent-input" asp-for="ExpenseLimit.Rent"/>
+            <label for="mortgages-input" class="label" asp-for="ExpenseLimit.Mortgages">Mortgages</label>
+            <input type="text" id="mortgages-input" asp-for="ExpenseLimit.Mortgages"/>
+            <label for="others-input" class="label" asp-for="ExpenseLimit.Others">Others</label>
+            <input type="text" id="others-input" asp-for="ExpenseLimit.Others"/>
+         </div>   
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+
+
+<style>
+    .portfolio {
+        display: inline-flex
+    }
+</style>

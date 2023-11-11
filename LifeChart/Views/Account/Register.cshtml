@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+@model LifeChart.Models.RegisterModel;
+
+<div class="register-form">
+    <form asp-controller="Account" asp-action="Register" class="form" method="post">
+        <h1 class="title">Sign up</h1>
+        <div class="input-container">
+            <input type="text" class="input" asp-for="Email" placeholder="a" required/>
+            <label asp-for="Email" class="label">Email</label>
+        </div>
+       @* <div>
+             <input type="text" class="input" asp-for="PhoneNumber" placeholder="a" required/>
+            <label asp-for="PhoneNumber" class="label">Phone Number</label>
+        </div>*@
+        <div class="input-container">
+            <input type="text" class="input" asp-for="Username" placeholder="a" required/>
+            <label asp-for="Username" class="label">Username</label>
+        </div>
+        <div class="input-container">
+            <input type="text" class="input" asp-for="Password" placeholder="a" required/>
+            <label asp-for="Password" class="label">Password</label>
+        </div>
+        <div class="input-container">
+            <input type="text" class="input" asp-for="RePassword" placeholder="a" required/>
+            <label asp-for="RePassword" class="label">Re-enter password</label>
+        </div>
+
+        <input type="submit" class="submit-btn" value="Sign up"/>
+        <p id="register-result">@ViewBag.RegistrationResultMessage</p>
+    </form>
+</div>
+
+
+<style>
+    .register-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .form {
+        background-color: white;
+        width: 400px;
+        border-radius: 8px;
+        padding: 20px 40px;
+        box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+    }
+    .title {
+        font-size: 50px;
+        margin-bottom: 50px;
+    }
+    .input-container {
+        position: relative;
+        height: 45px;
+        width: 90%;
+        margin-bottom: 17px;
+    }
+    /* Style the inputs */
+    .input {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		border: 1px solid #DADCE0;
+		border-radius: 7px;
+		font-size: 16px;
+		padding: 0 20px;
+		outline: none;
+		background: none;
+		z-index: 1;
+    }
+    
+    /* Hide the placeholder texts (a) */
+    ::placeholder {
+		color: transparent;
+    }
+    /* Styling text labels */
+	.label {
+		position: absolute;
+		top: 15px;
+		left: 15px;
+		padding: 0 4px;
+		background-color: white;
+		color: #DADCE0;
+		font-size: 16px;
+		transition: 0.5s;
+		z-index: 0;
+    }
+	.submit-btn {
+		display: block;
+		margin-left: auto;
+		padding: 15px 30px;
+		border: none;
+		background-color: purple;
+		color: white;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 16px;
+		margin-top: 30px;
+	}
+    .submit-btn:hover {
+        background-color: #9867C5;
+        transform: translateY(-2px);
+    }
+    .input:focus + .label {
+		top: -7px;
+		left: 3px;
+		z-index: 10;
+		font-size: 14px;
+		font-weight: 600;
+		color: purple;
+	}
+    .input:focus {
+        border: 2px solid purple;
+    }
+    .input:not(:placeholder-shown)+ .label {
+		top: -7px;
+		left: 3px;
+		z-index: 10;
+		font-size: 14px;
+		font-weight: 600;
+	}
+    #register-result {
+        color: red
+    }
+</style>

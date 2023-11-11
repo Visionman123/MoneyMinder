@@ -1,0 +1,64 @@
+﻿@{
+	ViewData["Title"] = "Dashboard";
+	DateTime today = DateTime.Today;
+	int thisMonth = today.Month;
+	int thisYear = today.Year;
+
+	DateTime dateOflastMonth = today.AddMonths(-1);
+	int lastMonth = dateOflastMonth.Month;
+	int lastYear = dateOflastMonth.Year; //can be this year
+}
+
+
+@model LifeChart.Models.DashboardModel
+
+<div class="dashboard">
+	<div class="balance">
+		<p class="balance">Balance</p>
+		<label asp-for="Balance">@Model.Balance</label>
+	</div>
+
+	<div class="income">
+		<p class="income">Income</p>
+		@if (Model.Income.Count > 0 && Model.Income.Keys.Last() == thisMonth + "/" + thisYear && Model.Income.Values.Last() != null) 
+		{
+			decimal? incomeThisMonth = Model.Income.Values.Last();
+			<label>@incomeThisMonth</label>
+			if (Model.Income.Count > 1 && Model.Income.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Income.Values.Reverse().Skip(1).FirstOrDefault() != null)
+			{
+				decimal? incomeLastMonth = Model.Income.Values.Reverse().Skip(1).FirstOrDefault();
+				decimal growth = Math.Round(((incomeThisMonth - incomeLastMonth) * 100 / incomeThisMonth).GetValueOrDefault(), 2);
+				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
+				<br/>
+				<label>Income this month @growthString%</label>
+				
+			}
+		}
+		else
+		{
+			<label></label>
+		}
+	</div>
+
+	<div class="expenses">
+		<p class="expenses">Expenses</p>
+		@if (Model.Expenses.Count > 0 && Model.Expenses.Keys.Last() == thisMonth + "/" + thisYear && Model.Expenses.Values.Last() != null) 
+		{
+			decimal? expensesThisMonth = Model.Expenses.Values.Last();
+			<label>@expensesThisMonth</label>
+			if (Model.Expenses.Count > 1 && Model.Expenses.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault() != null)
+			{
+				decimal? expensesLastMonth = Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault();
+				decimal growth = Math.Round(((expensesThisMonth - expensesLastMonth) * 100 / expensesThisMonth).GetValueOrDefault(), 2);
+				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
+				<br/>
+				<label>Expenses this month @growthString%</label>
+				
+			}
+		}
+		else
+		{
+			<label></label>
+		}
+	</div>
+</div>

@@ -1,0 +1,41 @@
+﻿@{
+	 ViewData["Title"] = "Money Lover";
+}
+
+@model LifeChart.Models.MoneyLoverModel;
+
+<div id="PastExpensesContainer">
+	<partial name="_PastExpenses" model="Model"/>
+</div>
+
+<div id="TodayExpensesContainer">
+	<partial name="_TodayExpenses" model="Model"/>
+</div>
+
+<div id="ExpenseTrackerContainer">
+	<partial name="_ExpenseTracker" model="Model"/>
+</div>
+
+@section scripts {
+	<script>
+		$(document).ready(function() {
+			$('body').on('submit','#today-expense-form', function() {	
+				//from _todayexpenses
+				const category = $('#expense-name').val();
+				const addedAmount = parseFloat($('#expense-amount').val());
+				//from _expensetracker
+				const amountSplit = $('#category-amount-' + category).html().split('/');
+				const currentAmount = parseFloat(amountSplit[0]);
+				const limit = parseFloat(amountSplit[1]);
+				const totalAmount = addedAmount + currentAmount;
+				console.log(totalAmount);
+				//edit amount
+				$('#category-amount-' + category).html(totalAmount + "/" + limit);
+			})
+		})
+	</script>
+}
+
+<style>
+	
+</style>
