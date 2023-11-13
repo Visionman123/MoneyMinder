@@ -20,7 +20,8 @@ namespace LifeChart.Controllers
         {
             if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
             {
-                return Redirect("../Account/Login");
+                Console.WriteLine("Redirecting to logout...");
+                return RedirectToAction("Logout", "Account");
             }
             
             if (ModelState.IsValid)
@@ -64,7 +65,8 @@ namespace LifeChart.Controllers
         {
             if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
             {
-                return Redirect("../Account/Login");
+                Console.WriteLine("Redirecting to logout...");
+                return RedirectToAction("Logout", "Account");
             }
 
             if (ModelState.IsValid)
@@ -149,6 +151,11 @@ namespace LifeChart.Controllers
         [Authorize]
         public IActionResult WhatIf()
         {
+            if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
+            {
+                Console.WriteLine("Redirecting to logout...");
+                return RedirectToAction("Logout", "Account");
+            }
             return View();
         }
 
@@ -157,7 +164,8 @@ namespace LifeChart.Controllers
         {
             if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
             {
-                return Redirect("../Account/Login");
+                Console.WriteLine("Redirecting to logout...");
+                return RedirectToAction("Logout", "Account");
             }
 
             if (ModelState.IsValid)
