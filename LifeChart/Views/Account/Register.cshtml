@@ -6,127 +6,167 @@
 }
 
 @model LifeChart.Models.RegisterModel;
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=League Spartan">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+<p class="word">MONEY</p>
+<div class="app-logo">
+    <img src="/Assets/logo.png" alt="logo" width="100%" height="60%">
+    <p class="app-name">MoneyMinder</p>
+    <p style="margin-top:-50px">Money works not you</p>
+</div>
 <div class="register-form">
     <form asp-controller="Account" asp-action="Register" class="form" method="post">
-        <h1 class="title">Sign up</h1>
+        <p style="color:white;font-size:45px;margin-top:-20px;font-weight:bold;">MoneyMinder</p>
         <div class="input-container">
-            <input type="text" class="input" asp-for="Email" placeholder="a" required/>
             <label asp-for="Email" class="label">Email</label>
+            <input type="text" class="input" asp-for="Email" required/>
+            
         </div>
        @* <div>
              <input type="text" class="input" asp-for="PhoneNumber" placeholder="a" required/>
             <label asp-for="PhoneNumber" class="label">Phone Number</label>
         </div>*@
         <div class="input-container">
-            <input type="text" class="input" asp-for="Username" placeholder="a" required/>
             <label asp-for="Username" class="label">Username</label>
+            <input type="text" class="input" asp-for="Username" required/>
+            
         </div>
         <div class="input-container">
-            <input type="text" class="input" asp-for="Password" placeholder="a" required/>
             <label asp-for="Password" class="label">Password</label>
+            <input type="password" class="input" asp-for="Password"required/>
+            
         </div>
         <div class="input-container">
-            <input type="text" class="input" asp-for="RePassword" placeholder="a" required/>
             <label asp-for="RePassword" class="label">Re-enter password</label>
+            <input type="password" class="input" asp-for="RePassword" required/>
+            
         </div>
 
-        <input type="submit" class="submit-btn" value="Sign up"/>
+        <button type="submit" class="submit-btn" value="Sign up"> Sign Up</button>
+        <p style="font-weight:lighter;">Already have an account? <a style="text-decoration:none" id="register-account" asp-controller="Account" asp-action="Login">Sign In</a> </p>
         <p id="register-result">@ViewBag.RegistrationResultMessage</p>
     </form>
 </div>
 
 
 <style>
-    .register-form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    html{
         height: 100vh;
     }
+    .container{
+        height:100vh;
+        display:flex;
+        flex-direction:row;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    body {
+        background-color: #03030F;
+    }
+    header{
+        display:none;
+    }
+    footer{
+        display:none;
+    }
+    p{
+        color:white;
+        font-family:"Outfit";
+    }
+
+    a {
+        color: white;
+        font-weight: bold;
+    }
+
+    .word {
+        font-size: 180px;
+        color: #ffffff26;
+        font-family: "Outfit";
+        font-weight: bold;
+        position: fixed;
+        transform: rotate(90deg);
+        ww top: 0;
+        left: -300px;
+    }
+
+    .app-logo {
+        width: 30vw;
+        height: 90vh;
+        margin-top: 5vh;
+        margin-left: 10vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .app-name {
+        color: white;
+        font-size: 50px;
+    }
+    .register-form {
+        border: 1px solid white;
+        border-radius: 50px;
+        width: 30vw;
+        height: 90vh;
+        margin-top: 4vh;
+        margin-left: 25vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+   
+    }
     .form {
-        background-color: white;
-        width: 400px;
-        border-radius: 8px;
-        padding: 20px 40px;
-        box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+ 
     }
     .title {
         font-size: 50px;
         margin-bottom: 50px;
     }
     .input-container {
-        position: relative;
+
         height: 45px;
         width: 90%;
         margin-bottom: 17px;
     }
     /* Style the inputs */
     .input {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		height: 100%;
-		width: 100%;
-		border: 1px solid #DADCE0;
-		border-radius: 7px;
-		font-size: 16px;
-		padding: 0 20px;
-		outline: none;
-		background: none;
-		z-index: 1;
+        width: 300px;
+        color: white;
+        height: 30px;
+        border: 1px solid white;
+        border-radius: 50px;
+        background: none;
+        padding-left: 10px;
     }
     
-    /* Hide the placeholder texts (a) */
-    ::placeholder {
-		color: transparent;
-    }
-    /* Styling text labels */
 	.label {
-		position: absolute;
-		top: 15px;
-		left: 15px;
-		padding: 0 4px;
-		background-color: white;
-		color: #DADCE0;
-		font-size: 16px;
-		transition: 0.5s;
-		z-index: 0;
+        color: white;
+        font-family: "Outfit";
+        font-size: small;
     }
 	.submit-btn {
-		display: block;
-		margin-left: auto;
-		padding: 15px 30px;
-		border: none;
-		background-color: purple;
-		color: white;
-		border-radius: 6px;
-		cursor: pointer;
-		font-size: 16px;
-		margin-top: 30px;
+        border-radius: 50px;
+        width: 200px;
+        height: 30px;
 	}
-    .submit-btn:hover {
-        background-color: #9867C5;
-        transform: translateY(-2px);
+
+    input {
+        width: 300px;
+        color: white;
+        height: 30px;
+        border: 1px solid white;
+        border-radius: 50px;
+        background: none;
+        padding-left: 10px;
     }
-    .input:focus + .label {
-		top: -7px;
-		left: 3px;
-		z-index: 10;
-		font-size: 14px;
-		font-weight: 600;
-		color: purple;
-	}
-    .input:focus {
-        border: 2px solid purple;
-    }
-    .input:not(:placeholder-shown)+ .label {
-		top: -7px;
-		left: 3px;
-		z-index: 10;
-		font-size: 14px;
-		font-weight: 600;
-	}
     #register-result {
         color: red
     }

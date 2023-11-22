@@ -6,23 +6,122 @@
 }
 
 @model LifeChart.Models.LoginModel;
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=League Spartan">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+<link rel="icon" href="/Assets/logo.png">
 
+
+
+<p class="word">MONEY</p>
+
+<div class="app-logo">
+    <img src="/Assets/logo.png" alt="logo" width="100%" height="60%">
+    <p class="app-name">MoneyMinder</p>
+    <p style="margin-top:-50px">Money works not you</p>
+</div>
 
 <div class="login-form">
+    <p style="font-size:30px;">Welcome to</p>
+    <p style="font-size:45px;margin-top:-20px;font-weight:bold;">MoneyMinder</p>
     <form asp-controller="Account" asp-action="Login" class="form" method="post">
-        <label for="username-input" asp-for="Username">Username</label>
-        <input type="text" id="username-input" asp-for="Username" required/>
-        <label for="password-input" class="label" asp-for="Password">Password</label>
-        <input type="text" id="password-input" asp-for="Password" required/>
-        <button type="submit">Login</button>
+        <label for="username-input" asp-for="Username">Username</label><br />
+        <input type="text" id="username-input" asp-for="Username" required/><br />
+        <label for="password-input" class="label" asp-for="Password">Password</label><br />
+        <input type="password" id="password-input" asp-for="Password" required/><br /><br />
+        <button class="loginBtn" type="submit">Login</button>
         <p id="login-error">@ViewBag.LoginErrorMessage</p>
-         <a id="register-account" asp-controller="Account" asp-action="Register">Don't have an account? Register</a>
+        <p style="font-weight:lighter;" >Don't have an account? <a style="text-decoration:none" id="register-account" asp-controller="Account" asp-action="Register">Register</a> </p>
     </form>
 </div>
 
-
 <style>
+    html{
+        height:100vh;
+    }
+    label{
+        color:white;
+        font-family:"Outfit";
+        font-size:small;
+    }
+    header{
+        display: none;
+    }
+    body{
+        background-color: #03030F;
+    }
+    a{
+        color:white;
+        font-weight:bold;
+    }
+    p{
+        color:white;
+        font-family:"Outfit";
+    }
+    .word{
+        font-size:180px;
+        color: #ffffff26;
+        font-family: "Outfit";
+        font-weight:bold;
+        position: fixed;
+        transform: rotate(90deg);ww
+        top: 0;
+        left: -300px;
+
+    }
+    .container{
+        display:flex;
+        flex-direction:row;
+    }
+
+    .app-logo {
+
+        width: 30vw;
+        height: 90vh;
+        margin-top: 5vh;
+        margin-left:10vw;  
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+    }
+    .app-name{
+        color:white;
+        font-size:50px;
+    }
+
+    .login-form{
+        border: 1px solid white;
+        border-radius: 50px;
+        width: 30vw;
+        height: 90vh;
+        margin-top: 4vh;
+        margin-left: 25vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+ 
+
+    }
+
+    input {
+        width: 300px;
+        color: white;
+        height: 30px;
+        border: 1px solid white;
+        border-radius: 50px;
+        background: none;
+        padding-left:10px;
+    }
+    .loginBtn{
+        border-radius:50px;
+        width: 200px;
+        height: 30px;
+       
+    }
     #login-error {
         color: red
+    }
+    .footer{
+        display: none;
     }
 </style>
