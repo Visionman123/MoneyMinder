@@ -204,7 +204,6 @@ namespace LifeChart.Controllers
             {
                 // Request was successful
                 MoneyLoverModel responseContent = await response.Content.ReadFromJsonAsync<MoneyLoverModel>();
-                Console.WriteLine(responseContent);
                 // Handle the response content
                 return responseContent;
             }

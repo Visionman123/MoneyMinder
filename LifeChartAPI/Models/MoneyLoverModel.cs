@@ -5,13 +5,15 @@ namespace LifeChartAPI.Models
 {
     public class MoneyLoverModel
     {
-        public Dictionary<string, decimal>? PastExpenses { get; set; } //key with format of "category"
-        public Dictionary<string, decimal>? TodayExpenses { get; set; } //key with format of "category"
+        public Dictionary<string, decimal>? PastExpenses { get; set; } //key with format of "category datetime"
+        public Dictionary<string, decimal>? TodayExpenses { get; set; } //key with format of "category datetime"
         public Dictionary<string, decimal>? ThisMonthExpenses { get; set; } //key with format of "category"
         public Dictionary<string, decimal>? ThisMonthLimits { get; set; } //key with format of "category"
 
         public decimal? GroceriesEstimation { get; set; }
         public decimal? EntertainmentEstimation { get; set; }
+        public decimal? UtilitiesEstimation { get; set; }
+        public decimal? OthersEstimation { get; set; }
 
         public MoneyLoverModel()
         {
@@ -21,6 +23,8 @@ namespace LifeChartAPI.Models
             ThisMonthLimits = new();
             GroceriesEstimation = null;
             EntertainmentEstimation = null;
+            UtilitiesEstimation = null;
+            OthersEstimation = null;
         }
 
         public void GetPastExpenses(string? connectionString, string? userId, DateTime date)
@@ -38,8 +42,9 @@ namespace LifeChartAPI.Models
                 while (reader.Read())
                 {
                     string category = reader[0] as string;
-                    decimal amount = (decimal)reader[1];
-                    PastExpenses.Add(category, amount);
+                    DateTime dateTime =  (DateTime)reader[1];
+                    decimal amount = (decimal)reader[2];
+                    PastExpenses.Add(category + " " + dateTime.ToString(), amount);
                 }
                 reader.Close();
                 connection.Close();
@@ -64,8 +69,9 @@ namespace LifeChartAPI.Models
                 while (reader.Read())
                 {
                     string category = reader[0] as string;
-                    decimal amount = (decimal)reader[1];
-                    TodayExpenses.Add(category, amount);
+                    DateTime dateTime = (DateTime)reader[1];
+                    decimal amount = (decimal)reader[2];
+                    TodayExpenses.Add(category + " " + dateTime.ToString(), amount);
 
                 }
                 reader.Close();
