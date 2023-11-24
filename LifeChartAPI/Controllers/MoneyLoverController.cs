@@ -56,6 +56,26 @@ namespace LifeChartAPI.Controllers
             };
             var entertainmentOutput = SpendingModel.Predict(entertainmentInput);
 
+            SpendingBehaviorModel utilitiesModel = new(connectionString, "balls", "utilities");
+            var utilitiesInput = new SpendingModel.ModelInput
+            {
+                ThreeMonthsPrior = (float)utilitiesModel.ThreeMonthsPrior,
+                TwoMonthsPrior = (float)utilitiesModel.TwoMonthsPrior,
+                OneMonthPrior = (float)utilitiesModel.OneMonthPrior,
+                LimitThisMonth = (float)utilitiesModel.Limit
+            };
+            var utilitiesOutput = SpendingModel.Predict(utilitiesInput);
+
+            SpendingBehaviorModel othersModel = new(connectionString, "balls", "others");
+            var othersInput = new SpendingModel.ModelInput
+            {
+                ThreeMonthsPrior = (float)othersModel.ThreeMonthsPrior,
+                TwoMonthsPrior = (float)othersModel.TwoMonthsPrior,
+                OneMonthPrior = (float)othersModel.OneMonthPrior,
+                LimitThisMonth = (float)othersModel.Limit
+            };
+            var othersOutput = SpendingModel.Predict(othersInput);
+
             //if date is not supplied then choose a date long ago => No data retrieved
             MoneyLoverModel model = new();
             model.GetPastExpenses(connectionString, "balls", (jsonDate.Date != null) ? DateTime.Parse(jsonDate.Date) : DateTime.Parse("1900-01-01"));
@@ -63,6 +83,8 @@ namespace LifeChartAPI.Controllers
             model.GetExpenseTracker(connectionString, "balls");
             model.GroceriesEstimation = (decimal)groceriesOutput.Score;
             model.EntertainmentEstimation = (decimal)entertainmentOutput.Score;
+            model.UtilitiesEstimation = (decimal)utilitiesOutput.Score;
+            model.OthersEstimation = (decimal)othersOutput.Score;
             return Ok(model);
         }
 
