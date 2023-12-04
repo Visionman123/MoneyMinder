@@ -3,7 +3,8 @@
 }
 
 @model LifeChart.Models.MoneyLoverModel;
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=League Spartan">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
 <div id="PastExpensesContainer">
 	<partial name="_PastExpenses" model="Model"/>
 </div>
@@ -37,5 +38,27 @@
 }
 
 <style>
-	
+	.container{
+		display:flex;
+		flex-direction:row;
+		gap:50px;
+        justify-content:center;
+        margin-top:5vh;
+        
+	}
+	body{
+		background-color: #03030F;
+	}
+	footer{
+		display:none;
+	}
+
+	h1 {
+		text-align: start;
+		margin-bottom: 20px;
+		font-family: "Outfit";
+		font-size:20px;
+	}
+
+   
 </style>

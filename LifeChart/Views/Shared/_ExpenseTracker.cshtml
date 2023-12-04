@@ -4,18 +4,19 @@
 @model LifeChart.Models.MoneyLoverModel;
 
 
-<div class="container">
+<div class="container-inside">
 	<h1>Expense Tracker</h1> 
 
 	<div class="expense-table"> 
 		<table> 
-            <thead> 
+            @*<thead> 
                 <tr> 
 					<th>Expense Name</th> 
                     <th>Amount</th>
 					<th>Estimated Spending</th>
                 </tr> 
             </thead> 
+			*@
             <tbody id="expense-list">
 				@if (Model != null) {
 					@foreach (var item in Model.ThisMonthExpenses)
@@ -46,18 +47,20 @@
 
 
 <style>
-	.container { 
-		max-width: 800px; 
-		margin: 0 auto; 
-		background-color: #f9f9f9; 
-		padding: 20px; 
-		border-radius: 8px; 
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    } 
+@* left and right table *@
+	.container-inside {
+		width: 200px;
+        height:400px;
+		margin: 0 auto;
+		background-color: #f9f9f9;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
 
-	  
-    h1 { 
-        text-align: center; 
-        margin-bottom: 20px; 
-    } 
+
+	h1 {
+		text-align: center;
+		margin-bottom: 20px;
+	}
 </style>
