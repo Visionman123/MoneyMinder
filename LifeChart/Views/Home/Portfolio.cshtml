@@ -13,13 +13,20 @@
 			<label for="salary-input" asp-for="Income.Salary">Salary</label>
 			<input type="text" id="salary-input" asp-for="Income.Salary" />
 		
-				@for (var i = 0; i < 20; i++)
-				{
-					<label for="investment-input" class="label">Investment @i</label>
-					<input name="InvestmentAmount" type="text" id="investment-input" />
-					<label for="roi-input" class="label">Roi @i</label>
-					<input name="RoiAmount" type="text" id="roi-input" />
+			@for (var i = 0; i < 10; i++)
+			{
+				<label for="investment-input" class="label">Investment @(i+1)</label>
+				if (i < Model.Income.Investments.Count) {
+					<input name="InvestmentId" type="hidden" id="investment-input" value="@Model.Income.Investments[i].Id"/>
+					<input name="InvestmentAmount" type="number" id="amount-input" value="@Model.Income.Investments[i].Amount"/>
+					<input name="RoiAmount" type="number" id="roi-input" value="@Model.Income.Investments[i].RoI"/>
 				}
+				else {
+					<input name="InvestmentId" type="hidden" id="investment-input" value="@(i+1)"/>
+					<input name="InvestmentAmount" type="number" id="amount-input"/>
+					<input name="RoiAmount" type="number" id="roi-input"/>
+				}
+			}
 			
 			
 			<label for="others-input" class="label" asp-for="Income.Others">Others</label>
@@ -28,11 +35,18 @@
 
 		<div class="assets" id="box">
 			
-				@for (var i = 0; i < 10; i++)
-				{
-					<label for="estate-input" >Real Estate @i</label>
-					<input name="EstateAmount"type="text" id="estate-input" />
+			@for (var i = 0; i < 5; i++)
+			{
+				<label for="estate-input" >Real Estate @(i+1)</label>
+				if (i < Model.Assets.RealEstates.Count) {
+					<input name="EstateId" type="hidden" id="estate-input" value="@Model.Assets.RealEstates[i].Id"/>
+					<input name="EstateAmount"type="number" id="amount-input" value="@Model.Assets.RealEstates[i].Amount"/>
 				}
+				else {
+					<input name="EstateId" type="hidden" id="estate-input" value="@(i+1)"/>
+					<input name="EstateAmount"type="number" id="amount-input"/>
+				}
+			}
 			
 			<label for="account-input" class="label" asp-for="Assets.BankAccount">Bank Account</label>
 			<input type="text" id="account-input" asp-for="Assets.BankAccount" />

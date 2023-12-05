@@ -17,11 +17,13 @@
 
     public class Investment
     {
+        public int? Id { get; set; }
         public decimal? Amount { get; set; }
         public decimal? RoI { get; set; }
 
-        public Investment(decimal? amount, decimal? roI)
+        public Investment(int? id, decimal? amount, decimal? roI)
         {
+            Id = id;
             Amount = amount;
             RoI = roI;
         }
@@ -29,8 +31,20 @@
 
     public class Assets
     {
-        public List<decimal>? RealEstates { get; set; }
+        public List<RealEstate>? RealEstates { get; set; }
         public decimal? BankAccount { get; set; }
+    }
+
+    public class RealEstate
+    {
+        public int? Id { get; set; }
+        public decimal? Amount { get; set; }
+
+        public RealEstate(int? id, decimal? amount)
+        {
+            Id = id;
+            Amount = amount;
+        }
     }
 
     public class Debt

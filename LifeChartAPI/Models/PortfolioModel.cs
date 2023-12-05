@@ -54,13 +54,54 @@ namespace LifeChartAPI.Models
                 cmd.Parameters.AddWithValue("@Others", (income.Others != null) ? income.Others : DBNull.Value);
                 cmd.Parameters.AddWithValue("@Date", date);
                 cmd.ExecuteNonQuery();
-                          
+
+                cmd = new("dbo.EditInvestment", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                string investmentIds = "", investmentAmounts = "", investmentRois = "";
+                foreach (var investment in income.Investments)
+				{
+                    investmentIds += investment.Id + ",";
+                    investmentAmounts += investment.Amount + ",";
+                    investmentRois += investment.RoI + ",";
+				}
+                //remove last comma
+                investmentIds = investmentIds.Remove(investmentIds.Length - 1);
+                investmentAmounts = investmentAmounts.Remove(investmentAmounts.Length - 1);
+                investmentRois = investmentRois.Remove(investmentRois.Length - 1);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@InvestmentIds", investmentIds);
+                cmd.Parameters.AddWithValue("@Amounts", investmentAmounts);
+                cmd.Parameters.AddWithValue("@RoIs", investmentRois);
+                cmd.ExecuteNonQuery();
+
+
                 cmd = new("dbo.EditBankAccount", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.Parameters.AddWithValue("@BankAccount", (assets.BankAccount != null) ? assets.BankAccount : DBNull.Value);
                 cmd.ExecuteNonQuery();
-                       
+
+
+                cmd = new("dbo.EditRealEstates", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                string estateIds = "", estateAmounts = "";
+                foreach (var estate in assets.RealEstates)
+                {
+                    Console.WriteLine(estate.Amount);
+                    estateIds += estate.Id + ",";
+                    estateAmounts += estate.Amount + ",";
+                }
+                //remove last comma
+                estateIds = estateIds.Remove(estateIds.Length - 1);
+                estateAmounts = estateAmounts.Remove(estateAmounts.Length - 1);
+
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@EstateIds", estateIds);
+                cmd.Parameters.AddWithValue("@Amounts", estateAmounts);
+                cmd.ExecuteNonQuery();
+
+
+
                 cmd = new("dbo.EditDebts", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserId", userId);
@@ -111,12 +152,12 @@ namespace LifeChartAPI.Models
             {
                 connection.Open();
                 //get investments
-                string sql = "SELECT Amount, RoI FROM dbo.UserInvestments WHERE UserId = " + "'" + userId + "'";
+                string sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = " + "'" + userId + "'";
                 SqlCommand cmd = new(sql, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Investment investment = new((decimal)reader[0], (decimal)reader[1]);
+                    Investment investment = new((int)reader[0], (decimal)reader[1], (decimal)reader[2]);
                     Investments.Add(investment);
                 }
                 reader.Close();
@@ -144,25 +185,28 @@ namespace LifeChartAPI.Models
 
     public class Investment
     {
+        public int? Id { get; set; }
         public decimal? Amount { get; set; }
         public decimal? RoI { get; set; }
 
 
         public Investment()
         {
+            Id = null;
             Amount = null;
             RoI = null;
         }
-        public Investment(decimal? amount, decimal? roI)
+        public Investment(int? id, decimal? amount, decimal? roi)
         {
+            Id = id;
             Amount = amount;
-            RoI = roI;
+            RoI = roi;
         }
     }
 
     public class Assets
     {
-        public List<decimal>? RealEstates { get; set; }
+        public List<RealEstate>? RealEstates { get; set; }
         public decimal? BankAccount { get; set; }
 
 
@@ -190,13 +234,13 @@ namespace LifeChartAPI.Models
                 reader.Close();
 
                 //get real estates
-                sql = "SELECT Amount FROM dbo.UserRealEstates WHERE UserId = " + "'" + userId + "'";
+                sql = "SELECT Id, Amount FROM dbo.UserRealEstates WHERE UserId = " + "'" + userId + "'";
                 cmd = new(sql, connection);
                 cmd.Parameters.AddWithValue("@UserId", userId);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    decimal realEstate = (decimal)reader[0];
+                    RealEstate realEstate = new((int)reader[0], (decimal)reader[1]);
                     RealEstates.Add(realEstate);
                 }
                 reader.Close();
@@ -206,6 +250,23 @@ namespace LifeChartAPI.Models
             {
                 Console.WriteLine(ex);
             }
+        }
+    }
+
+    public class RealEstate
+    {
+        public int? Id { get; set; }
+        public decimal? Amount { get; set; }
+
+        public RealEstate()
+        {
+            Id = null;
+            Amount = null;
+        }
+        public RealEstate(int? id, decimal? amount)
+        {
+            Id = id;
+            Amount = amount;
         }
     }
 

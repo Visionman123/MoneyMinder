@@ -106,22 +106,42 @@ namespace LifeChart.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> EditPortfolio(PortfolioModel model , List<string>InvestmentAmount,List<string>RoiAmount,List<string>EstateAmount)
-          
-        {   foreach(var investment in InvestmentAmount) {
+        public async Task<IActionResult> EditPortfolio(PortfolioModel model, List<string> InvestmentId, List<decimal> InvestmentAmount, List<decimal> RoiAmount, List<string> EstateId, List<decimal> EstateAmount)
+        {   
+            
+            List<Investment> investments = new List<Investment>();
+            for (int i = 0; i < InvestmentAmount.Count; i++) {
+                int investmentId = Int32.Parse(InvestmentId[i]);
+                decimal investmentAmount = InvestmentAmount[i];
+                decimal roiAmount = RoiAmount[i];
+
+                //Console.WriteLine(investmentId);
+                //Console.WriteLine(investmentAmount);
+                //Console.WriteLine(roiAmount);
+
+                Investment investment = new Investment(investmentId, investmentAmount, roiAmount);
                 Console.WriteLine(investment);
-				
+                investments.Add(investment);
 			}
-			foreach (var roi in RoiAmount)
+			
+            List<RealEstate> realEstates = new List<RealEstate>(); 
+			for (int i = 0; i < EstateAmount.Count; i++)
 			{
-				Console.WriteLine(roi);
+                int estateId = Int32.Parse(EstateId[i]);
+                decimal estateAmount = EstateAmount[i];
 
+                RealEstate realEstate = new RealEstate(estateId, estateAmount);
+                Console.WriteLine(realEstate.Amount);
+                realEstates.Add(realEstate);
 			}
-			foreach (var estate in EstateAmount)
-			{
-				Console.WriteLine(estate);
 
-			}
+            //add to model
+            model.Income.Investments = new();
+            model.Income.Investments.AddRange(investments);
+            model.Assets.RealEstates = new();
+            model.Assets.RealEstates.AddRange(realEstates);
+
+            //model.Income.Investments.AddRange()
 			var client = new HttpClient();
             string apiUrl = "https://localhost:7147/api/Portfolio";
 
