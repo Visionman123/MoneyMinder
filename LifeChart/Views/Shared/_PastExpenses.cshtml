@@ -2,9 +2,10 @@
 }
 
 @model LifeChart.Models.MoneyLoverModel;
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=League Spartan">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
 
-
-<div class="container">
+<div class="container-inside">
 	<h1>Past Expense</h1> 
 	<form id="past-expense-form" asp-controller="Home" asp-action="_PastExpenses" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#PastExpensesContainer" data-ajax-method="GET">
 		<label for="date-input"></label>
@@ -13,21 +14,23 @@
 	</form>
 
 	<div class="expense-table"> 
-		<table> 
-            <thead> 
+		<table class="past-table"> 
+            @*<thead> 
                 <tr> 
 					<th>Expense Name</th> 
                     <th>Amount</th> 
                     <th>Action</th> 
                 </tr> 
             </thead> 
+			*@
             <tbody id="expense-list">
 				@if (Model != null) {
 					@foreach (var item in Model.PastExpenses)
 					{
 						<tr>
-							<td>@item.Key</td>
+							<td>@item.Key.Split(" ")[0] @item.Key.Split(" ")[2] @item.Key.Split(" ")[3]</td>
 							<td>@item.Value</td>
+							
 						</tr>
 					}
 				}
@@ -42,18 +45,30 @@
 
 
 <style>
-	.container { 
-		max-width: 800px; 
-		margin: 0 auto; 
-		background-color: #f9f9f9; 
-		padding: 20px; 
-		border-radius: 8px; 
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    } 
-
-	  
-    h1 { 
-        text-align: center; 
-        margin-bottom: 20px; 
-    } 
+	@* left and right table *@
+	.container-inside {
+		width: 200px;
+        height:400px;
+		margin: 0 auto;
+		background-color: #f9f9f9;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		display:flex;
+		flex-direction:column;
+		align-items:start;
+	}
+	#past-expense-form{
+		border-bottom:1px solid black;
+		width:100%;
+	
+	}
+	.past-table{
+		
+	}
+	td{
+		font-size:10px;
+		font-weight:lighter;
+	}
+	
 </style>

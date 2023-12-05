@@ -106,9 +106,23 @@ namespace LifeChart.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> EditPortfolio(PortfolioModel model)
-        {
-            var client = new HttpClient();
+        public async Task<IActionResult> EditPortfolio(PortfolioModel model , List<string>InvestmentAmount,List<string>RoiAmount,List<string>EstateAmount)
+          
+        {   foreach(var investment in InvestmentAmount) {
+                Console.WriteLine(investment);
+				
+			}
+			foreach (var roi in RoiAmount)
+			{
+				Console.WriteLine(roi);
+
+			}
+			foreach (var estate in EstateAmount)
+			{
+				Console.WriteLine(estate);
+
+			}
+			var client = new HttpClient();
             string apiUrl = "https://localhost:7147/api/Portfolio";
 
             var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);

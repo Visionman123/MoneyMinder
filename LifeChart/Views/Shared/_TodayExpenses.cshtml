@@ -4,22 +4,23 @@
 @model LifeChart.Models.MoneyLoverModel;
 
 
-<div class="container"> 
-    <h1>Expense Today</h1> 
+<div class="container-inside-today"> 
+    <h1>Today Expenses</h1> 
     <form id="today-expense-form" asp-controller="Home" asp-action="AddExpense" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#TodayExpensesContainer" data-ajax-method="POST"> 
         <input type="text" id="expense-name" placeholder="Expense Name" name="category" required /> 
         <input type="number" id="expense-amount" placeholder="Amount" name="amount" required /> 
-        <button type="submit"> Add Expense </button> 
+        <button type="submit"><img src="~/assets/plus.png" width="15px"/> </button> 
     </form> 
     <div class="expense-table"> 
         <table> 
-            <thead> 
+            @*<thead> 
                 <tr> 
                     <th>Expense Name</th> 
                     <th>Amount</th> 
                     <th>Action</th> 
                 </tr> 
             </thead> 
+            *@
             <tbody id="expense-list">
                 @if (Model != null) {
                     @foreach (var item in Model.TodayExpenses)
@@ -145,84 +146,87 @@
 
 
 <style>
-    .container { 
-    max-width: 800px; 
-    margin: 0 auto; 
-    background-color: #f9f9f9; 
-    padding: 20px; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    } 
-      
-    h1 { 
-        text-align: center; 
-        margin-bottom: 20px; 
-    } 
-      
-    form { 
-        display: flex; 
-        justify-content: center; 
-        margin-bottom: 20px; 
-    } 
-      
-    input[type="text"], 
-    input[type="number"] { 
-        padding: 10px; 
-        border: 1px solid #ccc; 
-        border-radius: 4px; 
-        outline: none; 
-    } 
-      
-    input[type="text"]::placeholder, 
-    input[type="number"]::placeholder { 
-        color: #999; 
-    } 
-      
-    button { 
-        padding: 10px 20px; 
-        background-color: #4caf50; 
-        color: white; 
-        border: none; 
-        border-radius: 4px; 
-        cursor: pointer; 
-    } 
-      
-    button:hover { 
-        background-color: #45a049; 
-    } 
-      
-    .expense-table { 
-        border: 1px solid #ddd; 
-        border-radius: 8px; 
-        overflow: hidden; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    } 
-      
-    table { 
-        width: 100%; 
-        border-collapse: collapse; 
-    } 
-      
-    thead th { 
-        background-color: #f2f2f2; 
-        padding: 10px; 
-        text-align: left; 
-    } 
-      
-    tbody td { 
-        padding: 10px; 
-        border-top: 1px solid #ddd; 
-    } 
-      
-    .delete-btn { 
-        color: red; 
-        cursor: pointer; 
-    } 
-      
-    .total-amount { 
-        padding: 10px; 
-        text-align: right; 
-        background-color: #f2f2f2; 
+     @* Middle table *@
+    .container-inside-today {
+        width:400px;
+        height:400px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        padding: 5px;
+        border:none;
+        border-bottom:1px solid black;
+
+        outline: none;
+    }
+
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder {
+            color: #999;
+        }
+
+    button {
+    
+        background-color:white;
+        border: none;
+
+        cursor: pointer;
+    }
+
+        button:hover {
+          
+        }
+
+    .expense-table {
+        border: none;
+     
+        overflow: hidden;
+       
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead th {
+        background-color: white;
+        padding: 10px;
+        text-align: left;
+    }
+
+    tbody td {
+        padding: 10px;
+       
+    }
+
+    .delete-btn {
+        color: red;
+        cursor: pointer;
+    }
+
+    .total-amount {
+        padding: 10px;
+        text-align: right;
+        background-color: #f2f2f2;
     }
 </style>
 
