@@ -87,7 +87,7 @@ namespace LifeChartAPI.Models
                 string estateIds = "", estateAmounts = "";
                 foreach (var estate in assets.RealEstates)
                 {
-                    Console.WriteLine(estate.Amount);
+                    //Console.WriteLine(estate.Amount);
                     estateIds += estate.Id + ",";
                     estateAmounts += estate.Amount + ",";
                 }
@@ -125,6 +125,50 @@ namespace LifeChartAPI.Models
             }
 
             catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "500";
+            }
+        }
+
+        public string DeleteInvestment(string? connectionString, string? userId, int? investmentId)
+        {
+            try
+            {
+                SqlConnection connection = new(connectionString);
+                connection.Open();
+                SqlCommand cmd = new("dbo.DeleteInvestment", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@InvestmentId", investmentId);
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+                return "200";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "500";
+            }
+        }
+
+        public string DeleteRealEstate(string? connectionString, string? userId, int? estateId)
+        {
+            try
+            {
+                SqlConnection connection = new(connectionString);
+                connection.Open();
+                SqlCommand cmd = new("dbo.DeleteRealEstate", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@EstateId", estateId);
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+                return "200";
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 return "500";

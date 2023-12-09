@@ -18,8 +18,60 @@ namespace LifeChartAPI.Controllers
         }
 
 
+        //delete investment
+        [HttpPost("DeleteInvestment")]
+        public async Task<IActionResult> DeleteInvestment()
+        {
+            StreamReader reader = new(Request.Body, Encoding.UTF8);
+            var requestContent = await reader.ReadToEndAsync();
+            var investmentDeletion = JsonConvert.DeserializeObject<InvestmentAndEstateDeletion>(requestContent);
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
+            string connectionString = _config.GetConnectionString("LifeChartDatabase");
+            //init with no attribute
+            PortfolioModel model = new();
+            string status = model.DeleteInvestment(connectionString, userId, investmentDeletion.Id);
+            if (status == "200")
+            {
+                return Ok(200);
+            }
+            return StatusCode(500);
+        }
+
+        //delete real estate
+        [HttpPost("DeleteRealEstate")]
+        public async Task<IActionResult> DeleteRealEstate()
+        {
+            StreamReader reader = new(Request.Body, Encoding.UTF8);
+            var requestContent = await reader.ReadToEndAsync();
+            var estateDeletion = JsonConvert.DeserializeObject<InvestmentAndEstateDeletion>(requestContent);
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
+            string connectionString = _config.GetConnectionString("LifeChartDatabase");
+            //init with no attribute
+            PortfolioModel model = new();
+            string status = model.DeleteRealEstate(connectionString, userId, estateDeletion.Id);
+            if (status == "200")
+            {
+                return Ok(200);
+            }
+            return StatusCode(500);
+        }
+
         //edit portfolio
-        [HttpPost]
+        [HttpPost("EditPortfolio")]
         public async Task<IActionResult> EditPortfolio()
         {
             StreamReader reader = new(Request.Body, Encoding.UTF8);
@@ -60,5 +112,11 @@ namespace LifeChartAPI.Controllers
             PortfolioModel model = new(connectionString, userId);
             return Ok(model);
         }
+    }
+
+
+    public class InvestmentAndEstateDeletion
+    {
+        public int? Id { get; set; }
     }
 }

@@ -141,9 +141,8 @@ namespace LifeChart.Controllers
             model.Assets.RealEstates = new();
             model.Assets.RealEstates.AddRange(realEstates);
 
-            //model.Income.Investments.AddRange()
 			var client = new HttpClient();
-            string apiUrl = "https://localhost:7147/api/Portfolio";
+            string apiUrl = "https://localhost:7147/api/Portfolio/EditPortfolio";
 
             var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
             //set up auth header
@@ -170,6 +169,7 @@ namespace LifeChart.Controllers
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
+                Console.WriteLine("Ok");
                 // Request was successful
                 return RedirectToAction("Portfolio");
 
@@ -181,6 +181,81 @@ namespace LifeChart.Controllers
             }
         }
 
+        [Authorize]
+        public async Task<IActionResult> DeleteInvestment(string InvestmentId) 
+        {
+            var client = new HttpClient();
+            string apiUrl = "https://localhost:7147/api/Portfolio/DeleteInvestment";
+
+            var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
+            //set up auth header
+            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            //set up request body
+            var requestBody = new
+            {
+               Id = InvestmentId,
+            };
+            // Serialize the request body to JSON
+            string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
+
+            //add auth header
+            request.Headers.Add("Authorization", authHeader);
+            //add body
+            request.Content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
+
+
+            // Send request with request body
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                // Request was successful
+                return RedirectToAction("Portfolio");
+
+            }
+            else
+            {
+                // Request failed, handle the error
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DeleteRealEstate(string EstateId)
+        {
+            var client = new HttpClient();
+            string apiUrl = "https://localhost:7147/api/Portfolio/DeleteRealEstate";
+
+            var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
+            //set up auth header
+            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            //set up request body
+            var requestBody = new
+            {
+                Id = EstateId,
+            };
+            // Serialize the request body to JSON
+            string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
+
+            //add auth header
+            request.Headers.Add("Authorization", authHeader);
+            //add body
+            request.Content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
+
+
+            // Send request with request body
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                // Request was successful
+                return RedirectToAction("Portfolio");
+
+            }
+            else
+            {
+                // Request failed, handle the error
+                return StatusCode(500);
+            }
+        }
 
         [Authorize]
         public IActionResult WhatIf()
