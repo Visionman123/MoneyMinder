@@ -8,18 +8,30 @@ const bank_asset = null; // Total money in the bank NOW
 const bank_ROI = 0.06; // Bank return_of_investment (Ex: 6%)
 // Stage of life
 const start_age = 18;
-const end_age = 65;
+const end_age = 30;
 const Annual_increase = 0.1;
+const start_age_2 = 31;
+const end_age_2 = 55;
+const Annual_increase_2 = 0.07;
+const start_age_3 = 56;
+const end_age_3 = 65;
+const Annual_increase_3 = 0.08;
 // Event
 const event_age = 18;
 const event_income = 0;
 // Pension expected
 const pension = 0; 
 
+let stage_count = 3;
+let stages = [{toSavePerMonth: null, moneyEarnAnnual: [], totalSave: null, start: start_age, end: end_age, annualIncrease: Annual_increase}, 
+  {toSavePerMonth: 25000, moneyEarnAnnual: [], totalSave: null, start: start_age_2, end: end_age_2, annualIncrease: Annual_increase_2}, 
+  {toSavePerMonth: 25000, moneyEarnAnnual: [], totalSave: null, start: start_age_3, end: end_age_3, annualIncrease: Annual_increase_3}
+];
+
 // Calculation Total Money needed 
 const Money_need = (money_ffp - pension) * 12 * 25 * Math.pow(1 + inflation, ffp_age - current_age); // Money required after FFP
 const Money_event = event_income * Math.pow(1 + bank_ROI, ffp_age - event_age);
-const Total_money_need = Money_need - Money_event;
+const Total_money_need = Money_need - Money_event - computeMoneyLeftToSave(stages);
 
 // Function to calculate sigma of a given function
 function sigma(start, end, func) {
@@ -58,6 +70,9 @@ function calculateMoneyEarnAnnual(start, end, moneySave, annualIncrease) {
   return moneyEarnAnnual;
 }
 
+
+
+
 // Calculate money that the user can save each year then put it into the bank
 function calculateMoneyEarnAnnualWithBankROI(start, end, moneyEarnAnnual, bank_ROI) {
   const moneyEarnAnnualWithBankROI = [];
@@ -81,3 +96,17 @@ const tolerance = 0.01; // Tolerance for stopping the iteration
 const moneySaveNeeded = findReverseSigma(Total_money_need, x => calculateTotalMoneyEarnAnnualWithBankROI(x, Annual_increase, bank_ROI), initialGuess, tolerance);
 
 console.log("Money_save needed:", Math.floor(moneySaveNeeded));
+
+
+function computeMoneyLeftToSave(stages) {
+  let computedSum = 0;
+  stages.forEach(stage => {
+    if (stage.toSavePerMonth) {
+      stage.moneyEarnAnnual = calculateMoneyEarnAnnual(stage.start, stage.end, stage.toSavePerMonth);
+      stage.totalSave = sigma(stage.start, stage.end, i => stage.moneyEarnAnnual[i]);
+      computedSum += stage.totalSave;
+    }
+  });
+  return computedSum;
+}
+
