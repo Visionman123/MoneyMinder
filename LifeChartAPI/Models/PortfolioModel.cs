@@ -65,9 +65,12 @@ namespace LifeChartAPI.Models
                     investmentRois += investment.RoI + ",";
 				}
                 //remove last comma
-                investmentIds = investmentIds.Remove(investmentIds.Length - 1);
-                investmentAmounts = investmentAmounts.Remove(investmentAmounts.Length - 1);
-                investmentRois = investmentRois.Remove(investmentRois.Length - 1);
+                if (income.Investments.Count > 0)
+                {
+                    investmentIds = investmentIds.Remove(investmentIds.Length - 1);
+                    investmentAmounts = investmentAmounts.Remove(investmentAmounts.Length - 1);
+                    investmentRois = investmentRois.Remove(investmentRois.Length - 1);
+                }
                 cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.Parameters.AddWithValue("@InvestmentIds", investmentIds);
                 cmd.Parameters.AddWithValue("@Amounts", investmentAmounts);
@@ -92,9 +95,11 @@ namespace LifeChartAPI.Models
                     estateAmounts += estate.Amount + ",";
                 }
                 //remove last comma
-                estateIds = estateIds.Remove(estateIds.Length - 1);
-                estateAmounts = estateAmounts.Remove(estateAmounts.Length - 1);
-
+                if (assets.RealEstates.Count > 0)
+                {
+                    estateIds = estateIds.Remove(estateIds.Length - 1);
+                    estateAmounts = estateAmounts.Remove(estateAmounts.Length - 1);
+                }
                 cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.Parameters.AddWithValue("@EstateIds", estateIds);
                 cmd.Parameters.AddWithValue("@Amounts", estateAmounts);
