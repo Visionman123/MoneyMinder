@@ -120,7 +120,7 @@ namespace LifeChart.Controllers
                 //Console.WriteLine(roiAmount);
 
                 Investment investment = new Investment(investmentId, investmentAmount, roiAmount);
-                Console.WriteLine(investment);
+                //Console.WriteLine(investment);
                 investments.Add(investment);
 			}
 			
@@ -131,7 +131,7 @@ namespace LifeChart.Controllers
                 decimal estateAmount = EstateAmount[i];
 
                 RealEstate realEstate = new RealEstate(estateId, estateAmount);
-                Console.WriteLine(realEstate.Amount);
+                //Console.WriteLine(realEstate.Amount);
                 realEstates.Add(realEstate);
 			}
 
