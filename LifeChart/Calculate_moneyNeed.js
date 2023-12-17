@@ -1,42 +1,62 @@
 // What-if input
-const current_age = 18;
-const ffp_age = 65; // Financial freedom point age
-const money_ffp = 30000; // Monthly money required after financial freedom point
+const currentAge = 18;
+const ffpAge = 65; // Financial freedom point age
+const moneyFFP = 30000; // Monthly money required after financial freedom point
 const inflation = 0.06; // Inflation of the country
+
 // Capital Asset
-const bank_asset = null; // Total money in the bank NOW
-const bank_ROI = 0.06; // Bank return_of_investment (Ex: 6%)
-// Stage of life
-const start_age = 18;
-const end_age = 30;
-const Annual_increase = 0.1;
-const start_age_2 = 31;
-const end_age_2 = 55;
-const Annual_increase_2 = 0.07;
-const start_age_3 = 56;
-const end_age_3 = 65;
-const Annual_increase_3 = 0.08;
+const bankAsset = null; // Total money in the bank NOW
+const bankROI = 0.06; // Bank return_of_investment (e.g., 6%)
+
 // Event
-const event_age = 18;
-const event_income = 0;
+const eventAge = 18;
+const eventIncome = 0;
+
 // Pension expected
-const pension = 0; 
+const pension = 0;
 
-let stage_count = 3;
-let stages = [{toSavePerMonth: null, moneyEarnAnnual: [], totalSave: null, start: start_age, end: end_age, annualIncrease: Annual_increase}, 
-  {toSavePerMonth: 25000, moneyEarnAnnual: [], totalSave: null, start: start_age_2, end: end_age_2, annualIncrease: Annual_increase_2}, 
-  {toSavePerMonth: 25000, moneyEarnAnnual: [], totalSave: null, start: start_age_3, end: end_age_3, annualIncrease: Annual_increase_3}
-];
-
-// Calculation Total Money needed 
-const Money_need = (money_ffp - pension) * 12 * 25 * Math.pow(1 + inflation, ffp_age - current_age); // Money required after FFP
-const Money_event = event_income * Math.pow(1 + bank_ROI, ffp_age - event_age);
-const Total_money_need = Money_need - Money_event - computeMoneyLeftToSave(stages);
+function generateStages(stageInfo) {
+    const stages = [];
+  
+    for (let i = 0; i < stageInfo.length; i++) {
+      const { start, end, toSavePerMonth, annualIncrease } = stageInfo[i];
+  
+      const stage = {
+        stageNumber: i+1,
+        moneyEarnAnnual: [],
+        moneyEarnAnnualWithBankROI: [],
+        totalSave: null,
+        toSavePerMonth,
+        start,
+        end,
+        annualIncrease,
+      };
+  
+      stages.push(stage);
+    }
+  
+    return stages;
+  }
+  
+// Generate stages
+const stageInfo = [
+  { start: 18, end: 40, toSavePerMonth: null, annualIncrease: 0.1 },
+  { start: 41, end: 50, toSavePerMonth: null, annualIncrease: 0.08 },
+  { start: 51, end: 65, toSavePerMonth: 5754, annualIncrease: 0.12 },
+  ];
+  
+  const stages = generateStages(stageInfo);
+  console.log(stages);
+  
+// Calculation Total Money needed
+const moneyNeed = (moneyFFP - pension) * 12 * 25 * Math.pow(1 + inflation, ffpAge - currentAge); // Money required after FFP
+const moneyEvent = eventIncome * Math.pow(1 + bankROI, ffpAge - eventAge);
+const totalMoneyNeed = moneyNeed - moneyEvent;
 
 // Function to calculate sigma of a given function
 function sigma(start, end, func) {
   let sum = 0;
-  for (let i = start; i <= end; i++) {
+  for (let i = start; i < end; i++) {
     sum += func(i);
   }
   return sum;
@@ -62,51 +82,74 @@ function calculateDerivative(func, x) {
 }
 
 // Calculate money that the user can save each year
-function calculateMoneyEarnAnnual(start, end, moneySave, annualIncrease) {
-  const moneyEarnAnnual = [];
-  for (let i = start; i <= end; i++) {
-    moneyEarnAnnual[i] = (moneySave * 12) * Math.pow(1 + annualIncrease, i - start);
+function calculateAnnualSaving(stageNumber, start, end, monthlySaving, annualIncrease) {
+  if (stageNumber != 1) {
+    monthlySaving = monthlySaving * Math.pow((1+inflation),(start - currentAge)); 
   }
-  return moneyEarnAnnual;
+
+  const annualSaving = [];
+  for (let i = 0; i <= end - start; i++) {
+    const amount = (monthlySaving * 12) * Math.pow(1 + annualIncrease, start - (start - i));
+    const age = start + i;
+    annualSaving.push({ age, amount });
+  }
+
+  return annualSaving;
 }
 
-
-
-
 // Calculate money that the user can save each year then put it into the bank
-function calculateMoneyEarnAnnualWithBankROI(start, end, moneyEarnAnnual, bank_ROI) {
-  const moneyEarnAnnualWithBankROI = [];
-  for (let i = start; i <= end; i++) {
-    moneyEarnAnnualWithBankROI[i] = moneyEarnAnnual[i] * Math.pow(1 + bank_ROI, end - i);
+function calculateAnnualSavingWithBankROI(start, end, annualSaving, bankROI) {
+  const annualSavingWithBankROI = [];
+
+  console.log(start,end);
+  for (let i = 0; i <= end - start; i++) {
+    const age = annualSaving[i].age;
+    
+    console.log(age);
+    console.log(annualSaving[i]);
+
+    const amount = annualSaving[i].amount * Math.pow(1 + bankROI, ffpAge - age);
+    annualSavingWithBankROI.push({ age, amount });
+    console.log(annualSavingWithBankROI[i])
   }
-  return moneyEarnAnnualWithBankROI;
+
+  return annualSavingWithBankROI;
 }
 
 // Calculate Total_moneyEarnAnnualWithBankROI using the provided functions
-function calculateTotalMoneyEarnAnnualWithBankROI(money_save, Annual_increase, bank_ROI) {
-  const moneyEarnAnnual = calculateMoneyEarnAnnual(start_age, end_age, money_save, Annual_increase);
-  const moneyEarnAnnualWithBankROI = calculateMoneyEarnAnnualWithBankROI(start_age, end_age, moneyEarnAnnual, bank_ROI);
-  return sigma(start_age, end_age, i => moneyEarnAnnualWithBankROI[i]);
+function calculateTotalAnnualSavingWithBankROI(stages, monthlySavingRequired, bankROI) {
+  const totalAnnualSaving = [];
+  stages.forEach((stage) => {
+    stage.moneyEarnAnnual = calculateAnnualSaving(stage.stageNumber, stage.start, stage.end, stage.toSavePerMonth ? stage.toSavePerMonth : monthlySavingRequired, stage.annualIncrease);
+    stage.moneyEarnAnnualWithBankROI = calculateAnnualSavingWithBankROI(stage.start, stage.end, stage.moneyEarnAnnual, bankROI);
+    stage.moneyEarnAnnualWithBankROI.forEach((x) => {
+      totalAnnualSaving.push(x);
+    });
+  });
+  return sigma(0, totalAnnualSaving.length, (i) => totalAnnualSaving[i].amount);
 }
 
 // Example usage: Find the money_save needed to achieve the target Total_money_need
 const initialGuess = 1000; // Replace with an initial guess close to the solution
 const tolerance = 0.01; // Tolerance for stopping the iteration
 
-const moneySaveNeeded = findReverseSigma(Total_money_need, x => calculateTotalMoneyEarnAnnualWithBankROI(x, Annual_increase, bank_ROI), initialGuess, tolerance);
+const moneyToSavePerMonth = findReverseSigma(totalMoneyNeed, (x) => calculateTotalAnnualSavingWithBankROI(stages, x, bankROI), initialGuess, tolerance);
 
-console.log("Money_save needed:", Math.floor(moneySaveNeeded));
-
+console.log("Money needed to save:", (moneyToSavePerMonth));
 
 function computeMoneyLeftToSave(stages) {
   let computedSum = 0;
-  stages.forEach(stage => {
+  stages.forEach((stage) => {
     if (stage.toSavePerMonth) {
-      stage.moneyEarnAnnual = calculateMoneyEarnAnnual(stage.start, stage.end, stage.toSavePerMonth);
-      stage.totalSave = sigma(stage.start, stage.end, i => stage.moneyEarnAnnual[i]);
+      stage.moneyEarnAnnual = calculateMoneyEarnAnnual(stage.start, stage.end, stage.toSavePerMonth, stage.annualIncrease);
+      stage.totalSave = sigma(0, stage.end - stage.start, (i) => stage.moneyEarnAnnual[i].amount);
       computedSum += stage.totalSave;
     }
   });
   return computedSum;
 }
+
+//console.log(stages);
+
+
 
