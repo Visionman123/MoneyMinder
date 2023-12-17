@@ -9,17 +9,17 @@ namespace LifeChartAPI.Models
         public decimal OneMonthPrior { get; set; }
         public decimal Limit { get; set; }
 
-        public SpendingBehaviorModel(string? connectionString, string? userId, string? category)
+        public SpendingBehaviorModel(string? connectionString, string? userId, int? categoryId)
         {
             try
             {
                 SqlConnection connection = new(connectionString);
                 connection.Open();
                 //get balance
-                string sql = "SELECT * FROM GetExpensesThreeMonthsPriorOfCategory(@UserId, @Category)";
+                string sql = "SELECT * FROM GetExpensesThreeMonthsPriorOfCategory(@UserId, @CategoryId)";
                 SqlCommand cmd = new(sql, connection);
                 cmd.Parameters.AddWithValue("@UserId", userId);
-                cmd.Parameters.AddWithValue("@Category", category);
+                cmd.Parameters.AddWithValue("@CategoryId", categoryId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -37,6 +37,17 @@ namespace LifeChartAPI.Models
                     {
                         ThreeMonthsPrior = reader[1] != DBNull.Value ? (decimal)reader[1] : 0;
                     }
+                }
+                reader.Close();
+
+                //get name of category
+                sql = "SELECT Name FROM dbo.ExpenseCategories WHERE Id = " + categoryId;
+                string category = null;
+                cmd = new(sql, connection);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    category = reader[0] as string;
                 }
                 reader.Close();
 

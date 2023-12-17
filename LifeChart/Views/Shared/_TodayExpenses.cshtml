@@ -7,7 +7,7 @@
 <div class="container-inside-today"> 
     <h1>Today Expenses</h1> 
     <form id="today-expense-form" asp-controller="Home" asp-action="AddExpense" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#TodayExpensesContainer" data-ajax-method="POST"> 
-        <input type="text" id="expense-name" placeholder="Expense Name" name="category" required /> 
+        <input type="number" id="expense-name" placeholder="Expense Name" name="categoryId" required /> 
         <input type="number" id="expense-amount" placeholder="Amount" name="amount" required /> 
         <button type="submit"><img src="~/assets/plus.png" width="15px"/> </button> 
     </form> 
