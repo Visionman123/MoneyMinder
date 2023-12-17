@@ -53,10 +53,10 @@ namespace LifeChartAPI.Models
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    string category = reader[0] as string;
-                    decimal amount = (decimal)reader[1];
-                    int month = (int)reader[2];
-                    int year = (int)reader[3]; 
+                    string category = reader[1] as string;
+                    decimal amount = (decimal)reader[2];
+                    int month = (int)reader[3];
+                    int year = (int)reader[4]; 
                     ExpenseList.Add(month + "/" + year + "-" + category, amount);
                 }
                 reader.Close();

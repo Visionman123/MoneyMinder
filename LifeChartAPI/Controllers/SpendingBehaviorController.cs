@@ -21,17 +21,17 @@ namespace LifeChartAPI.Controllers
         [HttpGet]
         public IActionResult PredictSpending()
         {
-            //string authHeader = Request.Headers["Authorization"];
-            //if (string.IsNullOrEmpty(authHeader))
-            //{
-            //    return StatusCode(500);
-            //}
-            //string jwt = authHeader.Split(' ')[1];
-            //var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            //var userId = token.Audiences.FirstOrDefault();
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
 
-            SpendingBehaviorModel groceriesModel = new(connectionString, "balls", "groceries");
+            SpendingBehaviorModel groceriesModel = new(connectionString, userId, 1);
             var groceriesInput = new SpendingModel.ModelInput
             {
                 ThreeMonthsPrior = (float) groceriesModel.ThreeMonthsPrior,
@@ -41,7 +41,7 @@ namespace LifeChartAPI.Controllers
             };
             var groceriesOutput = SpendingModel.Predict(groceriesInput);
 
-            SpendingBehaviorModel entertainmentModel = new(connectionString, "balls", "entertainment");
+            SpendingBehaviorModel entertainmentModel = new(connectionString, userId, 2);
             var entertainmentInput = new SpendingModel.ModelInput
             {
                 ThreeMonthsPrior = (float)entertainmentModel.ThreeMonthsPrior,

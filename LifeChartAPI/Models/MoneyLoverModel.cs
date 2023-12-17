@@ -41,9 +41,9 @@ namespace LifeChartAPI.Models
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    string category = reader[0] as string;
-                    DateTime dateTime =  (DateTime)reader[1];
-                    decimal amount = (decimal)reader[2];
+                    string category = reader[1] as string;
+                    DateTime dateTime =  (DateTime)reader[2];
+                    decimal amount = (decimal)reader[3];
                     PastExpenses.Add(category + " " + dateTime.ToString(), amount);
                 }
                 reader.Close();
@@ -68,9 +68,9 @@ namespace LifeChartAPI.Models
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    string category = reader[0] as string;
-                    DateTime dateTime = (DateTime)reader[1];
-                    decimal amount = (decimal)reader[2];
+                    string category = reader[1] as string;
+                    DateTime dateTime = (DateTime)reader[2];
+                    decimal amount = (decimal)reader[3];
                     TodayExpenses.Add(category + " " + dateTime.ToString(), amount);
 
                 }
@@ -83,7 +83,7 @@ namespace LifeChartAPI.Models
             }
         }
 
-        public string AddExpense(string? connectionString, string? userId, string? category, decimal? amount, DateTime date)
+        public string AddExpense(string? connectionString, string? userId, int? categoryId, decimal? amount, DateTime date)
         {
             try
             {
@@ -91,9 +91,9 @@ namespace LifeChartAPI.Models
                 connection.Open();
                 SqlCommand cmd = new("dbo.AddExpense", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", userId + "-" + category + "-" +  date.ToString());
+                cmd.Parameters.AddWithValue("@Id", userId + "-category" + categoryId + "-" +  date.ToString());
                 cmd.Parameters.AddWithValue("@UserId", userId);
-                cmd.Parameters.AddWithValue("@Category", category);
+                cmd.Parameters.AddWithValue("@CategoryId", categoryId);
                 cmd.Parameters.AddWithValue("@Amount", amount);
                 cmd.Parameters.AddWithValue("@Date", date);
                 cmd.ExecuteNonQuery();
@@ -122,28 +122,29 @@ namespace LifeChartAPI.Models
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 //all categories
-                Dictionary<string, string> categories = new();
-                categories.Add("groceries", "groceries");
-                categories.Add("entertainment", "entertainment");
-                categories.Add("utilities", "utilities");
-                categories.Add("rent", "rent");
-                categories.Add("mortgages", "mortgages"); 
-                categories.Add("others", "others");
+                Dictionary<int, string> categories = new();
+                categories.Add(1, "groceries");
+                categories.Add(2, "entertainment");
+                categories.Add(3, "utilities");
+                categories.Add(4, "rent");
+                categories.Add(5, "mortgages"); 
+                categories.Add(6, "others");
                 while (reader.Read())
                 {
-                    string category = reader[0] as string;
-                    decimal amount = (decimal)reader[1];
+                    int categoryId = (int)reader[0];
+                    string category = reader[1] as string;
+                    decimal amount = (decimal)reader[2];
                     //remove from dictionary any category found in db
-                    if (category == categories[category])
+                    if (category == categories[categoryId])
                     {
-                        categories.Remove(category);
+                        categories.Remove(categoryId);
                     }
                     ThisMonthExpenses.Add(category, amount);
                 }
                 //add to ThisMonthExpenses categories not in db with amount = 0
-                foreach (string category in categories.Keys)
+                foreach (int categoryId in categories.Keys)
                 {
-                    ThisMonthExpenses.Add(category, 0);
+                    ThisMonthExpenses.Add(categories[categoryId], 0);
                 }
                 reader.Close();
 
@@ -153,12 +154,12 @@ namespace LifeChartAPI.Models
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    decimal groceries = (decimal)reader[0];
-                    decimal utilities = (decimal)reader[1];
-                    decimal rent = (decimal)reader[2];
-                    decimal entertainment = (decimal)reader[3];
-                    decimal mortgages = (decimal)reader[4];
-                    decimal others = (decimal)reader[5];
+                    decimal groceries = (reader[0] == DBNull.Value) ? 0 : (decimal)reader[0];
+                    decimal utilities = (reader[1] == DBNull.Value) ? 0 : (decimal)reader[1];
+                    decimal rent = (reader[2] == DBNull.Value) ? 0 : (decimal)reader[2];
+                    decimal entertainment = (reader[3] == DBNull.Value) ? 0 : (decimal)reader[3];
+                    decimal mortgages = (reader[4] == DBNull.Value) ? 0 : (decimal)reader[4];
+                    decimal others = (reader[5] == DBNull.Value) ? 0 : (decimal)reader[5];
                     ThisMonthLimits.Add("groceries", groceries);
                     ThisMonthLimits.Add("utilities", utilities);
                     ThisMonthLimits.Add("rent", rent);

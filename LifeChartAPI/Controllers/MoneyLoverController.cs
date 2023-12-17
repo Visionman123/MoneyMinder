@@ -22,21 +22,21 @@ namespace LifeChartAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMoneyLover()
         {
-            //string authHeader = Request.Headers["Authorization"];
-            //if (string.IsNullOrEmpty(authHeader))
-            //{
-            //    return StatusCode(500);
-            //}
-            //string jwt = authHeader.Split(' ')[1];
-            //var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            //var userId = token.Audiences.FirstOrDefault();
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
             StreamReader reader = new(Request.Body, Encoding.UTF8);
             var requestContent = await reader.ReadToEndAsync();
             var jsonDate = JsonConvert.DeserializeObject<DateClass>(requestContent);
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
 
             //prediction model
-            SpendingBehaviorModel groceriesModel = new(connectionString, "balls", "groceries");
+            SpendingBehaviorModel groceriesModel = new(connectionString, userId, 1);
             var groceriesInput = new SpendingModel.ModelInput
             {
                 ThreeMonthsPrior = (float)groceriesModel.ThreeMonthsPrior,
@@ -46,7 +46,7 @@ namespace LifeChartAPI.Controllers
             };
             var groceriesOutput = SpendingModel.Predict(groceriesInput);
 
-            SpendingBehaviorModel entertainmentModel = new(connectionString, "balls", "entertainment");
+            SpendingBehaviorModel entertainmentModel = new(connectionString, userId, 2);
             var entertainmentInput = new SpendingModel.ModelInput
             {
                 ThreeMonthsPrior = (float)entertainmentModel.ThreeMonthsPrior,
@@ -56,7 +56,7 @@ namespace LifeChartAPI.Controllers
             };
             var entertainmentOutput = SpendingModel.Predict(entertainmentInput);
 
-            SpendingBehaviorModel utilitiesModel = new(connectionString, "balls", "utilities");
+            SpendingBehaviorModel utilitiesModel = new(connectionString, userId, 3);
             var utilitiesInput = new SpendingModel.ModelInput
             {
                 ThreeMonthsPrior = (float)utilitiesModel.ThreeMonthsPrior,
@@ -66,7 +66,7 @@ namespace LifeChartAPI.Controllers
             };
             var utilitiesOutput = SpendingModel.Predict(utilitiesInput);
 
-            SpendingBehaviorModel othersModel = new(connectionString, "balls", "others");
+            SpendingBehaviorModel othersModel = new(connectionString, userId, 6);
             var othersInput = new SpendingModel.ModelInput
             {
                 ThreeMonthsPrior = (float)othersModel.ThreeMonthsPrior,
@@ -78,9 +78,9 @@ namespace LifeChartAPI.Controllers
 
             //if date is not supplied then choose a date long ago => No data retrieved
             MoneyLoverModel model = new();
-            model.GetPastExpenses(connectionString, "balls", (jsonDate.Date != null) ? DateTime.Parse(jsonDate.Date) : DateTime.Parse("1900-01-01"));
-            model.GetTodayExpenses(connectionString, "balls");
-            model.GetExpenseTracker(connectionString, "balls");
+            model.GetPastExpenses(connectionString, userId, (jsonDate.Date != null) ? DateTime.Parse(jsonDate.Date) : DateTime.Parse("1900-01-01"));
+            model.GetTodayExpenses(connectionString, userId);
+            model.GetExpenseTracker(connectionString, userId);
             model.GroceriesEstimation = (decimal)groceriesOutput.Score;
             model.EntertainmentEstimation = (decimal)entertainmentOutput.Score;
             model.UtilitiesEstimation = (decimal)utilitiesOutput.Score;
@@ -92,14 +92,14 @@ namespace LifeChartAPI.Controllers
         [HttpGet("PastExpenses")]
         public async Task<IActionResult> GetPastExpenses()
         {
-            //string authHeader = Request.Headers["Authorization"];
-            //if (string.IsNullOrEmpty(authHeader))
-            //{
-            //    return StatusCode(500);
-            //}
-            //string jwt = authHeader.Split(' ')[1];
-            //var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            //var userId = token.Audiences.FirstOrDefault();
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
             StreamReader reader = new(Request.Body, Encoding.UTF8);
             var requestContent = await reader.ReadToEndAsync();
             var jsonDate = JsonConvert.DeserializeObject<DateClass>(requestContent);
@@ -107,48 +107,51 @@ namespace LifeChartAPI.Controllers
 
             //if date is not supplied then choose a date long ago => No data retrieved
             MoneyLoverModel model = new();
-            model.GetPastExpenses(connectionString, "balls", (jsonDate.Date != null) ? DateTime.Parse(jsonDate.Date) : DateTime.Parse("1900-01-01"));
+            model.GetPastExpenses(connectionString, userId, (jsonDate.Date != null) ? DateTime.Parse(jsonDate.Date) : DateTime.Parse("1900-01-01"));
             return Ok(model);
         }
 
         [HttpGet("TodayExpenses")]
         public IActionResult GetTodayExpenses()
         {
-            //string authHeader = Request.Headers["Authorization"];
-            //if (string.IsNullOrEmpty(authHeader))
-            //{
-            //    return StatusCode(500);
-            //}
-            //string jwt = authHeader.Split(' ')[1];
-            //var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            //var userId = token.Audiences.FirstOrDefault();
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             MoneyLoverModel model = new();
-            model.GetTodayExpenses(connectionString, "balls");
+            model.GetTodayExpenses(connectionString, userId);
             return Ok(model);
         }
 
         [HttpPost("AddExpense")]
         public async Task<IActionResult> AddExpense()
         {
-            //string authHeader = Request.Headers["Authorization"];
-            //if (string.IsNullOrEmpty(authHeader))
-            //{
-            //    return StatusCode(500);
-            //}
-            //string jwt = authHeader.Split(' ')[1];
-            //var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            //var userId = token.Audiences.FirstOrDefault();
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
             StreamReader reader = new(Request.Body, Encoding.UTF8);
             var requestContent = await reader.ReadToEndAsync();
-            var jsonEpxense = JsonConvert.DeserializeObject<Expense>(requestContent);
+            var jsonExpense = JsonConvert.DeserializeObject<Expense>(requestContent);
+            Console.WriteLine(jsonExpense.CategoryId);
+            Console.WriteLine(jsonExpense.Amount);
+            Console.WriteLine(jsonExpense.Date);
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
 
             //if date is not supplied then choose a date long ago => No data retrieved
             MoneyLoverModel model = new();
-            string status = model.AddExpense(connectionString, "balls", jsonEpxense.Category, jsonEpxense.Amount, DateTime.Parse(jsonEpxense.Date));
+            string status = model.AddExpense(connectionString, userId, jsonExpense.CategoryId, jsonExpense.Amount, DateTime.Parse(jsonExpense.Date));
             //update model
-            model.GetTodayExpenses(connectionString, "balls");
+            model.GetTodayExpenses(connectionString, userId);
             if (status == "200")
             {
                 return Ok(model);
@@ -162,17 +165,17 @@ namespace LifeChartAPI.Controllers
         [HttpGet("ExpenseTracker")]
         public IActionResult GetExpenseTracker()
         {
-            //string authHeader = Request.Headers["Authorization"];
-            //if (string.IsNullOrEmpty(authHeader))
-            //{
-            //    return StatusCode(500);
-            //}
-            //string jwt = authHeader.Split(' ')[1];
-            //var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            //var userId = token.Audiences.FirstOrDefault();
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return StatusCode(500);
+            }
+            string jwt = authHeader.Split(' ')[1];
+            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
+            var userId = token.Audiences.FirstOrDefault();
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             MoneyLoverModel model = new();
-            model.GetExpenseTracker(connectionString, "balls");
+            model.GetExpenseTracker(connectionString, userId);
             return Ok(model);
         }
     }
@@ -184,7 +187,7 @@ namespace LifeChartAPI.Controllers
 
     public class Expense
     {
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
         public decimal Amount { get; set; }
         public string Date { get; set; }
     }

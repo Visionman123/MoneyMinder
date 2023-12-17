@@ -408,7 +408,7 @@ namespace LifeChart.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> AddExpense(string category, decimal amount)
+        public async Task<IActionResult> AddExpense(int categoryId, decimal amount)
         {
             var client = new HttpClient();
             string apiUrl = "https://localhost:7147/api/MoneyLover/AddExpense";
@@ -419,7 +419,7 @@ namespace LifeChart.Controllers
             //set up request body
             var requestBody = new
             {
-                Category = category,
+                CategoryId = categoryId,
                 Amount = amount,
                 Date = DateTime.Now,
             };
