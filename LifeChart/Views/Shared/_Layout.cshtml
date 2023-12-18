@@ -1,95 +1,110 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LifeChart</title>
-    <link rel="icon" type="image/x-icon" href="/Assets/logo.png">
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/LifeChart.styles.css" asp-append-version="true" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - LifeChart</title>
+	<link rel="icon" type="image/x-icon" href="/Assets/logo.png">
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/LifeChart.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="nav">
-          
-               <img src="/Assets/logo.png" alt="logo" width="40" height="40">
-                <a class="navbar-brand" asp-area="" asp-page="/Index" style="text-decoration:none">MoneyMinder</a>
-               
-                <div class="navbar-collapse">
-                    <ul class="navbar-nav">
-                        @if (User.Identity.IsAuthenticated) {
-                            
-                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Portfolio">Portfolio</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="WhatIf">What-If Scenario</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MoneyLover">Money Lover</a>
-                            </li>
-                            <li class="nav-item-logout">
-                                <a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            
-        </nav>
-    </header>
-    <div class="container">
-        
-            @RenderBody()
-       
-    </div>
+	<header>
+		<nav class="nav">
+			<div class="logo-space">
+				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative">
+				<a class="navbar-brand" asp-area="" asp-page="/Index" style="text-decoration:none">MoneyMinder</a>
+			</div>
+			<div class="navbar-collapse">
+				<ul class="navbar-nav">
+					@if (User.Identity.IsAuthenticated)
+					{
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - LifeChart - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Portfolio">Portfolio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="WhatIf">What-If Scenario</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="MoneyLover">Money Lover</a>
+						</li>
+						<li class="nav-item-logout">
+							<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
+						</li>
+					}
+				</ul>
+			</div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+		</nav>
+	</header>
+	<div class="container">
 
-    @await RenderSectionAsync("Scripts", required: false)
+		@RenderBody()
+
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; 2023 - LifeChart - <a asp-area="" asp-page="/Privacy">Privacy</a>
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 <style>
-    li{
-        display: inline;
-    }
+	li {
+		display: inline;
+		margin-left:30px;
+	}
 
-    nav {
-        background-color: black;
-        border-bottom:1px solid white;
-        display:flex;
-        flex-direction:row;
-        align-items:center;
+	nav {
+		background-color: black;
+		border-bottom: 1px solid white;
+		display:flex;
+		flex-direction:row;
+		padding:0px 50px 0px 10px;
+	}
+	.logo-space{
+		display:flex;
+		flex-direction:row;
+		align-items:center; 
+		width:30%;
+	}
+	.navbar-collapse{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: end;
+		width:70%
+	}
+	a {
+		color: white;
+		text-decoration: none;
+	}
 
-    }
-    a{
-        color:white;
-        text-decoration:none;
-    }
-    .container{
-      
-        align-items:center;
-       
-    }
-    .nav-item-logout{
-        background-color:white;
-        padding:5px 10px 5px 10px;
-        border-radius:20px;
-    }
-    .nav-link-logout{
-        color:black;
-    }
+	.container {
+		align-items: center;
+	}
+
+	.nav-item-logout {
+		background-color: white;
+		padding: 5px 10px 5px 10px;
+		border-radius: 20px;
+	}
+
+	.nav-link-logout {
+		color: black;
+	}
 </style>

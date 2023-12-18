@@ -8,7 +8,7 @@
 
 <div class="portfolio">
 	<form asp-controller="Home" asp-action="EditPortfolio" class="form" method="post">
-
+		<div class="four-input">
 		<div class="income" id="box">
 			<label for="salary-input" asp-for="Income.Salary">Salary</label>
 			<input type="text" id="salary-input" asp-for="Income.Salary" />
@@ -73,7 +73,7 @@
 			<label for="others-input" class="label" asp-for="ExpenseLimit.Others">Others</label>
 			<input type="text" id="others-input" asp-for="ExpenseLimit.Others" />
 		</div>
-
+		</div>
 		<button type="submit">Save</button>
 	</form>
 
@@ -114,16 +114,23 @@
 		width: 230px;
 		height: 350px;
 		padding: 20px 10px 20px 10px;
+	
 	}
 
 	form {
 		width: 100%;
 		display: flex;
+		flex-direction:column;
+		align-items:center;
+	}
+	.four-input{
+		width: 100%;
+		display: flex;
+		flex-direction:row;
 		justify-content: center;
 		column-gap: 10px;
 		margin-top: 5vh;
 	}
-
 	button {
 		width: 30%;
 		background-color: white;
