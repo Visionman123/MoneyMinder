@@ -8,7 +8,7 @@
 	<h1>Expense Tracker</h1> 
 
 	<div class="expense-table"> 
-		<table> 
+		
             @*<thead> 
                 <tr> 
 					<th>Expense Name</th> 
@@ -17,31 +17,47 @@
                 </tr> 
             </thead> 
 			*@
-            <tbody id="expense-list">
+            
 				@if (Model != null) {
 					@foreach (var item in Model.ThisMonthExpenses)
 					{
-						<tr>
-							<td id="category-key-@item.Key">@item.Key</td>
-							<td id="category-amount-@item.Key">@item.Value/@Model.ThisMonthLimits[@item.Key]</td>
+					
+							<label for="file">@item.Key    @item.Value/@Model.ThisMonthLimits[@item.Key]</label> <br />
+							<progress id="file" value="@item.Value" max="@Model.ThisMonthLimits[@item.Key]"> </progress><br />
+							
+							
 							@if (item.Key == "groceries") {
-								<td>@Model.GroceriesEstimation</td>
+								<progress id="file1" value="@Model.GroceriesEstimation" max="@Model.ThisMonthLimits[@item.Key]"> </progress><br />
 							}
 							else if (item.Key == "entertainment")
 							{
-								<td>@Model.EntertainmentEstimation</td>
+								<progress id="file1" value="@Model.EntertainmentEstimation" max="@Model.ThisMonthLimits[@item.Key]"></progress><br />
 							}
 							else if (item.Key == "utilities") {
-								<td>@Model.UtilitiesEstimation</td>
+								<progress id="file1" value="@Model.UtilitiesEstimation" max="@Model.ThisMonthLimits[@item.Key]"> </progress><br />
 							}
 							else if (item.Key == "others") {
-								<td>@Model.OthersEstimation</td>
+								<progress id="file1" value="@Model.OthersEstimation" max="@Model.ThisMonthLimits[@item.Key]"></progress><br />
+								
 							}
-						</tr>
+						
 					}
 				}
-			</tbody> 
-        </table> 
+				@*@foreach (var item in Model.ThisMonthExpenses)
+				{
+				
+					<p>@item.Key @item.Value/@Model.ThisMonthLimits[@item.Key]</p>
+				<div class="progress-container">
+					<div class="progress-now">
+						<div class="estimate">
+
+						</div>
+					</div>
+					
+				</div>
+				}*@
+			
+        
 	</div>
 </div>
 
@@ -58,9 +74,46 @@
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	}
 
-
+	.expense-table{
+		margin-top:-10px;
+		width:100%;
+	}
 	h1 {
 		text-align: center;
 		margin-bottom: 20px;
+	}
+	progress[value]{
+		height:10px;
+		width:100%;
+		
+	}
+	#file{
+		
+	}
+	#file1{
+
+	}
+	.progress-container{
+		border-radius:10px;
+		height:3px;
+		width:100%;
+		background:#E6E6E6;
+		
+	}
+	.progress-now{
+		border-radius:10px;
+		height:3px;
+		background-color:#088BEA;
+		width:30%;
+		
+		
+	}
+	.estimate{
+		border-radius:10px;
+		height:3px;
+		background-color:#088BEA;
+		opacity:50%;
+		width:150%;
+		
 	}
 </style>
