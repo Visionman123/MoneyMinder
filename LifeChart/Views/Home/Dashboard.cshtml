@@ -11,11 +11,15 @@
 
 
 @model LifeChart.Models.DashboardModel
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
 
 <div class="dashboard">
 	<div class="balance">
-		<p class="balance">Balance</p>
-		<label asp-for="Balance">@Model.Balance</label>
+		<p style="color:white;">Balance</p>
+		<label asp-for="Balance" style="color:white;">@Model.Balance VND</label>
+		<p style="color:white; margin-left:30px;font-size:larger;margin-top:50px;">**** **** **** ****</p>
 	</div>
 
 	<div class="income">
@@ -23,7 +27,7 @@
 		@if (Model.Income.Count > 0 && Model.Income.Keys.Last() == thisMonth + "/" + thisYear && Model.Income.Values.Last() != null) 
 		{
 			decimal? incomeThisMonth = Model.Income.Values.Last();
-			<label>@incomeThisMonth</label>
+			<label>@incomeThisMonth VND</label>
 			if (Model.Income.Count > 1 && Model.Income.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Income.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
 				decimal? incomeLastMonth = Model.Income.Values.Reverse().Skip(1).FirstOrDefault();
@@ -45,7 +49,7 @@
 		@if (Model.Expenses.Count > 0 && Model.Expenses.Keys.Last() == thisMonth + "/" + thisYear && Model.Expenses.Values.Last() != null) 
 		{
 			decimal? expensesThisMonth = Model.Expenses.Values.Last();
-			<label>@expensesThisMonth</label>
+			<label>@expensesThisMonth VND</label>
 			if (Model.Expenses.Count > 1 && Model.Expenses.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
 				decimal? expensesLastMonth = Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault();
@@ -61,4 +65,127 @@
 			<label></label>
 		}
 	</div>
+	<div class="monthly-chart">
+		<canvas id="monthlyChart" style="max-height:270px;max-width:90%;margin-left:10px;" ></canvas>
+	</div>
+	<div class="expense-chart">
+		<canvas id="myChart" style="max-height:250px;max-width:90%;" ></canvas>
+	</div>
 </div>
+<style>
+	html{
+		height:100%;
+	}
+	body{
+		background: #03030F;
+	}
+	p{
+		font-family:"Outfit";
+		margin-left:30px;
+		
+	}
+	label{
+		font-family:"Outfit";
+		margin-left:30px;
+		
+		
+	}
+	.dashboard{
+		display:grid;
+		justify-content:center;
+		margin-top:30px;
+		grid-template-columns: 25% 20% 20%;
+		column-gap:50px;
+		row-gap:30px;
+		
+		
+
+	}
+	.balance{
+		background:white;
+		height:160px;
+		border-radius:10px;
+		background: linear-gradient(to right, grey, black);
+		box-shadow: 10px 10px #42424B;
+		
+	}
+	.income{
+		background: white;
+		border-radius:10px;
+	}
+	.expenses{
+		background:white;
+		border-radius: 10px;
+	}
+	.monthly-chart{
+		background:white;
+		grid-column-start: 1;
+		grid-column-end: 3;
+		height:280px;
+		border-radius:10px;
+	}
+
+	.expense-chart {
+		background:white;
+		height:280px;
+		border-radius:10px;
+	}
+	footer{
+		display:none;
+	}
+</style>
+<script>
+	@*Month Chart*@
+	const xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+
+	new Chart("monthlyChart", {
+		type: "line",
+		data: {
+			labels: xValues,
+			datasets: [{
+				data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+				borderColor: "red",
+				fill: false
+			}, {
+				data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+				borderColor: "green",
+				fill: false
+			}, {
+				data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
+				borderColor: "blue",
+				fill: false
+			}]
+		},
+		options: {
+			legend: { display: false }
+		}
+	});
+
+
+	var Expenses = ["Italy", "France", "Spain", "USA", "Argentina"];
+	var Amount = [55, 49, 44, 24, 15];
+	var barColors = [
+		"#b91d47",
+		"#00aba9",
+		"#2b5797",
+		"#e8c3b9",
+		"#1e7145"
+	];
+
+	new Chart("myChart", {
+		type: "pie",
+		data: {
+			labels:Expenses,
+			datasets: [{
+				backgroundColor: barColors,
+				data: Amount
+			}]
+		},
+		options: {
+			title: {
+				display: true,
+				text: "All Expenses"
+			}
+		}
+	});
+</script>

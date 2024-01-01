@@ -4,7 +4,7 @@
 @model LifeChart.Models.MoneyLoverModel;
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=League Spartan">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <div class="container-inside">
 	<h1>Past Expense</h1> 
 	<form id="past-expense-form" asp-controller="Home" asp-action="_PastExpenses" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#PastExpensesContainer" data-ajax-method="GET">
@@ -41,6 +41,7 @@
 
 
 <script>
+	 
 </script>
 
 
@@ -70,5 +71,8 @@
 		font-size:10px;
 		font-weight:lighter;
 	}
-	
+	#date-input{
+		border:none;
+		background-color: #f9f9f9;
+	}
 </style>
