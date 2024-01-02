@@ -17,7 +17,7 @@
                 </tr> 
             </thead> 
 			*@
-            
+            @*
 				@if (Model != null) {
 					@foreach (var item in Model.ThisMonthExpenses)
 					{
@@ -43,19 +43,44 @@
 						
 					}
 				}
-				@*@foreach (var item in Model.ThisMonthExpenses)
+				*@
+				@foreach (var item in Model.ThisMonthExpenses)
 				{
 				
 					<p>@item.Key @item.Value/@Model.ThisMonthLimits[@item.Key]</p>
 				<div class="progress-container">
-					<div class="progress-now">
-						<div class="estimate">
-
-						</div>
+					<div class="progress-now" style="width:@((int)item.Value/@Model.ThisMonthLimits[@item.Key]*100)%">
+						
 					</div>
+					@if (item.Key == "groceries") {
+							<div class="estimate" style="width:@((int)Model.GroceriesEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+
+							</div>
+								
+							}
+							else if (item.Key == "entertainment")
+							{
+								<div class="estimate" style="width:@((int)Model.EntertainmentEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+
+								</div>
+								
+							}
+							else if (item.Key == "utilities") {
+								<div class="estimate" style="width:@((int)Model.UtilitiesEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+
+								</div>
+								
+							}
+							else if (item.Key == "others") {
+								<div class="estimate" style="width:@((int)Model.OthersEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+
+								</div>
+								
+								
+							}
 					
 				</div>
-				}*@
+				}
 			
         
 	</div>
@@ -98,6 +123,7 @@
 		height:3px;
 		width:100%;
 		background:#E6E6E6;
+		position:relative;
 		
 	}
 	.progress-now{
@@ -105,6 +131,7 @@
 		height:3px;
 		background-color:#088BEA;
 		width:30%;
+		position:absolute;
 		
 		
 	}
@@ -113,7 +140,8 @@
 		height:3px;
 		background-color:#088BEA;
 		opacity:50%;
-		width:150%;
+		width:50%;
+		position:absolute;
 		
 	}
 </style>
