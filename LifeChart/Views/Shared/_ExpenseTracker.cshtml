@@ -47,7 +47,7 @@
 				@foreach (var item in Model.ThisMonthExpenses)
 				{
 				
-					<p>@item.Key @item.Value/@Model.ThisMonthLimits[@item.Key]</p>
+					<p>@item.Key @((int)item.Value)/@((int)Model.ThisMonthLimits[@item.Key]) kVND</p>
 				<div class="progress-container">
 					<div class="progress-now" style="width:@((int)item.Value/@Model.ThisMonthLimits[@item.Key]*100)%">
 						
