@@ -28,7 +28,7 @@ namespace LifeChartAPI.Controllers
             string authHeader = Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(authHeader))
             {
-                return StatusCode(500);
+                return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
             var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
@@ -54,7 +54,7 @@ namespace LifeChartAPI.Controllers
             string authHeader = Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(authHeader))
             {
-                return StatusCode(500);
+                return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
             var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
@@ -80,7 +80,7 @@ namespace LifeChartAPI.Controllers
             string authHeader = Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(authHeader))
             {
-                return StatusCode(500);
+                return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
             var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
@@ -103,7 +103,7 @@ namespace LifeChartAPI.Controllers
             string authHeader = Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(authHeader))
             {
-                return StatusCode(500);
+                return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
             var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;

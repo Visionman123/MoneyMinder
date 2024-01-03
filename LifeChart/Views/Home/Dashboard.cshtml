@@ -22,11 +22,15 @@
 		<p class="income">Income</p>
 		@if (Model.Income.Count > 0 && Model.Income.Keys.Last() == thisMonth + "/" + thisYear && Model.Income.Values.Last() != null) 
 		{
-			decimal? incomeThisMonth = Model.Income.Values.Last();
+			decimal? investmentAmount = 0;
+			@foreach(var investment in Model.Investments) {
+				investmentAmount += investment.Amount * (1 + investment.RoI);
+			}
+			decimal? incomeThisMonth = Model.Income.Values.Last() + investmentAmount;
 			<label>@incomeThisMonth</label>
 			if (Model.Income.Count > 1 && Model.Income.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Income.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
-				decimal? incomeLastMonth = Model.Income.Values.Reverse().Skip(1).FirstOrDefault();
+				decimal? incomeLastMonth = Model.Income.Values.Reverse().Skip(1).FirstOrDefault() + investmentAmount;
 				decimal growth = Math.Round(((incomeThisMonth - incomeLastMonth) * 100 / incomeThisMonth).GetValueOrDefault(), 2);
 				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
 				<br/>
