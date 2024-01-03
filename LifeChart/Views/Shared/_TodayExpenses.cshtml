@@ -7,11 +7,19 @@
 <div class="container-inside-today"> 
     <h1>Today Expenses</h1> 
     <form id="today-expense-form" asp-controller="Home" asp-action="AddExpense" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#TodayExpensesContainer" data-ajax-method="POST"> 
-        <input type="number" id="expense-name" placeholder="Expense Name" name="categoryId" required /> 
+        <select id="expense-name" name="categoryId" required > 
+            <option value=1>Groceries</option>
+            <option value=2>Entertainment</option>
+            <option value=3>Utilities</option>
+            <option value=4>Rent</option>
+            <option value=5>Mortgages</option>
+            <option value=6>Others</option>
+        </select>
         <input type="number" id="expense-amount" placeholder="Amount" name="amount" required /> 
         <button type="submit"><img src="~/assets/plus.png" width="15px"/> </button> 
     </form> 
-    <div class="expense-table"> 
+    <div class="expense-table-today"> 
+        <div class="table-today">
         <table> 
             @*<thead> 
                 <tr> 
@@ -33,10 +41,11 @@
                 }
             </tbody> 
         </table> 
-        <div class="total-amount"> 
+        </div>
+        @*<div class="total-amount"> 
             <strong>Total:</strong>  
             $<span id="total-amount">0</span> 
-        </div> 
+        </div> *@
     </div> 
 </div> 
 
@@ -182,7 +191,12 @@
         input[type="number"]::placeholder {
             color: #999;
         }
-
+    select{
+        border-radius:10px;
+        margin-right:30px;
+        width:150px;
+        text-align-last: center;
+    }
     button {
     
         background-color:white;
@@ -195,16 +209,22 @@
           
         }
 
-    .expense-table {
+    .expense-table-today {
         border: none;
-     
         overflow: hidden;
+        height:100%
+
        
     }
-
+    .table-today{
+        
+        height:65%;
+    }
     table {
         width: 100%;
+        
         border-collapse: collapse;
+        
     }
 
     thead th {

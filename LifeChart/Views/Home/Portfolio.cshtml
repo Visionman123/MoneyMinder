@@ -4,19 +4,23 @@
 }
 
 @model LifeChart.Models.PortfolioModel;
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
 <p class="title">Finance Portfolio</p>
 
 <div class="portfolio">
 	<form asp-controller="Home" asp-action="EditPortfolio" class="form" method="post">
-
+		<div class="four-input">
 		<div class="income" id="box">
+			<p class="box-header">Income</p>
 			<label for="salary-input" asp-for="Income.Salary">Salary</label>
 			<input type="text" id="salary-input" asp-for="Income.Salary" />
-		
-			@for (var i = 0; i < 10; i++)
-			{
+			<button>></button>
+			
+				@{
+					for(var i=0; i<3;i++){
+
 				<label for="investment-input" class="label">Investment @(i+1)</label>
-				if (i < Model.Income.Investments.Count) {
+				@if (i < Model.Income.Investments.Count) {
 					<input name="InvestmentId" type="hidden" id="investment-input" value="@Model.Income.Investments[i].Id"/>
 					<input name="InvestmentAmount" type="number" id="amount-input" value="@Model.Income.Investments[i].Amount"/>
 					<input name="RoiAmount" type="number" id="roi-input" value="@Model.Income.Investments[i].RoI"/>
@@ -27,14 +31,14 @@
 					<input name="RoiAmount" type="number" id="roi-input"/>
 				}
 			}
-			
+			}
 			
 			<label for="others-input" class="label" asp-for="Income.Others">Others</label>
 			<input type="text" id="others-input" asp-for="Income.Others" />
 		</div>
 
 		<div class="assets" id="box">
-			
+				<p class="box-header">Assets</p>
 			@for (var i = 0; i < 5; i++)
 			{
 				<label for="estate-input" >Real Estate @(i+1)</label>
@@ -53,6 +57,7 @@
 		</div>
 
 		<div class="debt" id="box">
+				<p class="box-header">Debt</p>
 			<label for="loans-input" asp-for="Debt.Loans">Loans</label>
 			<input type="text" id="loans-input" asp-for="Debt.Loans" />
 			<label for="balance-input" class="label" asp-for="Debt.CreditCardBalance">CreditCardBalance</label>
@@ -60,6 +65,7 @@
 		</div>
 
 		<div class="expense-limit" id="box">
+				<p class="box-header">Monthly Expense Limit</p>
 			<label for="groceries-input" asp-for="ExpenseLimit.Groceries">Groceries</label>
 			<input type="text" id="groceries-input" asp-for="ExpenseLimit.Groceries" />
 			<label for="utilities-input" class="label" asp-for="ExpenseLimit.Utilities">Utilities</label>
@@ -73,7 +79,7 @@
 			<label for="others-input" class="label" asp-for="ExpenseLimit.Others">Others</label>
 			<input type="text" id="others-input" asp-for="ExpenseLimit.Others" />
 		</div>
-
+		</div>
 		<button type="submit">Save</button>
 	</form>
 
@@ -104,6 +110,11 @@
 
 	.title {
 		color: white;
+		font-family: "Outfit";
+		font-weight: bold;
+		font-size:xx-large;
+		margin-bottom:0px;
+		margin-top:20px;
 	}
 
 	#box {
@@ -114,34 +125,62 @@
 		width: 230px;
 		height: 350px;
 		padding: 20px 10px 20px 10px;
+	
+	}
+	.box-header{
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:0px;
+		font-family: "Outfit";
+		font-weight:bold;
 	}
 
 	form {
 		width: 100%;
 		display: flex;
+		flex-direction:column;
+		align-items:center;
+	}
+	.four-input{
+		width: 100%;
+		display: flex;
+		flex-direction:row;
 		justify-content: center;
 		column-gap: 10px;
-		margin-top: 5vh;
+		margin-top: 4vh;
 	}
-
 	button {
 		width: 30%;
 		background-color: white;
 		border: none;
-		margin-top: 5px;
+		margin-top: 15px;
 		height: 30px;
 		border-radius: 10px;
+		font-family: "Outfit";
+		font-weight: bold;
+		font-size:large;
 	}
 
 	label {
+		margin-bottom:0px;
+		font-family: "Outfit";
+		font-weight: thin;
 	}
 
 	input {
 		border: none;
 		border-bottom: 1px solid black;
+		margin-bottom: 10px;
+		font-family: "Outfit";
+		font-weight: thiner;
 	}
 
 	footer {
 		display: none;
 	}
 </style>
+<script>
+	function nextInvest() {
+
+	
+</script>
