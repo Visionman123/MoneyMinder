@@ -7,16 +7,65 @@
 <div class="what-if">
 	<div class="input-container">
 		<p>What-If Scenario</p>
-		<label for="stages-input">Stages</label>
-		<input type="number" id="stages-input" />
-
 		<label for="current-age-input">Current Age</label>
 		<input type="number" id="current-age-input" />
-
-		<label for="ffp-age-input">FFP Age</label>
+		<label for="current-age-input">FFP Age</label>
 		<input type="number" id="ffp-age-input" />
+		<ul id="myList">
+			<button onclick="addList()" id="add">+</button>
+			<li><a href="#1" style="color:black">Stage 1</a></li>
+			
+		</ul>
+		
+		<div class="stages-input" id="1">
+
+			<label for="current-age-input-1">From 1</label>
+			<input type="number" id="current-age-input-1" />
+
+			<label for="ffp-age-input-1">To 1</label>
+			<input type="number" id="ffp-age-input-1" />
+
+			<label for="increase-input">Annual Increase Saving 1</label>
+			<input type="number" id="increase-input" />
+
+			<label for="save-monthly">Save per month</label>
+			<input type="number" id="save-monthly" />
+
+		</div>
+
+		<div class="stages-input" id="2">
+
+			<label for="current-age-input-2">From 2</label>
+			<input type="number" id="current-age-input-2" />
+
+			<label for="ffp-age-input-2">To 2</label>
+			<input type="number" id="ffp-age-input-2" />
+
+			<label for="increase-input-2">Annual Increase Saving 2</label>
+			<input type="number" id="increase-input-2" />
+
+			<label for="save-monthly-2">Save per month 2</label>
+			<input type="number" id="save-monthly-2" />
+			
+
+		</div>
+
+		<div class="stages-input" id="3">
+
+			<label for="current-age-input-3">From 3</label>
+			<input type="number" id="current-age-input-3" />
+
+			<label for="ffp-age-input-3">To 3</label>
+			<input type="number" id="ffp-age-input-3" />
+
+			<label for="increase-input-3">Annual Increase Saving 3</label>
+			<input type="number" id="increase-input-3" />
+
+			<label for="save-monthly-3">Save per month</label>
+			<input type="number" id="save-monthly-3" />
 
 
+		</div>
 
 		<label for="spend-input">Spending</label>
 		<input type="text" id="spend-input" />
@@ -28,10 +77,9 @@
 		<input type="text" id="bank-input" />
 		<input type="text" id="roi-input" placeholder="ROI" />
 
-		<label for="increase-input">Annual Increase Saving</label>   
-		<input type="number" id="increase-input" />
+
 		<button onclick="calculate()">Calculate</button>
-		
+		<p id="moneytosavemonth"></p>
 
 	</div>
 	<div class="chart-container">
@@ -39,6 +87,7 @@
 	</div>
 </div>
 <style>
+	
 	html {
 		height: 100%;
 	}
@@ -46,7 +95,7 @@
 	body {
 		background-color: #03030F;
 	}
-
+	
 	p {
 		font-family: "Outfit";
 		font-weight: bold;
@@ -69,7 +118,7 @@
 		flex-direction: column;
 		align-items: start;
 		width: 25vw;
-		height: 75vh;
+		height: 100vh;
 		margin-left: 5vw;
 		border-radius: 30px;
 	}
@@ -81,8 +130,14 @@
 		border-radius: 30px;
 	}
 
-
-
+	.stages-input {
+		
+		display:none;
+	}
+	.stages-input:target{
+		display: flex;
+		flex-direction: column;
+	}
 	label {
 		margin-bottom: 0px;
 		font-family: "Outfit";
@@ -104,25 +159,55 @@
 	}
 </style>
 <script>
+	var i = 1;
+	function addList() {
+		i = i + 1;
+		var myList = document.getElementById("myList");
+		var newListItem = document.createElement("li");
+		var linkElement = document.createElement("a");
+		linkElement.innerText = "Stage " + i;
+		linkElement.href = "#" + i;
+		linkElement.style.color = "black";
+
+		newListItem.appendChild(linkElement);
+		myList.appendChild(newListItem);
+		if (i == 3) {
+			var button = document.getElementById("add");
+			button.disabled = true;
+		}
+	}
 
 	function calculate() {
 		// What-if input
-		const currentAge = parseInt(document.getElementById("current-age-input").value);
-		const ffpAge = parseInt(document.getElementById("ffp-age-input").value); // Financial freedom point age
+		const currentAge = parseInt(document.getElementById("current-age-input-1").value);
+		const ffpAge = parseInt(document.getElementById("ffp-age-input-1").value); // Financial freedom point age
 		const moneyFFP = parseInt(document.getElementById("spend-input").value); // Monthly money required after financial freedom point
-		const inflation = parseInt(document.getElementById("inflation-input").value)/100; // Inflation of the country
-		const annualIncrease = parseInt(document.getElementById("increase-input").value)/100;
+		const inflation = parseInt(document.getElementById("inflation-input").value) / 100; // Inflation of the country
+		const annualIncrease = parseInt(document.getElementById("increase-input").value) / 100;
+		const saveMonthly = parseInt(document.getElementById("save-monthly").value);
+
+		const currentAge2 = parseInt(document.getElementById("current-age-input-2").value);
+		const ffpAge2 = parseInt(document.getElementById("ffp-age-input-2").value); // Financial freedom point age
+		const annualIncrease2 = parseInt(document.getElementById("increase-input-2").value) / 100;
+		const saveMonthly2 = parseInt(document.getElementById("save-monthly-2").value);
+
+		const currentAge3 = parseInt(document.getElementById("current-age-input-3").value);
+		const ffpAge3 = parseInt(document.getElementById("ffp-age-input-3").value); // Financial freedom point age
+		const annualIncrease3 = parseInt(document.getElementById("increase-input-3").value) / 100;
+		const saveMonthly3 = parseInt(document.getElementById("save-monthly-3").value);
 
 		//xvalue for chart
+		const ageLife = parseInt(document.getElementById("current-age-input").value);
+		const ffpLife = parseInt(document.getElementById("ffp-age-input").value);
 		var life = [];
-		var last = ffpAge - currentAge;
+		var last = ffpLife - ageLife;
 		for (var i = 0; i <= last; i++) {
 			life[i] = currentAge + i;
 		}
-		console.log(last);
+		
 		// Capital Asset
 		const bankAsset = parseInt(document.getElementById("bank-input").value); // Total money in the bank NOW
-		const bankROI = parseInt(document.getElementById("roi-input").value )/ 100; // Bank return_of_investment (e.g., 6%)
+		const bankROI = parseInt(document.getElementById("roi-input").value) / 100; // Bank return_of_investment (e.g., 6%)
 
 		// Event
 		const eventAge = 30;
@@ -156,19 +241,21 @@
 
 		// Generate stages
 		const stageInfo = [
-			{ start: currentAge, end: ffpAge, toSavePerMonth: null, annualIncrease:annualIncrease},
-			
-		];
+			{ start: currentAge, end: ffpAge, toSavePerMonth: saveMonthly, annualIncrease: annualIncrease },
+			{ start: currentAge2, end: ffpAge2, toSavePerMonth: saveMonthly2, annualIncrease: annualIncrease2 },
+			{ start: currentAge3, end: ffpAge3, toSavePerMonth: saveMonthly3, annualIncrease: annualIncrease3 },
 
+		];
+		
 		const stages = generateStages(stageInfo);
-		console.log(stages);
+		// console.log(stages);
 
 		// Calculation Total Money needed
-		const moneyNeed = (moneyFFP - pension) * 12 * 25 * Math.pow(1 + inflation, ffpAge - currentAge); // Money required after FFP
-		const moneyEvent = eventIncome * Math.pow(1 + bankROI, ffpAge - eventAge);
-		const BankAsset = bankAsset * Math.pow(1 + bankROI, ffpAge - eventAge);
+		const moneyNeed = (moneyFFP - pension) * 12 * 25 * Math.pow(1 + inflation, ffpLife - ageLife); // Money required after FFP
+		const moneyEvent = eventIncome * Math.pow(1 + bankROI, ffpLife - eventAge);
+		const BankAsset = bankAsset * Math.pow(1 + bankROI, ffpLife - eventAge);
 		const totalMoneyNeed = moneyNeed - moneyEvent - BankAsset;
-
+	
 		// Function to calculate sigma of a given function
 		function sigma(start, end, func) {
 			let sum = 0;
@@ -205,14 +292,14 @@
 
 			const annualSaving = [];
 			for (let i = 0; i <= end - start; i++) {
-				const amount = (monthlySaving * 12) * Math.pow(1 + annualIncrease, start - (start - i));
+				const amount = (monthlySaving * 12) * Math.pow(1 + annualIncrease, i);
 				const age = start + i;
 				annualSaving.push({ age, amount });
 			}
 
 			return annualSaving;
 		}
-
+		
 		// Calculate money that the user can save each year then put it into the bank
 		function calculateAnnualSavingWithBankROI(start, end, annualSaving, bankROI) {
 			const annualSavingWithBankROI = [];
@@ -220,7 +307,7 @@
 			console.log(start, end);
 			for (let i = 0; i <= end - start; i++) {
 				const age = annualSaving[i].age;
-				const amount = annualSaving[i].amount * Math.pow(1 + bankROI, ffpAge - age);
+				const amount = annualSaving[i].amount * Math.pow(1 + bankROI, ffpLife - age);
 				annualSavingWithBankROI.push({ age, amount });
 			}
 
@@ -231,8 +318,11 @@
 		function calculateTotalAnnualSavingWithBankROI(stages, monthlySavingRequired, bankROI) {
 			const totalAnnualSaving = [];
 			stages.forEach((stage) => {
+
 				stage.moneyEarnAnnual = calculateAnnualSaving(stage.stageNumber, stage.start, stage.end, stage.toSavePerMonth ? stage.toSavePerMonth : monthlySavingRequired, stage.annualIncrease);
+
 				stage.moneyEarnAnnualWithBankROI = calculateAnnualSavingWithBankROI(stage.start, stage.end, stage.moneyEarnAnnual, bankROI);
+
 				stage.moneyEarnAnnualWithBankROI.forEach((x) => {
 					totalAnnualSaving.push(x);
 				});
@@ -246,34 +336,36 @@
 
 		const moneyToSavePerMonth = findReverseSigma(totalMoneyNeed, (x) => calculateTotalAnnualSavingWithBankROI(stages, x, bankROI), initialGuess, tolerance);
 
-		console.log("Money needed to save:", (moneyToSavePerMonth));
-		console.log(inflation);
-		console.log(bankROI);
-		
-		function computeMoneyLeftToSave(stages) {
-			let computedSum = 0;
-			stages.forEach((stage) => {
-				if (stage.toSavePerMonth) {
-					stage.moneyEarnAnnual = calculateMoneyEarnAnnual(stage.start, stage.end, stage.toSavePerMonth, stage.annualIncrease);
-					stage.totalSave = sigma(0, stage.end - stage.start, (i) => stage.moneyEarnAnnual[i].amount);
-					computedSum += stage.totalSave;
-				}
-			});
-			return computedSum;
-		}
+		// console.log("Money needed to save:", (moneyToSavePerMonth));
+		// console.log(inflation);
+		// console.log(bankROI);
 
-		console.log(stages);
+		// function computeMoneyLeftToSave(stages) {
+		// 	let computedSum = 0;
+		// 	stages.forEach((stage) => {
+		// 		if (stage.toSavePerMonth) {
+		// 			stage.moneyEarnAnnual = calculateMoneyEarnAnnual(stage.start, stage.end, stage.toSavePerMonth, stage.annualIncrease);
+		// 			stage.totalSave = sigma(0, stage.end - stage.start, (i) => stage.moneyEarnAnnual[i].amount);
+		// 			computedSum += stage.totalSave;
+		// 		}
+		// 	});
+		// 	return computedSum;
+		// }
+
+		
 		// Generate new stages info
 		function StageInfoUpdate(stages, moneyToSavePerMonth) {
 			const filledStages = stages.map((stage, index) => {
-				if (index === 0) {
-					// For the first stage, set toSavePerMonth to moneyToSavePerMonth if it's null
-					stage.toSavePerMonth = stage.toSavePerMonth || moneyToSavePerMonth;
-				} else {
-					// For subsequent stages, set toSavePerMonth to the value from the previous stage
-					stage.toSavePerMonth =
-						stage.toSavePerMonth || stages[index - 1].toSavePerMonth;
-				}
+				// if (index === 0) {
+				// 	// For the first stage, set toSavePerMonth to moneyToSavePerMonth if it's null
+				// 	stage.toSavePerMonth = stage.toSavePerMonth || moneyToSavePerMonth;
+				// } else {
+				// 	// For subsequent stages, set toSavePerMonth to the value from the previous stage
+				// 	stage.toSavePerMonth =
+				// 		stage.toSavePerMonth || stages[index - 1].toSavePerMonth;
+				// }
+				stage.toSavePerMonth = stage.toSavePerMonth || moneyToSavePerMonth;
+
 				return stage;
 			});
 			return filledStages;
@@ -305,9 +397,10 @@
 
 		// Usage with the provided stages (Yellow Line = ArrayAnnualSaving)
 		const ArrayAnnualSaving = generateCombinedMonthlySavings(stages);
-		console.log(ArrayAnnualSaving);
+		
+
 		var moneyAnnual = [];
-		for (var i = 0; i < ArrayAnnualSaving.length;i++){
+		for (var i = 0; i < ArrayAnnualSaving.length; i++) {
 			moneyAnnual.push(ArrayAnnualSaving[i].monthlySaving);
 		}
 
@@ -332,19 +425,21 @@
 
 		// Usage with the previously generated ArrayAnnualSaving array (Red line = totalSavingsAtEachAge)
 		const totalSavingsAtEachAge = calculateTotalSavingsAtEachAge(ArrayAnnualSaving);
-		console.log(totalSavingsAtEachAge);
+		
 		var moneyCreated = [];
-		for (var i = 0; i < totalSavingsAtEachAge.length; i++){
+		for (var i = 0; i < totalSavingsAtEachAge.length; i++) {
 			moneyCreated.push(totalSavingsAtEachAge[i].total)
 		}
 		// Total Money (Green Line = totalMoneyNeed)
-		console.log(totalMoneyNeed);
+		
 		var goal = [];
-		for (var i = currentAge; i <= ffpAge; i++) {
+		for (var i = ageLife; i <= ffpLife; i++) {
 			goal.push(totalMoneyNeed);
 		}
 
-		console.log(life);
+		document.getElementById("moneytosavemonth").innerHTML = moneyToSavePerMonth;
+
+		
 		const xValues = life;
 
 		new Chart("myChart", {
@@ -352,25 +447,28 @@
 			data: {
 				labels: xValues,
 				datasets: [{
+					label: 'Money to save annual',
 					data: moneyAnnual,
 					borderColor: "yellow",
 					fill: false
 				}, {
+					label: 'Goal',
 					data: goal,
 					borderColor: "green",
 					fill: false
 				}
-				, {
+					, {
+					label: 'Money generated',
 					data: moneyCreated,
 					borderColor: "red",
 					fill: false
 				}]
 			},
 			options: {
-				legend: { display: false }
+				legend: {}
 			}
 		});
 	}
 
-		
+
 </script>
