@@ -20,13 +20,13 @@ Website link
 
 ## Technology Stack
 
-The Money Minder app is built using the .NET framework, a robust and versatile technology stack. Leveraging the power of C# for backend logic, ASP.NET for web development, and ASP.NET Web API for RESTful APIs, the project embraces the efficiency and scalability offered by the .NET ecosystem
+The Money Minder app is built using the .NET framework, a robust and versatile technology stack. Leveraging the power of C# for backend logic, ASP.NET Core for web development, and ASP.NET Web API for RESTful APIs, the project embraces the efficiency and scalability offered by the .NET ecosystem
 
 **Frontend:**
 
 C# for backend logic
 
-ASP.NET for web development
+ASP.NET Core for web development
 
 Razor syntax for server-side rendering
 
