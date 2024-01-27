@@ -38,8 +38,13 @@
 				decimal growth = Math.Round(((incomeThisMonth - incomeLastMonth) * 100 / incomeThisMonth).GetValueOrDefault(), 2);
 				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
 				<br/>
-				<label>Income this month @growthString%</label>
-				
+				<br />
+				<br />
+				<div class="inout-container">
+				<label class="inout">Income this month </label>
+
+				<p class="growth">@growthString%</p>
+				</div>
 			}
 		}
 		else
@@ -60,8 +65,13 @@
 				decimal growth = Math.Round(((expensesThisMonth - expensesLastMonth) * 100 / expensesThisMonth).GetValueOrDefault(), 2);
 				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
 				<br/>
-				<label>Expenses this month @growthString%</label>
-				
+				<br />
+				<br />
+				<div class="inout-container">
+				<label class="inout">Expenses this month </label>
+
+				<p class="growth">@growthString%</p>
+				</div>
 			}
 		}
 		else
@@ -79,6 +89,7 @@
 </div>
 
 <style>
+	
 	html {
 		height: 100%;
 	}
@@ -91,7 +102,19 @@
 		font-family: "Outfit";
 		margin-left: 30px;
 	}
-
+	.inout-container{
+	
+		
+	}
+	.inout{
+		
+		font-size:medium;
+		
+	}
+	.growth{
+		margin-top:0px;
+		
+	}
 	label {
 		font-family: "Outfit";
 		margin-left: 30px;

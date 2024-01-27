@@ -27,6 +27,7 @@ namespace LifeChart.Controllers
         }
         public IActionResult Login()
         {
+            Console.WriteLine("hello");
             return View();
         }
 
@@ -39,7 +40,8 @@ namespace LifeChart.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+			Console.WriteLine("hello1");
+			if (ModelState.IsValid)
             {
                 var user = await AuthenticateUser(model);
 

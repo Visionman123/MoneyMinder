@@ -9,14 +9,30 @@
 		<p>What-If Scenario</p>
 		<label for="current-age-input">Current Age</label>
 		<input type="number" id="current-age-input" />
+
 		<label for="current-age-input">FFP Age</label>
 		<input type="number" id="ffp-age-input" />
+
+		<label for="spend-input">Spending</label>
+		<input type="text" id="spend-input" />
+
+		<label for="inflation-input">Inflation</label>
+		<input type="number" id="inflation-input" />
+
+		<label for="bank-input">Bank Assets</label>
+		<input type="text" id="bank-input" />
+		<input type="text" id="roi-input" placeholder="ROI" />
+
+		<div class="stages-list">
+			
 		<ul id="myList">
-			<button onclick="addList()" id="add">+</button>
+			
 			<li><a href="#1" style="color:black">Stage 1</a></li>
 			
+			
 		</ul>
-		
+			<button onclick="addList()" id="add" >+</button>
+		</div>
 		<div class="stages-input" id="1">
 
 			<label for="current-age-input-1">From 1</label>
@@ -67,18 +83,10 @@
 
 		</div>
 
-		<label for="spend-input">Spending</label>
-		<input type="text" id="spend-input" />
-
-		<label for="inflation-input">Inflation</label>
-		<input type="number" id="inflation-input" />
-
-		<label for="bank-input">Bank Assets</label>
-		<input type="text" id="bank-input" />
-		<input type="text" id="roi-input" placeholder="ROI" />
+		
 
 
-		<button onclick="calculate()">Calculate</button>
+		<button onclick="calculate()" id="calculate">Calculate</button>
 		<p id="moneytosavemonth"></p>
 
 	</div>
@@ -118,22 +126,51 @@
 		flex-direction: column;
 		align-items: start;
 		width: 25vw;
-		height: 100vh;
+		height: 105vh;
 		margin-left: 5vw;
 		border-radius: 30px;
+
+		
+	}
+	.stages-list{
+		display: flex;
+		width:100%;
+		align-items:center;
+	
+	
+		
+	}
+	ul{
+		padding:0;
+	}
+	li{
+
+
+	}
+	#add{
+		border:none;
+		background-color:white;
+		margin-left:5px;
+		font-size:larger;
+		
+	}
+	#add:hover{
+		cursor:pointer;
 	}
 
+	.stages-input {
+		width: 100%;
+		display: none;
+	
+	}
 	.chart-container {
 		background-color: white;
 		width: 60vw;
 		height: 75vh;
 		border-radius: 30px;
 	}
-
-	.stages-input {
-		
-		display:none;
-	}
+	
+	
 	.stages-input:target{
 		display: flex;
 		flex-direction: column;
@@ -144,7 +181,17 @@
 		font-weight: thin;
 		margin-left: 10%;
 	}
-
+	#calculate{
+		background-color:black;
+		color:white;
+		margin-left: auto;
+		margin-right:auto;
+		border-radius:30px;
+		padding:7px 30px 7px 30px;
+	}
+	#calculate:hover{
+		cursor: pointer;
+	}
 	input {
 		border: none;
 		border-bottom: 1px solid black;
@@ -152,6 +199,7 @@
 		font-family: "Outfit";
 		font-weight: thiner;
 		margin-left: 10%;
+		width:70%;
 	}
 
 	footer {
@@ -159,6 +207,7 @@
 	}
 </style>
 <script>
+
 	var i = 1;
 	function addList() {
 		i = i + 1;
