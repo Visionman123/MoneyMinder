@@ -17,7 +17,7 @@
 <div class="dashboard">
 	<div class="balance">
 		<p style="color:white;">Balance</p>
-		<label asp-for="Balance" style="color:white;">@Model.Balance VND</label>
+		<label asp-for="Balance" style="color:white;">@Model.Balance USD</label>
 		<p style="color:white; margin-left:30px;font-size:larger;margin-top:50px;">**** **** **** ****</p>
 		
 	</div>
@@ -31,7 +31,7 @@
 				investmentAmount += investment.Amount * (1 + investment.RoI);
 			}
 			decimal? incomeThisMonth = Model.Income.Values.Last() + investmentAmount;
-			<label>@incomeThisMonth</label>
+			<label>@incomeThisMonth USD</label>
 			if (Model.Income.Count > 1 && Model.Income.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Income.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
 				decimal? incomeLastMonth = Model.Income.Values.Reverse().Skip(1).FirstOrDefault() + investmentAmount;
@@ -58,7 +58,7 @@
 		@if (Model.Expenses.Count > 0 && Model.Expenses.Keys.Last() == thisMonth + "/" + thisYear && Model.Expenses.Values.Last() != null) 
 		{
 			decimal? expensesThisMonth = Model.Expenses.Values.Last();
-			<label>@expensesThisMonth VND</label>
+			<label>@expensesThisMonth USD</label>
 			if (Model.Expenses.Count > 1 && Model.Expenses.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
 				decimal? expensesLastMonth = Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault();
@@ -70,7 +70,7 @@
 				<div class="inout-container">
 				<label class="inout">Expenses this month </label>
 
-				<p class="growth">@growthString%</p>
+				<p class="growth">@growthString% </p>
 				</div>
 			}
 		}
@@ -83,7 +83,7 @@
 		<canvas id="monthlyChart" style="max-height:270px;max-width:90%;margin-left:10px;"></canvas>
 	</div>
 	<div class="expense-chart">
-		<canvas id="myChart" style="max-height:250px;max-width:90%;"></canvas>
+		<canvas id="expenseChart" style="max-height:250px;max-width:90%;"></canvas>
 	</div>
 </div>
 </div>
@@ -156,50 +156,84 @@
 	}
 
 	.expense-chart {
+		display:flex;
 		background: white;
 		height: 280px;
+		width:100%;
 		border-radius: 10px;
+		justify-content:center;
 	}
-
+	#myChart{
+		
+		
+	}
 	footer {
 		display: none;
 	}
 </style>
 <script>
 	@*Month Chart*@
-		const xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+		var income = [];
+	var incomeValue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Income.Values));
+	for (var i = 0; i < @Model.Income.Count; i++) {
+		income.push(incomeValue[i]);
+	}
+	var expense = [];
+	var expenseValue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Expenses.Values));
+	for (var i = 0; i < @Model.Expenses.Count; i++) {
+		expense.push(expenseValue[i]);
+	}
+	var month = [];
+	var monthValue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Income.Keys));
+	for (var i = 0; i < @Model.Income.Count; i++) {
+		month.push(monthValue[i]);
+	}
+		const xValues = month;
 	new Chart("monthlyChart", {
 		type: "line",
 		data: {
 			labels: xValues,
 			datasets: [{
-				data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+				label: 'Expense',
+				data: expense,
 				borderColor: "red",
 				fill: false
 			}, {
-				data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+				label: 'Income',
+				data: income,
 				borderColor: "green",
-				fill: false
-			}, {
-				data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
-				borderColor: "blue",
 				fill: false
 			}]
 		},
 		options: {
-			legend: { display: false }
+			legend: {}
 		}
 	});
-	var Expenses = ["Italy", "France", "Spain", "USA", "Argentina"];
-	var Amount = [55, 49, 44, 24, 15];
+
+	var category = [];
+	var categoryValue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ExpenseList.Keys));
+	for (var i = 0; i < @Model.ExpenseList.Count; i++) {
+		category.push(categoryValue[i]);
+	}
+
+	var amount = [];
+	var amountValue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ExpenseList.Values));
+	for (var i = 0; i < @Model.ExpenseList.Count; i++) {
+		amount.push(amountValue[i]);
+	}
+
+	var Expenses = category;
+	var Amount = amount;
 	var barColors = [
 		"#b91d47",
 		"#00aba9",
 		"#2b5797",
 		"#e8c3b9",
-		"#1e7145"
+		"#1e7145",
+		"#FFFF00"
 	];
-	new Chart("myChart", {
+	
+	new Chart("expenseChart", {
 		type: "pie",
 		data: {
 			labels: Expenses,
@@ -212,6 +246,13 @@
 			title: {
 				display: true,
 				text: "All Expenses"
+			},
+			responsive: true,
+			maintainAspectRatio: false,
+			legend: {
+				labels: {
+					fontSize: 10 // Adjust the font size as needed
+				}
 			}
 		}
 	});

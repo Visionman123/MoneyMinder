@@ -28,8 +28,8 @@
 					@foreach (var item in Model.PastExpenses)
 					{
 						<tr>
-							<td>@item.Key.Split(" ")[0] @item.Key.Split(" ")[2] @item.Key.Split(" ")[3]</td>
-							<td>@item.Value</td>
+							<td class="itemKey">@item.Key.Split(" ")[0] @item.Key.Split(" ")[2] @item.Key.Split(" ")[3]</td>
+							<td>@Math.Floor(item.Value)</td>
 							
 						</tr>
 					}
@@ -81,5 +81,6 @@
 		border:1px solid black;
 		border-radius:7px;
 		margin-left:20px;
+		margin-bottom:2px;
 	}
 </style>
