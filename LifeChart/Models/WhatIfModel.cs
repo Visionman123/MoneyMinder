@@ -4,7 +4,8 @@
     {
         public int FinancialFreedomPoint { get; set; }
         public float Spending { get; set; }
-        public float Inflation { get; set; }
+        public float Inflation
+            { get; set; }
 
         public WhatIfModel(int financialFreedomPoint, float spending, float inflation)
         {

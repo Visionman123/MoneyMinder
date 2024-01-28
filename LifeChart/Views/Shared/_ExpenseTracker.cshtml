@@ -44,45 +44,76 @@
 					}
 				}
 				*@
-				@foreach (var item in Model.ThisMonthExpenses)
-				{
-				
-					<p>@item.Key @((int)item.Value)/@((int)Model.ThisMonthLimits[@item.Key]) kVND</p>
+		@if (Model != null)
+		{
+			@foreach (var item in Model.ThisMonthExpenses)
+			{
+
+				<p class="itemKey">@item.Key @((int)item.Value)/@((int)Model.ThisMonthLimits[@item.Key]) USD</p>
 				<div class="progress-container">
-					<div class="progress-now" style="width:@((int)item.Value/@Model.ThisMonthLimits[@item.Key]*100)%">
-						
+					<div class="progress-now" style="width:@((int)item.Value/@Model.ThisMonthLimits[@item.Key]*100)%; max-width:100%;">
+
 					</div>
-					@if (item.Key == "groceries") {
-							<div class="estimate" style="width:@((int)Model.GroceriesEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+					@if (item.Key == "groceries")
+					{
+						<div class="estimate" style="width:((int)Model.GroceriesEstimation/Model.ThisMonthLimits[@item.Key]*100)%; max-width:100%;">
 
-							</div>
-								
-							}
-							else if (item.Key == "entertainment")
-							{
-								<div class="estimate" style="width:@((int)Model.EntertainmentEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+						</div>
 
-								</div>
-								
-							}
-							else if (item.Key == "utilities") {
-								<div class="estimate" style="width:@((int)Model.UtilitiesEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+					}
+					else if (item.Key == "entertainment")
+					{
+						<div class="estimate" style="width:((int)Model.EntertainmentEstimation/Model.ThisMonthLimits[@item.Key]*100)%; max-width:100%;">
 
-								</div>
-								
-							}
-							else if (item.Key == "others") {
-								<div class="estimate" style="width:@((int)Model.OthersEstimation/Model.ThisMonthLimits[@item.Key]*100)%">
+						</div>
 
-								</div>
-								
-								
-							}
-					
+					}
+					else if (item.Key == "utilities")
+					{
+						<div class="estimate" style="width:((int)Model.UtilitiesEstimation/Model.ThisMonthLimits[@item.Key]*100)%; max-width:100%;">
+
+						</div>
+
+					}
+					else if (item.Key == "others")
+					{
+						<div class="estimate" style="width:((int)Model.OthersEstimation/Model.ThisMonthLimits[@item.Key]*100)%; max-width:100%;">
+
+						</div>
+
+
+					}
+
 				</div>
-				}
-			
-        
+
+			}
+		}
+		else
+		{
+
+			<div class="estimate" >
+
+			</div>
+			<div class="estimate" >
+
+			</div>
+
+
+
+			<div class="estimate" >
+
+			</div>
+
+
+
+			<div class="estimate" >
+
+			</div>
+
+
+
+		}
+
 	</div>
 </div>
 
@@ -98,7 +129,9 @@
 		border-radius: 8px;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	}
-
+	.itemKey{
+		text-transform:capitalize;
+	}
 	.expense-table{
 		margin-top:-10px;
 		width:100%;
@@ -145,3 +178,7 @@
 		
 	}
 </style>
+<script>
+	
+
+</script>

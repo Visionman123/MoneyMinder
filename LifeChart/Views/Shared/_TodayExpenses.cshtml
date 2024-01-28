@@ -34,8 +34,8 @@
                     @foreach (var item in Model.TodayExpenses)
 	                {
                         <tr>
-		                    <td>@item.Key</td>
-		                    <td>@item.Value</td>
+		                    <td class="itemKey">@item.Key</td>
+		                    <td>@Math.Floor(item.Value)</td>
                         </tr>
 	                }
                 }
@@ -212,7 +212,7 @@
     .expense-table-today {
         border: none;
         overflow: hidden;
-        height:100%
+        height:70%
 
        
     }

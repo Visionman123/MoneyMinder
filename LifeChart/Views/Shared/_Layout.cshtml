@@ -1,4 +1,82 @@
 ﻿<!DOCTYPE html>
+<style>
+	li {
+		display: inline;
+		margin-left: 30px;
+		color: white;
+	}
+
+	#block:hover {
+		cursor: not-allowed;
+	}
+
+	.hidden-text {
+		display: none;
+	}
+
+	#block:hover .hidden-text {
+		display: inline;
+		color: red;
+	}
+
+	#block:hover #show-text {
+		display: none;
+	}
+
+	nav {
+		background-color: black;
+		border-bottom: 1px solid white;
+		display: flex;
+		flex-direction: row;
+		padding: 0px 50px 0px 10px;
+		font-family: "Outfit";
+		font-weight: normal;
+	}
+
+	.nav-item {
+		font-weight: normal;
+		!important
+	}
+
+	.logo-space {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: 30%;
+	}
+
+	.navbar-collapse {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: end;
+		width: 70%
+	}
+
+	a {
+		color: white;
+		text-decoration: none;
+	}
+
+	.container {
+		align-items: center;
+	}
+
+	.nav-item-logout {
+		background-color: white;
+		padding: 5px 10px 5px 10px;
+		border-radius: 20px;
+	}
+
+	.nav-link-logout {
+		color: black;
+	}
+
+	iframe {
+		display: none;
+	}
+</style>
+
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -11,10 +89,11 @@
 </head>
 <body>
 	<header>
+		<iframe src="../Home/Portfolio" id="externalFrame"> </iframe>
 		<nav class="nav">
-			<div class="logo-space">
-				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative">
-				<a class="navbar-brand" asp-area="" asp-page="/Index" style="text-decoration:none">MoneyMinder</a>
+			<div class="logo-space" >
+				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative" >
+				<a class="navbar-brand" asp-area="" asp-page="/Index"  style="text-decoration:none">MoneyMinder</a>
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">
@@ -30,14 +109,16 @@
 						<li class="nav-item">
 							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="WhatIf">What-If Scenario</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="MoneyLover">Money Lover</a>
+						<li class="nav-item" id="moneyLover">
+							<a class="nav-link" id="show-text" asp-area="" asp-controller="Home" asp-action="MoneyLover">Money Lover</a>
+							<a class="hidden-text">Fill all limits to unlock</a>
 						</li>
 						<li class="nav-item-logout">
 							<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
 						</li>
 					}
 				</ul>
+				
 			</div>
 
 		</nav>
@@ -64,50 +145,31 @@
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<style>
-	li {
-		display: inline;
-		margin-left:30px;
-	}
 
-	nav {
-		background-color: black;
-		border-bottom: 1px solid white;
-		display:flex;
-		flex-direction:row;
-		padding:0px 50px 0px 10px;
-		font-family: "Outfit";
-		font-weight: normal;
-	}
-	.logo-space{
-		display:flex;
-		flex-direction:row;
-		align-items:center; 
-		width:30%;
-	}
-	.navbar-collapse{
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: end;
-		width:70%
-	}
-	a {
-		color: white;
-		text-decoration: none;
-	}
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	var btn = document.getElementById("moneyLover");
+	var externalFrame = document.getElementById('externalFrame');
+	externalFrame.addEventListener('load', function () {
+		var externalDocument = externalFrame.contentDocument || externalFrame.contentWindow.document;
+		var groceries = externalDocument.getElementById('groceries-input').value;
+			var utilities = externalDocument.getElementById('utilities-input').value;
+			var entertainment = externalDocument.getElementById('entertainment-input').value;
+			var rent = externalDocument.getElementById('rent-input').value;
+			var mortgages = externalDocument.getElementById('mortgages-input').value;
+			var others = externalDocument.getElementById('others1-input').value;
+		// Manipulate the element or perform other actions
+		console.log("concac" + others);
+		if (groceries == "" || entertainment =="" || utilities == "" || rent == "" || mortgages == "" || others == "" ) {
+			console.log("hello");
+				
 
-	.container {
-		align-items: center;
-	}
-
-	.nav-item-logout {
-		background-color: white;
-		padding: 5px 10px 5px 10px;
-		border-radius: 20px;
-	}
-
-	.nav-link-logout {
-		color: black;
-	}
-</style>
+			btn.setAttribute("id", "block");
+		}else {
+			
+			btn.removeAttribute("id", "block");
+		}
+		});
+		
+	});
+</script>

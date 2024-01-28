@@ -70,12 +70,14 @@ namespace LifeChartAPI.Models
                     investmentIds = investmentIds.Remove(investmentIds.Length - 1);
                     investmentAmounts = investmentAmounts.Remove(investmentAmounts.Length - 1);
                     investmentRois = investmentRois.Remove(investmentRois.Length - 1);
-                }
-                cmd.Parameters.AddWithValue("@UserId", userId);
-                cmd.Parameters.AddWithValue("@InvestmentIds", investmentIds);
-                cmd.Parameters.AddWithValue("@Amounts", investmentAmounts);
-                cmd.Parameters.AddWithValue("@RoIs", investmentRois);
-                cmd.ExecuteNonQuery();
+					cmd.Parameters.AddWithValue("@UserId", userId);
+					cmd.Parameters.AddWithValue("@InvestmentIds", investmentIds);
+					cmd.Parameters.AddWithValue("@Amounts", investmentAmounts);
+					cmd.Parameters.AddWithValue("@RoIs", investmentRois);
+					cmd.ExecuteNonQuery();
+				}
+                
+               
 
 
                 cmd = new("dbo.EditBankAccount", connection);
@@ -99,11 +101,12 @@ namespace LifeChartAPI.Models
                 {
                     estateIds = estateIds.Remove(estateIds.Length - 1);
                     estateAmounts = estateAmounts.Remove(estateAmounts.Length - 1);
-                }
-                cmd.Parameters.AddWithValue("@UserId", userId);
-                cmd.Parameters.AddWithValue("@EstateIds", estateIds);
-                cmd.Parameters.AddWithValue("@Amounts", estateAmounts);
-                cmd.ExecuteNonQuery();
+					cmd.Parameters.AddWithValue("@UserId", userId);
+					cmd.Parameters.AddWithValue("@EstateIds", estateIds);
+					cmd.Parameters.AddWithValue("@Amounts", estateAmounts);
+					cmd.ExecuteNonQuery();
+				}
+               
 
 
 
