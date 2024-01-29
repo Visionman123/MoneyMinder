@@ -7,16 +7,40 @@ The Money Minder app, inspired by the article 'Financial freedom, final fantasy,
 
 ## Table of Contents
 
-- [Website](#website)
+- [Manual](#manual)
 - [Technology Stack](#technology-stack)
 - [Features](#features)
 - [Resources and Inspirations](#resources-and-inspirations)
 - [Contributors](#contributors)
 - [License](#license)
 
-## Website
+## Manual
 
-Website link
+### Prerequisites
+Before you can run this Money Minder project, you need to have the following software installed:
+- [Visual Studio](https://visualstudio.microsoft.com)
+- [.NET Core 6 SDK](https://dotnet.microsoft.com/download)
+
+### Installation 
+
+To run the MoneyMinder app locally, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/money-minder-app.git
+2. Navigate to the project folder:
+    ```bash
+    cd money-minder-app
+3. Open the project in Visual Studio 
+### Running the Project
+1. Build the project:
+Open the terminal in Visual Studio and run the following command to build the project.
+    ```bash
+    dotnet build
+2. Run the project: After building the project, run the following command to start the application.
+    ```bash
+    dotnet run
+3. Access the application: Open your web browser and navigate to http://localhost:7010 to access the MoneyMinder app.
 
 ## Technology Stack
 
