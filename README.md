@@ -68,11 +68,9 @@ C# for backend logic
 
 ASP.NET Web API for building RESTful APIs
 
-PostgreSQL for data storage
-
 **Database:**
 
-PostgreSQL for data storage
+SQL server
 
 **Authentication:**
 
@@ -81,6 +79,8 @@ JSON Web Tokens (JWT) for secure user authentication
 **Deployment:**
 
 Fly.io for deployment and hosting
+
+Docker
 
 ## Features 
 
@@ -117,7 +117,7 @@ Fly.io for deployment and hosting
 ### 4. Money Tracker / Expense Management:
 ![Dashboard](Picture/Moneytracker1.png)
 - **Expense Tracking:** Allowing users to record and categorize daily expenditures.
-- **Budgeting:** Setting budget limits for various categories and tracking actual spending against those limits.
+- **Budgeting:** Tracking actual spending against those limits.
 - **Income Tracking:** Logging sources of income and monitoring overall cash flow.
 - **Alerts and Notifications:** Notifying users when they approach or surpass budgetary limits.
 - **Reports:** Generating reports and visual representations to better understand spending patterns.
