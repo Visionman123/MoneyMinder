@@ -61,7 +61,7 @@ Fly.io for deployment and hosting
 ## Features 
 
 ### 1. Dashboard
-![Dashboard](Picture/Dashboard.png)
+![Dashboard](Picture/Dashboard1.png)
 - **Overview**: A centralized hub providing a quick glance at essential financial data.
 
 - **Account Summary**: Displaying balances, assets, debts, and the overall net worth.
@@ -75,7 +75,7 @@ Fly.io for deployment and hosting
 
 
 ### 2. Portfolio Management:
-![Dashboard](Picture/Portfolio.png)
+![Dashboard](Picture/Portfolio1.png)
 - **Asset Allocation:** Visualizing the distribution of investments across various asset types.
 - **Individual Holdings:** Offering details on each investment, including quantity, value, and historical performance.
 - **Buy/Sell Transactions:** Enabling users to execute, monitor, and analyze buying or selling activities.
@@ -83,7 +83,7 @@ Fly.io for deployment and hosting
 - **Diversification Analysis:** Evaluating the level of diversification within the investment portfolio.
 
 ### 3. What-If Scenario:
-![Dashboard](Picture/Whatif.png)
+![Dashboard](Picture/Whatif1.png)
 - **Projection Tools:** Empowering users to create financial forecasts based on hypothetical scenarios.
 - **Income Changes:** Modeling the potential impact of alterations in income levels.
 - **Expense Changes:** Examining the consequences of modifying spending habits or major expenses.
@@ -91,7 +91,7 @@ Fly.io for deployment and hosting
 - **Retirement Planning:** Assessing various retirement scenarios and adjusting key variables.
 
 ### 4. Money Tracker / Expense Management:
-![Dashboard](Picture/Moneytracker.png)
+![Dashboard](Picture/Moneytracker1.png)
 - **Expense Tracking:** Allowing users to record and categorize daily expenditures.
 - **Budgeting:** Setting budget limits for various categories and tracking actual spending against those limits.
 - **Income Tracking:** Logging sources of income and monitoring overall cash flow.
