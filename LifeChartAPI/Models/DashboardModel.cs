@@ -144,10 +144,10 @@ namespace LifeChartAPI.Models
                 reader.Close();
                 connection.Close();
 
-                Console.WriteLine("Balance: " + Balance);
-                Console.WriteLine("Income: " + Income);
-                Console.WriteLine("Expenses: " + Expenses);
-                Console.WriteLine("Expense This Month: " + ExpenseList);
+                //Console.WriteLine("Balance: " + Balance);
+                //Console.WriteLine("Income: " + Income);
+                //Console.WriteLine("Expenses: " + Expenses);
+                //Console.WriteLine("Expense This Month: " + ExpenseList);
             }
             catch (Exception ex)
             {

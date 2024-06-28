@@ -32,7 +32,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(
 
 //email
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
-builder.Services.AddSingleton(emailConfig);
+builder.Services.AddSingleton(emailConfig!);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
@@ -43,23 +43,6 @@ builder.Services.Configure<IdentityOptions>(
         options.User.RequireUniqueEmail = true;
     }
 );
-
-//auth
-builder.Services.AddAuthentication(options =>
-{
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = null,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
 
 
 //session
@@ -96,11 +79,11 @@ app.UseSession();
 app.Use(async (context, next) =>
 {
     var token = context.Session.GetString("jwtoken");
-    Console.WriteLine("Token here = " + token);
     if (!string.IsNullOrEmpty(token))
     {
-        context.Request.Headers.Add("Authorization", "Bearer " + token);
-    }
+        context.Request.Headers.Append("Authorization", "Bearer " + token);
+		Console.WriteLine("Token added");
+	}
     await next();
 });
 

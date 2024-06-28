@@ -25,34 +25,34 @@ namespace LifeChart.Controllers
             _emailService = emailService;
             _signInManager = signInManager;
         }
+        [HttpGet]
         public IActionResult Login()
         {
-            Console.WriteLine("hello");
             return View();
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        //login
         [HttpPost]
+        //login
         public async Task<IActionResult> Login(LoginModel model)
         {
-			Console.WriteLine("hello1");
 			if (ModelState.IsValid)
             {
-                var user = await AuthenticateUser(model);
+                var response = await AuthenticateUser(model);
 
-                if (user != null)
+                if (response != null && response != "Bad")
                 {
-                    var tokenString = await GetJWT(user);
+                    var tokenString = response;
                     //Save token in session object
                     if (tokenString != null)
                     {
                         HttpContext.Session.SetString("jwtoken", tokenString);
-                        Console.WriteLine(HttpContext.Session.GetString("jwtoken"));
+                        //Console.WriteLine("Token:" + HttpContext.Session.GetString("jwtoken"));
                         return Redirect("../Home/Dashboard");
                     }
                     else
@@ -60,59 +60,55 @@ namespace LifeChart.Controllers
                         return View();
                     }
                 }
+                else if (response == "Bad")
+                {
+					ViewBag.LoginErrorMessage = "Wrong username or password";
+				}
+                else
+                {
+					ViewBag.LoginErrorMessage = "Server error";
+				}
             }
-            ViewBag.LoginErrorMessage = "Wrong username or password";
-            return View();
+			return View();
         }
 
-        private async Task<string> GetJWT(IdentityUser user)
+        private async Task<string> AuthenticateUser(LoginModel model)
         {
-            var client = new HttpClient();
-            // Define the URL of the API endpoint where you want to send the POST request
-            string apiUrl = "https://localhost:7147/api/TokenGeneration";
+			var client = new HttpClient();
+			// Define the URL of the API endpoint where you want to send the POST request
+			string apiUrl = "https://localhost:7147/api/Account/ProcLogin";
 
-            // Define the content you want to include in the request body (e.g., a JSON object)
-            var requestBody = new
-            {
-                UID = user.Id,
-            };
+			//set up request body
+			var requestBody = new
+			{
+				username = model.Username,
+                password = model.Password,
+			};
+            //Console.WriteLine(model.Username);
+			// Serialize the request body to JSON
+			string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
+			// Create a StringContent object with the JSON content
+			var content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
 
-            // Serialize the request body to JSON
-            string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
-            // Create a StringContent object with the JSON content
-            var content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
-
-            // Send the POST request with the request body
-            HttpResponseMessage response = await client.PostAsync(apiUrl, content);
-            if (response.IsSuccessStatusCode)
-            {
-                // Request was successful
-                string responseContent = await response.Content.ReadAsStringAsync();
-                // Handle the response content
-                return responseContent;
-            }
+			// Send the POST request with the request body
+			HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+			if (response.IsSuccessStatusCode)
+			{
+				// Request was successful
+				string responseContent = await response.Content.ReadAsStringAsync();
+				// Handle the response content
+				return responseContent;
+			}
+			else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+			{
+				// Request failed, handle the error
+				return "Bad";
+			}
             else
             {
-                // Request failed, handle the error
                 return null;
             }
-        }
-
-        private async Task<IdentityUser> AuthenticateUser(LoginModel model)
-        {
-            IdentityUser user = null;
-            string username = "", password = "";
-
-            username = model.Username!;
-            password = model.Password!;
-            var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                //get user in db
-                user = await _userManager.FindByNameAsync(username);
-            }
-            return user;
-        }
+		}
 
 
         //register

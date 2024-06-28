@@ -18,15 +18,16 @@ namespace LifeChart.Controllers
 
         public async Task<IActionResult> Dashboard()
         {
-            if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
+            if (string.IsNullOrEmpty(HttpContext.Request.Headers.Authorization))
             {
                 Console.WriteLine("Redirecting to logout...");
                 return RedirectToAction("Logout", "Account");
             }
-            
-            if (ModelState.IsValid)
+
+            var response = await GetDashboard();
+            if (ModelState.IsValid && response != null)
             {
-                var dashboardModel = await GetDashboard();
+                var dashboardModel = response;
                 return View(dashboardModel);
             }
 
@@ -40,13 +41,14 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //add auth header
             request.Headers.Add("Authorization", authHeader);
 
             // Send the GET request with the request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			//Console.WriteLine(response);
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 DashboardModel responseContent = await response.Content.ReadFromJsonAsync<DashboardModel>();
@@ -60,10 +62,9 @@ namespace LifeChart.Controllers
             }
         }
 
-        [Authorize]
         public async Task<IActionResult> Portfolio()
         {
-            if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
+            if (string.IsNullOrEmpty(HttpContext.Request.Headers.Authorization))
             {
                 Console.WriteLine("Redirecting to logout...");
                 return RedirectToAction("Logout", "Account");
@@ -77,7 +78,6 @@ namespace LifeChart.Controllers
             return View();
         }
 
-		[Authorize]
         public async Task<PortfolioModel> GetPortfolio()
         {
             var client = new HttpClient();
@@ -85,13 +85,13 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //add auth header
             request.Headers.Add("Authorization", authHeader);
 
             // Send the GET request with the request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 PortfolioModel responseContent = await response.Content.ReadFromJsonAsync<PortfolioModel>();
@@ -104,8 +104,6 @@ namespace LifeChart.Controllers
                 return null;
             }
         }
-
-        [Authorize]
         public async Task<IActionResult> EditPortfolio(PortfolioModel model, List<string> InvestmentId, List<decimal> InvestmentAmount, List<decimal> RoiAmount, List<string> EstateId, List<decimal> EstateAmount)
         {   
             
@@ -167,7 +165,8 @@ namespace LifeChart.Controllers
 
             // Send request with request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine("Ok");
                 // Request was successful
@@ -181,7 +180,6 @@ namespace LifeChart.Controllers
             }
         }
 
-        [Authorize]
         public async Task<IActionResult> DeleteInvestment(string InvestmentId) 
         {
             var client = new HttpClient();
@@ -189,7 +187,7 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //set up request body
             var requestBody = new
             {
@@ -206,7 +204,8 @@ namespace LifeChart.Controllers
 
             // Send request with request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 return RedirectToAction("Portfolio");
@@ -219,7 +218,6 @@ namespace LifeChart.Controllers
             }
         }
 
-        [Authorize]
         public async Task<IActionResult> DeleteRealEstate(string EstateId)
         {
             var client = new HttpClient();
@@ -227,7 +225,7 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //set up request body
             var requestBody = new
             {
@@ -244,7 +242,8 @@ namespace LifeChart.Controllers
 
             // Send request with request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 return RedirectToAction("Portfolio");
@@ -257,10 +256,9 @@ namespace LifeChart.Controllers
             }
         }
 
-        [Authorize]
         public IActionResult WhatIf()
         {
-            if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
+            if (string.IsNullOrEmpty(HttpContext.Request.Headers.Authorization))
             {
                 Console.WriteLine("Redirecting to logout...");
                 return RedirectToAction("Logout", "Account");
@@ -268,10 +266,9 @@ namespace LifeChart.Controllers
             return View();
         }
 
-        [Authorize]
         public async Task<IActionResult> MoneyLover()
         {
-            if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
+            if (string.IsNullOrEmpty(HttpContext.Request.Headers.Authorization))
             {
                 Console.WriteLine("Redirecting to logout...");
                 return RedirectToAction("Logout", "Account");
@@ -285,7 +282,6 @@ namespace LifeChart.Controllers
             return View();
         }
 
-        [Authorize]
         public async Task<MoneyLoverModel> GetMoneyLover()
         {
             var client = new HttpClient();
@@ -293,7 +289,7 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //set up request body
             var requestBody = new
             { 
@@ -309,7 +305,8 @@ namespace LifeChart.Controllers
 
             // Send the GET request with the request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 MoneyLoverModel responseContent = await response.Content.ReadFromJsonAsync<MoneyLoverModel>();
@@ -325,7 +322,7 @@ namespace LifeChart.Controllers
 
         public async Task<IActionResult> _PastExpenses(string date)
         {
-            if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers["Authorization"]))
+            if (string.IsNullOrEmpty(HttpContext.Request.Headers.Authorization))
             {
                 return Redirect("../Account/Login");
             }
@@ -338,7 +335,6 @@ namespace LifeChart.Controllers
             return PartialView("_PastExpenses");
         }
 
-        [Authorize]
         public async Task<MoneyLoverModel> GetPastExpenses(string? date)
         {
             var client = new HttpClient();
@@ -346,7 +342,7 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //set up request body
             var requestBody = new
             {
@@ -362,7 +358,8 @@ namespace LifeChart.Controllers
 
             // Send the GET request with the request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 MoneyLoverModel responseContent = await response.Content.ReadFromJsonAsync<MoneyLoverModel>();
@@ -377,7 +374,6 @@ namespace LifeChart.Controllers
         }
 
 
-        [Authorize]
         public async Task<MoneyLoverModel> GetTodayExpenses()
         {
             var client = new HttpClient();
@@ -385,13 +381,14 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //add auth header
             request.Headers.Add("Authorization", authHeader);
 
             // Send the GET request with the request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 // Request was successful
                 MoneyLoverModel responseContent = await response.Content.ReadFromJsonAsync<MoneyLoverModel>();
@@ -407,7 +404,6 @@ namespace LifeChart.Controllers
         }
 
 
-        [Authorize]
         public async Task<IActionResult> AddExpense(int categoryId, decimal amount)
         {
             var client = new HttpClient();
@@ -415,7 +411,7 @@ namespace LifeChart.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
             //set up auth header
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string authHeader = HttpContext.Request.Headers.Authorization;
             //set up request body
             var requestBody = new
             {
@@ -434,7 +430,8 @@ namespace LifeChart.Controllers
 
             // Send request with request body
             HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+			
+			if (response.IsSuccessStatusCode)
             {
                 MoneyLoverModel responseContent = await response.Content.ReadFromJsonAsync<MoneyLoverModel>();
                 // Request was successful

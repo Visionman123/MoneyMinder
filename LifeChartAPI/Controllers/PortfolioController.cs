@@ -12,9 +12,11 @@ namespace LifeChartAPI.Controllers
     public class PortfolioController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public PortfolioController(IConfiguration config)
+        private readonly AccountController _accountController;
+        public PortfolioController(IConfiguration config, AccountController accountController)
         {
             _config = config;
+            _accountController = accountController;
         }
 
 
@@ -31,8 +33,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             //init with no attribute
             PortfolioModel model = new();
@@ -57,8 +63,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             //init with no attribute
             PortfolioModel model = new();
@@ -83,8 +93,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             //init with no attribute
             PortfolioModel model = new();
@@ -106,8 +120,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             PortfolioModel model = new(connectionString, userId);
             return Ok(model);

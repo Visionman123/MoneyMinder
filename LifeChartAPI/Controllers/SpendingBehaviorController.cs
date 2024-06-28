@@ -18,17 +18,9 @@ namespace LifeChartAPI.Controllers
             _config = config;
         }
 
-        [HttpGet]
-        public IActionResult PredictSpending()
+        [HttpPost]
+        public PredictionOutput PredictSpending(string userId)
         {
-            string authHeader = Request.Headers["Authorization"];
-            if (string.IsNullOrEmpty(authHeader))
-            {
-                return StatusCode(403);
-            }
-            string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
 
             SpendingBehaviorModel groceriesModel = new(connectionString, userId, 1);
@@ -51,9 +43,29 @@ namespace LifeChartAPI.Controllers
             };
             var entertainmentOutput = SpendingModel.Predict(entertainmentInput);
 
-            PredictionOutput prediction = new(groceriesOutput.Score, entertainmentOutput.Score);
+            SpendingBehaviorModel utilitiesModel = new(connectionString, userId, 3);
+            var utilitiesInput = new SpendingModel.ModelInput
+            {
+                ThreeMonthsPrior = (float)utilitiesModel.ThreeMonthsPrior,
+                TwoMonthsPrior = (float)utilitiesModel.TwoMonthsPrior,
+                OneMonthPrior = (float)utilitiesModel.OneMonthPrior,
+                LimitThisMonth = (float)utilitiesModel.Limit
+            };
+            var utilitiesOutput = SpendingModel.Predict(utilitiesInput);
+
+            SpendingBehaviorModel othersModel = new(connectionString, userId, 6);
+            var othersInput = new SpendingModel.ModelInput
+            {
+                ThreeMonthsPrior = (float)othersModel.ThreeMonthsPrior,
+                TwoMonthsPrior = (float)othersModel.TwoMonthsPrior,
+                OneMonthPrior = (float)othersModel.OneMonthPrior,
+                LimitThisMonth = (float)othersModel.Limit
+            };
+            var othersOutput = SpendingModel.Predict(othersInput);
+
+            PredictionOutput prediction = new(groceriesOutput.Score, entertainmentOutput.Score, utilitiesOutput.Score, othersOutput.Score);
             //return predicted price
-            return Ok(prediction);
+            return prediction;
         }
     }
 
@@ -61,11 +73,15 @@ namespace LifeChartAPI.Controllers
     {
         public float GroceriesScore { get; set; }
         public float EntertainmentScore { get; set; }
+        public float UtilitiesScore { get; set; }
+        public float OthersScore { get; set; }
 
-        public PredictionOutput(float groceriesScore, float entertainmentScore)
+        public PredictionOutput(float groceriesScore, float entertainmentScore , float utilitiesScore, float othersScore)
         {
             GroceriesScore = groceriesScore;
             EntertainmentScore = entertainmentScore;
+            UtilitiesScore = utilitiesScore;
+            OthersScore = othersScore;
         }
     }
 }

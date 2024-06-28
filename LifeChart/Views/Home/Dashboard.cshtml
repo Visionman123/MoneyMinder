@@ -19,15 +19,16 @@
 		<p style="color:white;">Balance</p>
 		<label asp-for="Balance" style="color:white;">@Model.Balance USD</label>
 		<p style="color:white; margin-left:30px;font-size:larger;margin-top:50px;">**** **** **** ****</p>
-		
+
 	</div>
 
 	<div class="income">
 		<p class="income">Income</p>
-		@if (Model.Income.Count > 0 && Model.Income.Keys.Last() == thisMonth + "/" + thisYear && Model.Income.Values.Last() != null) 
+		@if (Model.Income.Count > 0 && Model.Income.Keys.Last() == thisMonth + "/" + thisYear && Model.Income.Values.Last() != null)
 		{
 			decimal? investmentAmount = 0;
-			@foreach(var investment in Model.Investments) {
+			@foreach (var investment in Model.Investments)
+			{
 				investmentAmount += investment.Amount * (1 + investment.RoI);
 			}
 			decimal? incomeThisMonth = Model.Income.Values.Last() + investmentAmount;
@@ -35,15 +36,17 @@
 			if (Model.Income.Count > 1 && Model.Income.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Income.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
 				decimal? incomeLastMonth = Model.Income.Values.Reverse().Skip(1).FirstOrDefault() + investmentAmount;
-				decimal growth = Math.Round(((incomeThisMonth - incomeLastMonth) * 100 / incomeThisMonth).GetValueOrDefault(), 2);
-				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
-				<br/>
+				//Console.WriteLine(incomeThisMonth);
+				//Console.WriteLine(incomeLastMonth);
+				decimal growth = Math.Round(((incomeThisMonth - incomeLastMonth) * 100 / incomeLastMonth).GetValueOrDefault(), 2);
+				string growthString = (growth >= 0) ? "+" + @growth : "" + @growth;
+				<br />
 				<br />
 				<br />
 				<div class="inout-container">
-				<label class="inout">Income this month </label>
+					<label class="inout">Income this month </label>
 
-				<p class="growth">@growthString%</p>
+					<p class="growth">@growthString%</p>
 				</div>
 			}
 		}
@@ -55,22 +58,22 @@
 
 	<div class="expenses">
 		<p class="expenses">Expenses</p>
-		@if (Model.Expenses.Count > 0 && Model.Expenses.Keys.Last() == thisMonth + "/" + thisYear && Model.Expenses.Values.Last() != null) 
+		@if (Model.Expenses.Count > 0 && Model.Expenses.Keys.Last() == thisMonth + "/" + thisYear && Model.Expenses.Values.Last() != null)
 		{
 			decimal? expensesThisMonth = Model.Expenses.Values.Last();
 			<label>@expensesThisMonth USD</label>
 			if (Model.Expenses.Count > 1 && Model.Expenses.Keys.Reverse().Skip(1).FirstOrDefault() == lastMonth + "/" + lastYear && Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault() != null)
 			{
 				decimal? expensesLastMonth = Model.Expenses.Values.Reverse().Skip(1).FirstOrDefault();
-				decimal growth = Math.Round(((expensesThisMonth - expensesLastMonth) * 100 / expensesThisMonth).GetValueOrDefault(), 2);
-				string growthString = (@growth > 0) ? "+" + @growth : "" + @growth;
-				<br/>
+				decimal growth = Math.Round(((expensesThisMonth - expensesLastMonth) * 100 / expensesLastMonth).GetValueOrDefault(), 2);
+				string growthString = (@growth >= 0) ? "+" + @growth : "" + @growth;
+				<br />
 				<br />
 				<br />
 				<div class="inout-container">
-				<label class="inout">Expenses this month </label>
+					<label class="inout">Expenses this month </label>
 
-				<p class="growth">@growthString% </p>
+					<p class="growth">@growthString% </p>
 				</div>
 			}
 		}
@@ -89,7 +92,7 @@
 </div>
 
 <style>
-	
+
 	html {
 		height: 100%;
 	}
@@ -102,19 +105,18 @@
 		font-family: "Outfit";
 		margin-left: 30px;
 	}
-	.inout-container{
-	
-		
+
+	.inout-container {
 	}
-	.inout{
-		
-		font-size:medium;
-		
+
+	.inout {
+		font-size: medium;
 	}
-	.growth{
-		margin-top:0px;
-		
+
+	.growth {
+		margin-top: 0px;
 	}
+
 	label {
 		font-family: "Outfit";
 		margin-left: 30px;
@@ -156,24 +158,24 @@
 	}
 
 	.expense-chart {
-		display:flex;
+		display: flex;
 		background: white;
 		height: 280px;
-		width:100%;
+		width: 100%;
 		border-radius: 10px;
-		justify-content:center;
+		justify-content: center;
 	}
-	#myChart{
-		
-		
+
+	#myChart {
 	}
+
 	footer {
 		display: none;
 	}
 </style>
 <script>
 	@*Month Chart*@
-		var income = [];
+			var income = [];
 	var incomeValue = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Income.Values));
 	for (var i = 0; i < @Model.Income.Count; i++) {
 		income.push(incomeValue[i]);
@@ -188,7 +190,7 @@
 	for (var i = 0; i < @Model.Income.Count; i++) {
 		month.push(monthValue[i]);
 	}
-		const xValues = month;
+	const xValues = month;
 	new Chart("monthlyChart", {
 		type: "line",
 		data: {
@@ -232,7 +234,7 @@
 		"#1e7145",
 		"#FFFF00"
 	];
-	
+
 	new Chart("expenseChart", {
 		type: "pie",
 		data: {

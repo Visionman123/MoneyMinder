@@ -13,11 +13,15 @@ namespace LifeChartAPI.Controllers
     public class MoneyLoverController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public MoneyLoverController(IConfiguration config)
+        private readonly AccountController _accountController;
+        private readonly SpendingBehaviorController _spendingBehaviorController;
+        public MoneyLoverController(IConfiguration config, AccountController accountController, SpendingBehaviorController spendingBehaviorController)
         {
             _config = config;
+            _accountController = accountController;
+            _spendingBehaviorController = spendingBehaviorController;
         }
-    
+
         //get money lover
         [HttpGet]
         public async Task<IActionResult> GetMoneyLover()
@@ -28,63 +32,68 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             StreamReader reader = new(Request.Body, Encoding.UTF8);
             var requestContent = await reader.ReadToEndAsync();
             var jsonDate = JsonConvert.DeserializeObject<DateClass>(requestContent);
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
 
-            //prediction model
-            SpendingBehaviorModel groceriesModel = new(connectionString, userId, 1);
-            var groceriesInput = new SpendingModel.ModelInput
-            {
-                ThreeMonthsPrior = (float)groceriesModel.ThreeMonthsPrior,
-                TwoMonthsPrior = (float)groceriesModel.TwoMonthsPrior,
-                OneMonthPrior = (float)groceriesModel.OneMonthPrior,
-                LimitThisMonth = (float)groceriesModel.Limit
-            };
-            var groceriesOutput = SpendingModel.Predict(groceriesInput);
+            //prediction 
+            //SpendingBehaviorModel groceriesModel = new(connectionString, userId, 1);
+            //var groceriesInput = new SpendingModel.ModelInput
+            //{
+            //    ThreeMonthsPrior = (float)groceriesModel.ThreeMonthsPrior,
+            //    TwoMonthsPrior = (float)groceriesModel.TwoMonthsPrior,
+            //    OneMonthPrior = (float)groceriesModel.OneMonthPrior,
+            //    LimitThisMonth = (float)groceriesModel.Limit
+            //};
+            //var groceriesOutput = SpendingModel.Predict(groceriesInput);
 
-            SpendingBehaviorModel entertainmentModel = new(connectionString, userId, 2);
-            var entertainmentInput = new SpendingModel.ModelInput
-            {
-                ThreeMonthsPrior = (float)entertainmentModel.ThreeMonthsPrior,
-                TwoMonthsPrior = (float)entertainmentModel.TwoMonthsPrior,
-                OneMonthPrior = (float)entertainmentModel.OneMonthPrior,
-                LimitThisMonth = (float)entertainmentModel.Limit
-            };
-            var entertainmentOutput = SpendingModel.Predict(entertainmentInput);
+            //SpendingBehaviorModel entertainmentModel = new(connectionString, userId, 2);
+            //var entertainmentInput = new SpendingModel.ModelInput
+            //{
+            //    ThreeMonthsPrior = (float)entertainmentModel.ThreeMonthsPrior,
+            //    TwoMonthsPrior = (float)entertainmentModel.TwoMonthsPrior,
+            //    OneMonthPrior = (float)entertainmentModel.OneMonthPrior,
+            //    LimitThisMonth = (float)entertainmentModel.Limit
+            //};
+            //var entertainmentOutput = SpendingModel.Predict(entertainmentInput);
 
-            SpendingBehaviorModel utilitiesModel = new(connectionString, userId, 3);
-            var utilitiesInput = new SpendingModel.ModelInput
-            {
-                ThreeMonthsPrior = (float)utilitiesModel.ThreeMonthsPrior,
-                TwoMonthsPrior = (float)utilitiesModel.TwoMonthsPrior,
-                OneMonthPrior = (float)utilitiesModel.OneMonthPrior,
-                LimitThisMonth = (float)utilitiesModel.Limit
-            };
-            var utilitiesOutput = SpendingModel.Predict(utilitiesInput);
+            //SpendingBehaviorModel utilitiesModel = new(connectionString, userId, 3);
+            //var utilitiesInput = new SpendingModel.ModelInput
+            //{
+            //    ThreeMonthsPrior = (float)utilitiesModel.ThreeMonthsPrior,
+            //    TwoMonthsPrior = (float)utilitiesModel.TwoMonthsPrior,
+            //    OneMonthPrior = (float)utilitiesModel.OneMonthPrior,
+            //    LimitThisMonth = (float)utilitiesModel.Limit
+            //};
+            //var utilitiesOutput = SpendingModel.Predict(utilitiesInput);
 
-            SpendingBehaviorModel othersModel = new(connectionString, userId, 6);
-            var othersInput = new SpendingModel.ModelInput
-            {
-                ThreeMonthsPrior = (float)othersModel.ThreeMonthsPrior,
-                TwoMonthsPrior = (float)othersModel.TwoMonthsPrior,
-                OneMonthPrior = (float)othersModel.OneMonthPrior,
-                LimitThisMonth = (float)othersModel.Limit
-            };
-            var othersOutput = SpendingModel.Predict(othersInput);
+            //SpendingBehaviorModel othersModel = new(connectionString, userId, 6);
+            //var othersInput = new SpendingModel.ModelInput
+            //{
+            //    ThreeMonthsPrior = (float)othersModel.ThreeMonthsPrior,
+            //    TwoMonthsPrior = (float)othersModel.TwoMonthsPrior,
+            //    OneMonthPrior = (float)othersModel.OneMonthPrior,
+            //    LimitThisMonth = (float)othersModel.Limit
+            //};
+            //var othersOutput = SpendingModel.Predict(othersInput);
+            PredictionOutput prediction = _spendingBehaviorController.PredictSpending(userId);
 
             //if date is not supplied then choose a date long ago => No data retrieved
             MoneyLoverModel model = new();
             model.GetPastExpenses(connectionString, userId, (jsonDate.Date != null) ? DateTime.Parse(jsonDate.Date) : DateTime.Parse("1900-01-01"));
             model.GetTodayExpenses(connectionString, userId);
             model.GetExpenseTracker(connectionString, userId);
-            model.GroceriesEstimation = (decimal)groceriesOutput.Score;
-            model.EntertainmentEstimation = (decimal)entertainmentOutput.Score;
-            model.UtilitiesEstimation = (decimal)utilitiesOutput.Score;
-            model.OthersEstimation = (decimal)othersOutput.Score;
+            model.GroceriesEstimation = (decimal)prediction.GroceriesScore;
+            model.EntertainmentEstimation = (decimal)prediction.EntertainmentScore;
+            model.UtilitiesEstimation = (decimal)prediction.UtilitiesScore;
+            model.OthersEstimation = (decimal)prediction.OthersScore;
             return Ok(model);
         }
 
@@ -98,8 +107,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             StreamReader reader = new(Request.Body, Encoding.UTF8);
             var requestContent = await reader.ReadToEndAsync();
             var jsonDate = JsonConvert.DeserializeObject<DateClass>(requestContent);
@@ -120,8 +133,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             MoneyLoverModel model = new();
             model.GetTodayExpenses(connectionString, userId);
@@ -137,8 +154,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             StreamReader reader = new(Request.Body, Encoding.UTF8);
             var requestContent = await reader.ReadToEndAsync();
             var jsonExpense = JsonConvert.DeserializeObject<Expense>(requestContent);
@@ -171,8 +192,12 @@ namespace LifeChartAPI.Controllers
                 return StatusCode(403);
             }
             string jwt = authHeader.Split(' ')[1];
-            var token = new JwtSecurityTokenHandler().ReadToken(jwt) as JwtSecurityToken;
-            var userId = token.Audiences.FirstOrDefault();
+            string userId = _accountController.ValidateJWT(jwt);
+            if (userId == "forbidden")
+            {
+                return StatusCode(403);
+            }
+
             string connectionString = _config.GetConnectionString("LifeChartDatabase");
             MoneyLoverModel model = new();
             model.GetExpenseTracker(connectionString, userId);

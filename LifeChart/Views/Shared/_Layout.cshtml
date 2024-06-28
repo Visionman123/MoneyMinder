@@ -97,8 +97,7 @@
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">
-					@if (User.Identity.IsAuthenticated)
-					{
+					
 
 						<li class="nav-item">
 							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
@@ -116,7 +115,7 @@
 						<li class="nav-item-logout">
 							<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
 						</li>
-					}
+					
 				</ul>
 				
 			</div>
