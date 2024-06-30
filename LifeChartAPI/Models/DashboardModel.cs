@@ -44,10 +44,12 @@ namespace LifeChartAPI.Models
                 }
                 reader.Close();
 
-                //get investments
-                sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = " + "'" + userId + "'";
-                cmd = new(sql, connection);
-                reader = cmd.ExecuteReader();
+				//get investments
+				//sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = " + "'" + userId + "'";
+				sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = @UserId";
+				cmd = new(sql, connection);
+				cmd.Parameters.AddWithValue("UserId", userId);
+				reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     int id = (int)reader[0];

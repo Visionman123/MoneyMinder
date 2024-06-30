@@ -158,13 +158,10 @@
 			var mortgages = externalDocument.getElementById('mortgages-input').value;
 			var others = externalDocument.getElementById('others1-input').value;
 		// Manipulate the element or perform other actions
-		console.log("concac" + others);
 		if (groceries == "" || entertainment =="" || utilities == "" || rent == "" || mortgages == "" || others == "" ) {
-			console.log("hello");
-				
-
 			btn.setAttribute("id", "block");
-		}else {
+		}
+		else {
 			
 			btn.removeAttribute("id", "block");
 		}

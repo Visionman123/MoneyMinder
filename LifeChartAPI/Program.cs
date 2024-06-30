@@ -6,6 +6,11 @@ using Microsoft.Data.SqlClient;
 using LifeChartAPI.Models;
 using LifeChartAPI.Controllers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
+using OpenIddict.Server.AspNetCore;
+using static OpenIddict.Abstractions.OpenIddictConstants;
+using System.Security.Claims;
+using OpenIddict.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,18 +54,17 @@ builder.Services.AddAuthentication(options =>
 {
 }).AddJwtBearer(options =>
 {
-	//options.TokenValidationParameters = new TokenValidationParameters
-	//{
-	//    ValidateIssuer = false,
-	//    ValidateAudience = false,
-	//    ValidateLifetime = false,
-	//    ValidateIssuerSigningKey = false,
-	//    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-	//    ValidAudience = builder.Configuration["Jwt:Audience"],
-	//    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-	//};
-	options.Audience = builder.Configuration["Jwt:Audience"];
-	options.Authority = builder.Configuration["Jwt:Issuer"];
+	options.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuer = true,
+		ValidateAudience = false,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+		ClockSkew = TimeSpan.Zero,
+		ValidIssuer = builder.Configuration["Jwt:Issuer"],
+		ValidAudience = builder.Configuration["Jwt:Audience"],
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+	};
 });
 
 

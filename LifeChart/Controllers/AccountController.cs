@@ -184,16 +184,16 @@ namespace LifeChart.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            Console.WriteLine("Logged out");
+            //Console.WriteLine("Logged out");
             return Redirect("../Account/Login");
         }
     }
 }
 
-public class Response
+class Response
 {
-    public string Status;
-    public string Message;
+    private string Status;
+    private string Message;
 
     public Response(string status, string message)
     {

@@ -15,6 +15,10 @@
     <PackageReference Include="Microsoft.ML" Version="3.0.1" />
     <PackageReference Include="Microsoft.ML.LightGbm" Version="3.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenIddict.Core" Version="5.7.0" />
+    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="5.7.0" />
+    <PackageReference Include="OpenIddict.Validation" Version="5.7.0" />
+    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="5.7.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 

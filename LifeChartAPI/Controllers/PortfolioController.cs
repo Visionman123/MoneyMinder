@@ -34,7 +34,7 @@ namespace LifeChartAPI.Controllers
             }
             string jwt = authHeader.Split(' ')[1];
             string userId = _accountController.ValidateJWT(jwt);
-            if (userId == "forbidden")
+            if (userId == null)
             {
                 return StatusCode(403);
             }
@@ -64,7 +64,7 @@ namespace LifeChartAPI.Controllers
             }
             string jwt = authHeader.Split(' ')[1];
             string userId = _accountController.ValidateJWT(jwt);
-            if (userId == "forbidden")
+            if (userId == null)
             {
                 return StatusCode(403);
             }
@@ -94,7 +94,7 @@ namespace LifeChartAPI.Controllers
             }
             string jwt = authHeader.Split(' ')[1];
             string userId = _accountController.ValidateJWT(jwt);
-            if (userId == "forbidden")
+            if (userId == null)
             {
                 return StatusCode(403);
             }
@@ -121,8 +121,9 @@ namespace LifeChartAPI.Controllers
             }
             string jwt = authHeader.Split(' ')[1];
             string userId = _accountController.ValidateJWT(jwt);
-            if (userId == "forbidden")
+            if (userId == null)
             {
+                Console.WriteLine("UserId is null");
                 return StatusCode(403);
             }
 

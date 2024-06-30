@@ -64,8 +64,12 @@ namespace LifeChartAPI.Controllers
             var othersOutput = SpendingModel.Predict(othersInput);
 
             PredictionOutput prediction = new(groceriesOutput.Score, entertainmentOutput.Score, utilitiesOutput.Score, othersOutput.Score);
-            //return predicted price
-            return prediction;
+            Console.WriteLine(prediction.GroceriesScore);
+			Console.WriteLine(prediction.EntertainmentScore);
+			Console.WriteLine(prediction.UtilitiesScore);
+			Console.WriteLine(prediction.OthersScore);
+			//return predicted price
+			return prediction;
         }
     }
 

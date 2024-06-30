@@ -203,9 +203,11 @@ namespace LifeChartAPI.Models
             try
             {
                 connection.Open();
-                //get investments
-                string sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = " + "'" + userId + "'";
-                SqlCommand cmd = new(sql, connection);
+				//get investments
+				//string sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = " + "'" + userId + "'";
+				string sql = "SELECT Id, Amount, RoI FROM dbo.UserInvestments WHERE UserId = @UserId";
+				SqlCommand cmd = new(sql, connection);
+                cmd.Parameters.AddWithValue("UserId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -275,9 +277,11 @@ namespace LifeChartAPI.Models
             try
             {
                 connection.Open();
-                //get bank account
-                string sql = "SELECT BankAccount FROM dbo.UserBankAccounts WHERE UserId = " + "'" + userId + "'";
-                SqlCommand cmd = new(sql, connection);
+				//get bank account
+				//string sql = "SELECT BankAccount FROM dbo.UserBankAccounts WHERE UserId = " + "'" + userId + "'";
+				string sql = "SELECT BankAccount FROM dbo.UserBankAccounts WHERE UserId = @UserId";
+				SqlCommand cmd = new(sql, connection);
+                cmd.Parameters.AddWithValue("UserId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -285,10 +289,11 @@ namespace LifeChartAPI.Models
                 }
                 reader.Close();
 
-                //get real estates
-                sql = "SELECT Id, Amount FROM dbo.UserRealEstates WHERE UserId = " + "'" + userId + "'";
-                cmd = new(sql, connection);
-                cmd.Parameters.AddWithValue("@UserId", userId);
+				//get real estates
+				//sql = "SELECT Id, Amount FROM dbo.UserRealEstates WHERE UserId = " + "'" + userId + "'";
+				sql = "SELECT Id, Amount FROM dbo.UserRealEstates WHERE UserId = @UserId";
+				cmd = new(sql, connection);
+                cmd.Parameters.AddWithValue("UserId", userId);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -339,9 +344,11 @@ namespace LifeChartAPI.Models
             try
             {
                 connection.Open();
-                //get bank account
-                string sql = "SELECT Loans, CreditCardBalance FROM dbo.UserDebts WHERE UserId = " + "'" + userId + "'";
-                SqlCommand cmd = new(sql, connection);
+				//get bank account
+				//string sql = "SELECT Loans, CreditCardBalance FROM dbo.UserDebts WHERE UserId = " + "'" + userId + "'";
+				string sql = "SELECT Loans, CreditCardBalance FROM dbo.UserDebts WHERE UserId = @UserId";
+				SqlCommand cmd = new(sql, connection);
+                cmd.Parameters.AddWithValue("UserId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -384,9 +391,11 @@ namespace LifeChartAPI.Models
             {
                 //SqlConnection connection = new(connectionString);
                 connection.Open();
-                //get bank account
-                string sql = "SELECT Groceries, Utilities, Rent, Entertainment, Mortgages, Others FROM dbo.UserMonthlyExpenseLimits WHERE UserId = " + "'" + userId + "'";
-                SqlCommand cmd = new(sql, connection);
+				//get bank account
+				//string sql = "SELECT Groceries, Utilities, Rent, Entertainment, Mortgages, Others FROM dbo.UserMonthlyExpenseLimits WHERE UserId = " + "'" + userId + "'";
+				string sql = "SELECT Groceries, Utilities, Rent, Entertainment, Mortgages, Others FROM dbo.UserMonthlyExpenseLimits WHERE UserId = @UserId";
+				SqlCommand cmd = new(sql, connection);
+                cmd.Parameters.AddWithValue("UserId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

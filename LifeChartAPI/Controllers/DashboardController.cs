@@ -32,7 +32,7 @@ namespace LifeChartAPI.Controllers
             //Console.WriteLine("Token:" + authHeader);
             string jwt = authHeader.Split(' ')[1];
             string userId = _accountController.ValidateJWT(jwt);
-            if (userId == "forbidden")
+            if (userId == null)
             {
                 return StatusCode(403);
             }

@@ -53,8 +53,10 @@ namespace LifeChartAPI.Models
 
                 //get limit of category
                 string categoryUpper = char.ToUpper(category[0]) + category.Substring(1);
-                sql = "SELECT " + categoryUpper + " FROM dbo.UserMonthlyExpenseLimits WHERE UserId = " + "'" + userId + "'";
-                cmd = new(sql, connection);
+                //sql = "SELECT " + categoryUpper + " FROM dbo.UserMonthlyExpenseLimits WHERE UserId = " + "'" + userId + "'";
+                sql = "SELECT " + categoryUpper + " FROM dbo.UserMonthlyExpenseLimits WHERE UserId = @UserId";
+				cmd = new(sql, connection);
+                cmd.Parameters.AddWithValue("UserId", userId);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

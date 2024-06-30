@@ -27,12 +27,11 @@ namespace LifeChart.Controllers
             var response = await GetDashboard();
             if (ModelState.IsValid && response != null)
             {
-                var dashboardModel = response;
+                DashboardModel dashboardModel = response;
                 return View(dashboardModel);
             }
-
-            return View();
-        }
+			return RedirectToAction("Logout", "Account");
+		}
 
         public async Task<DashboardModel> GetDashboard()
         {
@@ -55,12 +54,9 @@ namespace LifeChart.Controllers
                 // Handle the response content
                 return responseContent;
             }
-            else
-            {
-                // Request failed, handle the error
-                return null;
-            }
-        }
+			// Request failed, handle the error
+			return null;
+		}
 
         public async Task<IActionResult> Portfolio()
         {
@@ -70,13 +66,14 @@ namespace LifeChart.Controllers
                 return RedirectToAction("Logout", "Account");
             }
 
-            if (ModelState.IsValid)
+			var response = await GetPortfolio();
+			if (ModelState.IsValid && response != null)
             {
-                var portfolioModel = await GetPortfolio();
+                PortfolioModel portfolioModel = response;
                 return View(portfolioModel);
             }
-            return View();
-        }
+			return RedirectToAction("Logout", "Account");
+		}
 
         public async Task<PortfolioModel> GetPortfolio()
         {
@@ -98,12 +95,9 @@ namespace LifeChart.Controllers
                 // Handle the response content
                 return responseContent;
             }
-            else
-            {
-                // Request failed, handle the error
-                return null;
-            }
-        }
+			// Request failed, handle the error
+			return null;
+		}
         public async Task<IActionResult> EditPortfolio(PortfolioModel model, List<string> InvestmentId, List<decimal> InvestmentAmount, List<decimal> RoiAmount, List<string> EstateId, List<decimal> EstateAmount)
         {   
             
@@ -173,11 +167,9 @@ namespace LifeChart.Controllers
                 return RedirectToAction("Portfolio");
 
             }
-            else
-            {
-                // Request failed, handle the error
-                return StatusCode(500);
-            }
+            // Request failed, handle the error
+            return RedirectToAction("Logout", "Account"); ;
+            
         }
 
         public async Task<IActionResult> DeleteInvestment(string InvestmentId) 
@@ -210,12 +202,10 @@ namespace LifeChart.Controllers
                 // Request was successful
                 return RedirectToAction("Portfolio");
 
-            }
-            else
-            {
-                // Request failed, handle the error
-                return StatusCode(500);
-            }
+            }   
+            // Request failed, handle the error
+            return RedirectToAction("Logout", "Account"); ;
+            
         }
 
         public async Task<IActionResult> DeleteRealEstate(string EstateId)
@@ -249,12 +239,9 @@ namespace LifeChart.Controllers
                 return RedirectToAction("Portfolio");
 
             }
-            else
-            {
-                // Request failed, handle the error
-                return StatusCode(500);
-            }
-        }
+			// Request failed, handle the error
+			return RedirectToAction("Logout", "Account"); ;
+		}
 
         public IActionResult WhatIf()
         {
@@ -274,13 +261,14 @@ namespace LifeChart.Controllers
                 return RedirectToAction("Logout", "Account");
             }
 
-            if (ModelState.IsValid)
+            var response = await GetMoneyLover();
+            if (ModelState.IsValid && response != null)
             {
-                MoneyLoverModel expenseModel = await GetMoneyLover();
+                MoneyLoverModel expenseModel = response;
                 return View(expenseModel);
             }
-            return View();
-        }
+			return RedirectToAction("Logout", "Account");
+		}
 
         public async Task<MoneyLoverModel> GetMoneyLover()
         {
@@ -313,12 +301,9 @@ namespace LifeChart.Controllers
                 // Handle the response content
                 return responseContent;
             }
-            else
-            {
-                // Request failed, handle the error
-                return null;
-            }
-        }
+			// Request failed, handle the error
+			return null;
+		}
 
         public async Task<IActionResult> _PastExpenses(string date)
         {
@@ -327,13 +312,14 @@ namespace LifeChart.Controllers
                 return Redirect("../Account/Login");
             }
 
-            if (ModelState.IsValid)
+            var response = await GetPastExpenses(date);
+            if (ModelState.IsValid && response != null)
             {
-                MoneyLoverModel pastExpenseModel = await GetPastExpenses(date);
+                MoneyLoverModel pastExpenseModel = response;
                 return PartialView("_PastExpenses", pastExpenseModel);
             }
-            return PartialView("_PastExpenses");
-        }
+			return RedirectToAction("Logout", "Account");
+		}
 
         public async Task<MoneyLoverModel> GetPastExpenses(string? date)
         {
@@ -366,12 +352,9 @@ namespace LifeChart.Controllers
                 // Handle the response content
                 return responseContent;
             }
-            else
-            {
-                // Request failed, handle the error
-                return null;
-            }
-        }
+			// Request failed, handle the error
+			return null;
+		}
 
 
         public async Task<MoneyLoverModel> GetTodayExpenses()
@@ -396,11 +379,7 @@ namespace LifeChart.Controllers
                 // Handle the response content
                 return responseContent;
             }
-            else
-            {
-                // Request failed, handle the error
-                return null;
-            }
+            return null;
         }
 
 
@@ -438,11 +417,9 @@ namespace LifeChart.Controllers
                 return PartialView("_TodayExpenses", responseContent);
 
             }
-            else
-            {
-                // Request failed, handle the error
-                return StatusCode(500);
-            }
-        }
+			// Request failed, handle the error
+			return RedirectToAction("Logout", "Account");
+		}
     }
 }
+
