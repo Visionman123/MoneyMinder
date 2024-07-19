@@ -27,7 +27,7 @@
         <input type="password" id="password-input" asp-for="Password" required/><br /><br />
         <button class="loginBtn" type="submit">Login</button>
         <p id="login-error">@ViewBag.LoginErrorMessage</p>
-        <p style="font-weight:lighter;" >Don't have an account? <a style="text-decoration:none" id="register-account" asp-controller="Account" asp-action="Register">Register</a> </p>
+        @* <p style="font-weight:lighter;" >Don't have an account? <a style="text-decoration:none" id="register-account" asp-controller="Account" asp-action="Register">Register</a> </p> *@
     </form>
 </div>
 

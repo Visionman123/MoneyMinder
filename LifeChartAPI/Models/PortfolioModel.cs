@@ -108,8 +108,6 @@ namespace LifeChartAPI.Models
 				}
                
 
-
-
                 cmd = new("dbo.EditDebts", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserId", userId);

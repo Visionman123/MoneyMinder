@@ -53,7 +53,7 @@ namespace LifeChart.Controllers
                     {
                         HttpContext.Session.SetString("jwtoken", tokenString);
                         //Console.WriteLine("Token:" + HttpContext.Session.GetString("jwtoken"));
-                        return Redirect("../Home/Dashboard");
+                        return Redirect("../Home/WhatIf");
                     }
                     else
                     {
@@ -75,8 +75,8 @@ namespace LifeChart.Controllers
         private async Task<string> AuthenticateUser(LoginModel model)
         {
 			var client = new HttpClient();
-			// Define the URL of the API endpoint where you want to send the POST request
-			string apiUrl = "https://localhost:7147/api/Account/ProcLogin";
+            // Define the URL of the API endpoint where you want to send the POST request
+            string apiUrl = _configuration.GetConnectionString("BaseURL") + "/api/Account/ProcLogin";
 
 			//set up request body
 			var requestBody = new
@@ -112,73 +112,73 @@ namespace LifeChart.Controllers
 
 
         //register
-        [HttpPost]
-        public async Task<ActionResult> Register(RegisterModel model)
-        {
-            string email = "", username = "", password = "", rePassword = "", phoneNumber = "";
-            if (ModelState.IsValid)
-            {
-                email = model.Email!;
-                username = model.Username!;
-                password = model.Password!;
-                rePassword = model.RePassword!;
-                phoneNumber = model.PhoneNumber!;
-            }
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user != null)
-            {
-                ViewBag.RegistrationResultMessage = "User already exists";
+        //[HttpPost]
+        //public async Task<ActionResult> Register(RegisterModel model)
+        //{
+        //    string email = "", username = "", password = "", rePassword = "", phoneNumber = "";
+        //    if (ModelState.IsValid)
+        //    {
+        //        email = model.Email!;
+        //        username = model.Username!;
+        //        password = model.Password!;
+        //        rePassword = model.RePassword!;
+        //        phoneNumber = model.PhoneNumber!;
+        //    }
+        //    var user = await _userManager.FindByEmailAsync(email);
+        //    if (user != null)
+        //    {
+        //        ViewBag.RegistrationResultMessage = "User already exists";
 
-            }
+        //    }
 
-            else if (password != rePassword)
-            {
-                ViewBag.RegistrationResultMessage = "Passwords do not match";
-            }
+        //    else if (password != rePassword)
+        //    {
+        //        ViewBag.RegistrationResultMessage = "Passwords do not match";
+        //    }
 
-            else
-            {
-                var newUser = new IdentityUser
-                {
-                    UserName = username,
-                    Email = email,
-                    PhoneNumber = phoneNumber
-                };
-                var result = await _userManager.CreateAsync(newUser, password);
-                if (result.Succeeded)
-                {
-                    //add token
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    var confirmLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = newUser.Email }, Request.Scheme);
-                    var message = new Message(new string[] { newUser.Email }, "Confirmation Link", confirmLink!);
-                    _emailService.SendEmail(message);
-                    ViewBag.RegistrationResultMessage = "A confirmation email has been sent to your mailbox";
+        //    else
+        //    {
+        //        var newUser = new IdentityUser
+        //        {
+        //            UserName = username,
+        //            Email = email,
+        //            PhoneNumber = phoneNumber
+        //        };
+        //        var result = await _userManager.CreateAsync(newUser, password);
+        //        if (result.Succeeded)
+        //        {
+        //            //add token
+        //            var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+        //            var confirmLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = newUser.Email }, Request.Scheme);
+        //            var message = new Message(new string[] { newUser.Email }, "Confirmation Link", confirmLink!);
+        //            _emailService.SendEmail(message);
+        //            ViewBag.RegistrationResultMessage = "A confirmation email has been sent to your mailbox";
 
-                }
-                else
-                {
-                    ViewBag.RegistrationResultMessage = "Failed to register account";
-                }
-            }
-            return View();
-        }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.RegistrationResultMessage = "Failed to register account";
+        //        }
+        //    }
+        //    return View();
+        //}
 
-        [HttpGet("ConfirmEmail")]
-        public async Task<IActionResult> ConfirmEmail(string token, string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user != null)
-            {
-                var result = await _userManager.ConfirmEmailAsync(user, token);
-                if (result.Succeeded)
-                {
-                    return Redirect("Account/Login");
-                }
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new Response("Error", "User does not exist")
-            );
-        }
+        //[HttpGet("ConfirmEmail")]
+        //public async Task<IActionResult> ConfirmEmail(string token, string email)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(email);
+        //    if (user != null)
+        //    {
+        //        var result = await _userManager.ConfirmEmailAsync(user, token);
+        //        if (result.Succeeded)
+        //        {
+        //            return Redirect("Account/Login");
+        //        }
+        //    }
+        //    return StatusCode(StatusCodes.Status500InternalServerError,
+        //        new Response("Error", "User does not exist")
+        //    );
+        //}
 
         // logout
         public async Task<IActionResult> Logout()

@@ -8,6 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static OpenIddict.Abstractions.OpenIddictConstants;
+using static Plotly.NET.StyleParam.DrawingStyle;
 
 namespace LifeChartAPI.Controllers
 {
@@ -35,18 +38,6 @@ namespace LifeChartAPI.Controllers
 				if (user != null)
 				{
 					var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
-					//var claimsData = new[]
-					//{
-					//	new Claim(JwtRegisteredClaimNames.Sub, user.Id)
-					//};
-
-					//var token = new JwtSecurityToken(
-					//  issuer: _configuration["Jwt:Issuer"],
-					//  audience: _configuration["Jwt:Audience"],
-					//  claims: claimsData,
-					//  expires: DateTime.Now.AddMinutes(120),
-					//  signingCredentials: credentials
-					//);
 					var tokenDescriptor = new SecurityTokenDescriptor
 					{
 						Subject = new ClaimsIdentity(new Claim[]
@@ -54,7 +45,7 @@ namespace LifeChartAPI.Controllers
 							new Claim(ClaimTypes.NameIdentifier, user.Id)
 							// Add other claims as needed
 						}),
-						Expires = DateTime.UtcNow.AddMinutes(1),
+						Expires = DateTime.UtcNow.AddMinutes(120),
 						Issuer = _configuration["Jwt:Issuer"],
 						Audience = _configuration["Jwt:Audience"],
 						SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -65,7 +56,7 @@ namespace LifeChartAPI.Controllers
 					Console.WriteLine(jwt);
 					return Ok(jwt);
 				}
-				return BadRequest("User already exists");
+				return BadRequest("Failed to login");
 			}
 			catch (Exception ex)
 			{
@@ -77,18 +68,48 @@ namespace LifeChartAPI.Controllers
 		private async Task<IdentityUser> AuthenticateUser(LoginModel model)
 		{
 			IdentityUser user = null;
-			string username = "", password = "";
 
-			username = model.Username!;
-			password = model.Password!;
+			string username = model.Username!;
+			string password = model.Password!;
+
 			var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: false, lockoutOnFailure: false);
 			if (result.Succeeded)
 			{
 				//get user in db
 				user = await _userManager.FindByNameAsync(username);
 			}
+			else
+			{
+				user = await Register(model);
+			}
 			return user;
 		}
+
+		private async Task<IdentityUser> Register(LoginModel model)
+		{
+			IdentityUser user = null;
+
+			string username = model.Username!;
+			string password = model.Password!;
+
+			var newUser = new IdentityUser
+			{
+				UserName = username,
+			};
+			Console.WriteLine(newUser);
+			var result = await _userManager.CreateAsync(newUser, password);
+			var errors = result.Errors;
+			var message = string.Join(", ", errors.Select(x => "Code " + x.Code + " Description" + x.Description));
+			Console.WriteLine(message);
+			Console.WriteLine(result.Succeeded);
+			if (result.Succeeded)
+			{
+				Console.WriteLine("Success!");
+				user = await _userManager.FindByNameAsync(username);
+			}
+			return user;
+		}
+
 		[HttpGet("Authorize")]
 		public string ValidateJWT(string jwt)
 		{

@@ -19,30 +19,16 @@ builder.Services.AddDbContextPool<ApplicationDbContext>(
 );
 
 //identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(
-    options =>
-    {
-        options.SignIn.RequireConfirmedEmail = false;
-        options.SignIn.RequireConfirmedPhoneNumber = false;
-    }
-)
-        .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 //email
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig!);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
-
-builder.Services.Configure<IdentityOptions>(
-    options =>
-    {
-        options.SignIn.RequireConfirmedEmail = true;
-        options.User.RequireUniqueEmail = true;
-    }
-);
 
 
 //session

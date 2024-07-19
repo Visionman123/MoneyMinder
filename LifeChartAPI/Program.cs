@@ -23,22 +23,16 @@ builder.Services.AddDbContextPool<ApplicationDbContext>(
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(
 	options =>
 	{
-		options.SignIn.RequireConfirmedEmail = false;
-		options.SignIn.RequireConfirmedPhoneNumber = false;
+		options.Password.RequireNonAlphanumeric = false;
+		options.Password.RequireDigit = false;
+		options.Password.RequireLowercase = false;
+		options.Password.RequireUppercase = false;
+		options.Password.RequiredLength = 1;
 	}
 )
-		.AddRoles<IdentityRole>()
-		.AddEntityFrameworkStores<ApplicationDbContext>()
-		.AddDefaultTokenProviders();
-
-
-builder.Services.Configure<IdentityOptions>(
-	options =>
-	{
-		options.SignIn.RequireConfirmedEmail = true;
-		options.User.RequireUniqueEmail = true;
-	}
-);
+	.AddRoles<IdentityRole>()
+	.AddEntityFrameworkStores<ApplicationDbContext>()
+	.AddDefaultTokenProviders();
 
 
 builder.Services.AddControllers();
