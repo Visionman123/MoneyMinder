@@ -2,79 +2,79 @@
 	ViewData["Title"] = "What-if Scenario";
 }
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="what-if">
 	<div class="input-container">
 		<p>What-If Scenario</p>
-		<label for="current-age-input">Current Age</label>
-		<input type="number" placeholder="Ex: 18" id="current-age-input" />
+		<label title="Your current age" for="current-age-input" class="whatif-labels">Current Age</label>
+		<input type="number" placeholder="Ex: 18" id="current-age-input" required/>
 
-		<label for="current-age-input">FFP Age</label>
-		<input type="number" placeholder="Ex: 65" id="ffp-age-input" />
+		<label title="Desired age at which you are financially free" for="ffp-age-input" class="whatif-labels">FFP Age</label>
+		<input type="number" placeholder="Ex: 65" id="ffp-age-input" required/>
 
-		<label for="spend-input">Spending (USD)</label>
-		<input type="text" placeholder="Ex: 30000" id="spend-input" />
+		<label title="Amount you want to spend after FFP" for="spend-input" class="whatif-labels">Spending (USD)</label>
+		<input type="text" placeholder="Ex: 30000" id="spend-input" required/>
 
-		<label for="inflation-input">Inflation (%)</label>
-		<input type="number" placeholder="Ex: 5" id="inflation-input" />
+		<label title="Your country's inflation rate" for="inflation-input" class="whatif-labels">Inflation (%)</label>
+		<input type="number" placeholder="Ex: 5" id="inflation-input" required/>
 
-		<label for="bank-input">Bank Assets (USD)</label>
-		<input type="text" placeholder="Ex: 10000" id="bank-input" />
-		<input type="text" id="roi-input" placeholder="ROI (%)" />
+		<label title="Amount of money in your bank" for="bank-input" class="whatif-labels">Bank Assets (USD)</label>
+		<input type="text" placeholder="Ex: 10000" id="bank-input" required/>
+		<input type="text" id="roi-input" placeholder="ROI (%)" required/>
 
 		<div class="stages-list">
-			
-		<ul id="myList">			
-			<li><a id="clicked" href="#1"  style="color:black">Stage 1</a></li>
-		</ul>
-			<button onclick="addList()" id="add" >+</button>
+			<ul id="myList">			
+				<li><a id="stage1" href="#1"  style="color:black">Stage</a></li>
+			</ul>
+			<a disabled="disabled" onclick="removeFromList()" id="remove">-</a>
+			<a onclick="addToList()" id="add">+</a>
 		</div>
 		<div class="stages-input" id="1">
 
-			<label for="current-age-input-1">From 1</label>
-			<input type="number" placeholder="Ex: 18"  id="current-age-input-1" />
+			<label title="Your starting age" id="lbl-current-age-input-1" for="current-age-input-1" class="whatif-labels">From</label>
+			<input type="number" placeholder="Ex: 18"  id="current-age-input-1" required disabled/>
 
-			<label for="ffp-age-input-1">To 1</label>
-			<input type="number" placeholder="Ex: 65" id="ffp-age-input-1" />
+			<label title="Your ending age" id="lbl-ffp-age-input-1" for="ffp-age-input-1" class="whatif-labels">To</label>
+			<input type="number" placeholder="Ex: 65" id="ffp-age-input-1" required/>
 
-			<label for="increase-input">Annual Increase Saving 1 (%)</label>
-			<input type="number" placeholder="Ex: 10" id="increase-input" />
+			<label title="Annual increase in your saving" id="lbl-increase-input-1" for="increase-input-1" class="whatif-labels">Annual Increase Saving (%)</label>
+			<input type="number" placeholder="Ex: 10" id="increase-input-1" required/>
 
-			<label for="save-monthly">Save per month 1 (USD)</label>
-			<input type="number" placeholder="Ex: 10000" id="save-monthly" />
+			<label title="Amount to save per month to achieve FFP (optional)" id="lbl-save-monthly-1" for="save-monthly-1" class="whatif-labels">Save per month (USD)</label>
+			<input type="number" placeholder="Ex: 10000" id="save-monthly-1" />
 
 		</div>
 
 		<div class="stages-input" id="2">
 
-			<label for="current-age-input-2">From 2</label>
-			<input type="number" placeholder="Ex: 40" id="current-age-input-2" />
+			<label title="Your starting age" for="current-age-input-2" class="whatif-labels">From 2</label>
+			<input type="number" placeholder="Ex: 40" id="current-age-input-2" required disabled/>
 
-			<label for="ffp-age-input-2">To 2</label>
-			<input type="number" placeholder="Ex: 65" id="ffp-age-input-2" />
+			<label title="Your ending age" for="ffp-age-input-2" class="whatif-labels">To 2</label>
+			<input type="number" placeholder="Ex: 65" id="ffp-age-input-2" required/>
 
-			<label for="increase-input-2">Annual Increase Saving 2 (%)</label>
-			<input type="number" placeholder="Ex: 10" id="increase-input-2" />
+			<label title="Annual increase in your saving" for="increase-input-2" class="whatif-labels">Annual Increase Saving 2 (%)</label>
+			<input type="number" placeholder="Ex: 10" id="increase-input-2" required/>
 
-			<label for="save-monthly-2">Save per month 2 (USD)</label>
-			<input type="number" placeholder="Ex: 10000" id="save-monthly-2" />
+			<label title="Amount to save per month to achieve FFP (optional)" for="save-monthly-2" class="whatif-labels">Save per month 2 (USD)</label>
+			<input type="number" placeholder="Ex: 10000" id="save-monthly-2"/>
 			
 
 		</div>
 
 		<div class="stages-input" id="3">
 
-			<label for="current-age-input-3">From 3</label>
-			<input type="number" placeholder="Ex: 50" id="current-age-input-3" />
+			<label title="Your starting age" for="current-age-input-3" class="whatif-labels">From 3</label>
+			<input type="number" placeholder="Ex: 50" id="current-age-input-3" required disabled/>
 
-			<label for="ffp-age-input-3">To 3</label>
-			<input type="number" placeholder="Ex: 65" id="ffp-age-input-3" />
+			<label title="Your ending age" for="ffp-age-input-3" class="whatif-labels">To 3</label>
+			<input type="number" placeholder="Ex: 65" id="ffp-age-input-3" required/>
 
-			<label for="increase-input-3">Annual Increase Saving 3 (%)</label>
-			<input type="number" placeholder="Ex: 10" id="increase-input-3" />
+			<label title="Annual increase in your saving" for="increase-input-3" class="whatif-labels">Annual Increase Saving 3 (%)</label>
+			<input type="number" placeholder="Ex: 10" id="increase-input-3" required/>
 
-			<label for="save-monthly-3">Save per month 3 (USD)</label>
+			<label title="Amount to save per month to achieve FFP (optional)" for="save-monthly-3" class="whatif-labels">Save per month 3 (USD)</label>
 			<input type="number" placeholder="Ex: 10000" id="save-monthly-3" />
 
 
@@ -86,7 +86,9 @@
 			<button onclick="calculate()" id="calculate">Calculate</button>
 			<button onclick="save()" id="save">Save</button>
 		</div>
-		<p id="moneytosavemonth"></p>
+
+		<br />
+		<p id="error-line" style="color: red"></p>
 
 	</div>
 	<div class="answer-container">
@@ -94,7 +96,7 @@
 		<canvas id="myChart" style="margin-top:50px;"></canvas>
 	</div>
 	<div class="answer">
-		<span class="ans">First Year Savings:</span>
+		<span class="ans" id="span-answer"></span>
 			<p id="answer"></p>
 	</div>
 	</div>
@@ -125,6 +127,10 @@
 		padding-top: 5vh;
 	}
 
+	.whatif-labels:hover {
+		cursor: pointer
+	}
+
 	.input-container {
 		background-color: white;
 		display: flex;
@@ -138,25 +144,47 @@
 		
 	}
 	.stages-list{
+		font-family: "Outfit";
 		display: flex;
 		width:100%;
 		align-items:center;		
 	}
-	ul{
+	ul {
 		padding:0;
 	
 	}
-	li{
+	li {
 		font-weight:bold;
-	
-
 	}
-	#add{
-		border:none;
-		background-color:white;
-		margin-left:5px;
-		font-size:larger;
-		
+
+	a[disabled="disabled"] {
+		display: none;
+	}
+	
+	input:disabled {
+		cursor: not-allowed;
+		background-color: lightgray;
+	}
+
+	#remove {
+		font-family: "Outfit";
+		color: black;
+		font-size: 22px;
+		font-weight: 350;
+		margin-left: 10px;
+		height: 32px;
+	}
+
+	#remove:hover {
+		cursor: pointer;
+	}
+
+	#add {
+		font-family: "Outfit";
+		color: black;
+		font-size: 22px;
+		font-weight: 350;
+		margin-left: 5px;
 	}
 	#add:hover{
 		cursor:pointer;
@@ -226,10 +254,17 @@
 		border-bottom: 1px solid black;
 		margin-bottom: 10px;
 		font-family: "Outfit";
-		font-weight: thiner;
+		/* font-weight: thinner; */
 		margin-left: 10%;
 		width:70%;
 	}
+
+	input[type=number]::-webkit-inner-spin-button, 
+	input[type=number]::-webkit-outer-spin-button { 
+	  -webkit-appearance: none; 
+	  margin: 0; 
+	}
+
 	.ans{
 		font-family:"Outfit";
 	}
@@ -249,35 +284,184 @@
 </style>
 <script>
 	
+	//events
+	document.getElementById("current-age-input").addEventListener("input", (e) => {
+		document.getElementById("current-age-input-1").value = e.target.value
+	})
+	document.getElementById("ffp-age-input").addEventListener("input", (e) => {
+		let i = document.getElementById("myList").getElementsByTagName("li").length;
+		document.getElementById("ffp-age-input-" + i).value = e.target.value;
+	})
+	document.getElementById("ffp-age-input-1").addEventListener("input", (e) => {
+		document.getElementById("current-age-input-2").value = parseInt(e.target.value) + 1;
+	})
+	document.getElementById("ffp-age-input-2").addEventListener("input", (e) => {
+		document.getElementById("current-age-input-3").value = parseInt(e.target.value) + 1;
+	})
 
+	function validateTopMostInput() {
+		if (document.getElementById("current-age-input").value.length === 0
+			|| document.getElementById("ffp-age-input").value.length === 0
+			|| document.getElementById("spend-input").value.length === 0
+			|| document.getElementById("inflation-input").value.length === 0
+			|| document.getElementById("bank-input").value.length === 0
+			|| document.getElementById("roi-input").value.length === 0
+		) {
+			document.getElementById("error-line").innerText = `Missing value on top-most required input fields`;
+			return false;
+		}
+		return true;
+	}
 
-	var i = 1;
-	function addList() {
-		i = i + 1;
-		var myList = document.getElementById("myList");
-		var newListItem = document.createElement("li");
-		var linkElement = document.createElement("a");
-		// newListItem.setAttribute('id', i);
-		linkElement.innerText = "Stage " + i;
-		linkElement.href = "#" + i;
+	function addToList() {
+		let i = document.getElementById("myList").getElementsByTagName("li").length;
+		if (!validateInputOnAddStage(i)) return;
+		document.getElementById("error-line").innerText = "";
+
+		autoCompleteFields(i);
+
+		const myList = document.getElementById("myList");
+		const newListItem = document.createElement("li");
+		const linkElement = document.createElement("a");
+		
+		const firstElement = document.getElementById("stage1");
+		const firstCurrentAgeInput = document.getElementById("lbl-current-age-input-1");
+		const firstFFPAgeInput = document.getElementById("lbl-ffp-age-input-1");
+		const firstIncreaseInput = document.getElementById("lbl-increase-input-1");
+		const firstSaveInput = document.getElementById("lbl-save-monthly-1");
+		firstElement.innerText = "Stage 1"; 
+		firstCurrentAgeInput.innerText = "From 1";
+		firstFFPAgeInput.innerText = "To 1";
+		firstIncreaseInput.innerText = "Annual Increase Saving 1 (%)";
+		firstSaveInput.innerText = "Save per month 1 (USD)";
+
+		linkElement.innerText = "Stage " + (i + 1);
+		linkElement.href = "#" + (i + 1);
 		linkElement.style.color = "black";
 
 		newListItem.appendChild(linkElement);
+		newListItem.setAttribute("id", "stage" + (i+1));
 		myList.appendChild(newListItem);
-		if (i == 3) {
-			var button = document.getElementById("add");
-			button.disabled = true;
+
+		const removeBtn = document.getElementById("remove");
+		removeBtn.removeAttribute("disabled");
+		const addBtn = document.getElementById("add");
+		//force display on stage
+		addBtn.setAttribute("href", "#" + (i+1));
+
+		if (i+1 === 3) {
+			addBtn.setAttribute("disabled", "disabled");
 		}
 	}
 
+	function validateInputOnAddStage(i) {
+		if (!validateTopMostInput()) return false;
+		if (parseInt(document.getElementById("ffp-age-input-" + i).value) >= parseInt(document.getElementById("ffp-age-input").value)) {
+			document.getElementById("error-line").innerText = `To ${i} must be lower than FFP age`;
+			return false;
+		}
+
+		for (let j = 1; j <= i; j++) {
+			if (document.getElementById("current-age-input-" + j).value.length === 0 || document.getElementById("ffp-age-input-" + j).value.length === 0 || document.getElementById("increase-input-" + j).value.length === 0) {
+				document.getElementById("error-line").innerText = `Missing value on required input fields (Stage ${j})`;
+				return false;
+			}
+			if (parseInt(document.getElementById("current-age-input-" + j).value) >= parseInt(document.getElementById("ffp-age-input-" + j).value)) {
+				document.getElementById("error-line").innerText = `To ${j} must be higher than From ${j}`;
+				return false;
+			}
+			if (parseInt(document.getElementById("ffp-age-input-" + j).value) > parseInt(document.getElementById("ffp-age-input").value)) {
+				document.getElementById("error-line").innerText = `To ${j} must be lower or equal to FFP Age`;
+				return false;
+			}
+		}
+		return true;
+	}
+
+	function autoCompleteFields(i) {
+		document.getElementById("current-age-input-" + (i+1)).value = parseInt(document.getElementById("ffp-age-input-" + i).value) + 1;
+		document.getElementById("ffp-age-input-" + (i + 1)).value = parseInt(document.getElementById("ffp-age-input").value);
+	}
+
+	function removeFromList() {
+		let i = document.getElementById("myList").getElementsByTagName("li").length;
+		const item = document.getElementById("stage" + i);
+		item.parentNode.removeChild(item);
+
+		//invalidate all inputs from removed stage
+		document.getElementById("current-age-input-" + i).value = "";
+		document.getElementById("ffp-age-input-" + i).value = "";
+		document.getElementById("increase-input-" + i).value = "";
+		document.getElementById("save-monthly-" + i).value = "";
+
+		//default ffp age of latest stage to ffp age
+		document.getElementById("ffp-age-input-" + (i - 1)).value = parseInt(document.getElementById("ffp-age-input").value);
+		const removeBtn = document.getElementById("remove");
+		const addBtn = document.getElementById("add");
+		if (addBtn.hasAttribute("disabled")) { 
+			addBtn.removeAttribute("disabled");
+		}
+
+		//force display on stage
+		removeBtn.setAttribute("href", "#" + (i-1));
+		addBtn.setAttribute("href", "#" + (i-1));		
+		
+		if (i-1 === 1) {
+			const firstElement = document.getElementById("stage1");
+			const firstCurrentAgeInput = document.getElementById("lbl-current-age-input-1");
+			const firstFFPAgeInput = document.getElementById("lbl-ffp-age-input-1");
+			const firstIncreaseInput = document.getElementById("lbl-increase-input-1");
+			const firstSaveInput = document.getElementById("lbl-save-monthly-1");
+			firstElement.innerText = "Stage";
+			firstCurrentAgeInput.innerText = "From";
+			firstFFPAgeInput.innerText = "To";
+			firstIncreaseInput.innerText = "Annual Increase Saving (%)";
+			firstSaveInput.innerText = "Save per month (USD)";
+			
+			removeBtn.setAttribute("disabled", "disabled");
+		} 
+	}
+
+	function validateOnCalculate() {
+		if (!validateTopMostInput()) return false;
+
+		let i = document.getElementById("myList").getElementsByTagName("li").length;
+		for (let j = 1; j <= i; j++) {
+			if (document.getElementById("current-age-input-" + j).value.length === 0
+				|| document.getElementById("ffp-age-input-" + j).value.length === 0
+				|| document.getElementById("increase-input-" + j).value.length === 0
+			) {
+				document.getElementById("error-line").innerText = `Missing value on required input fields (Stage ${j})`;
+				return false;
+			}
+			if (parseInt(document.getElementById("current-age-input-" + j).value) >= parseInt(document.getElementById("ffp-age-input-" + j).value)) {
+				document.getElementById("error-line").innerText = `To ${j} must be higher than From ${j}`;
+				return false;
+			}
+			if (parseInt(document.getElementById("ffp-age-input-" + j).value) > parseInt(document.getElementById("ffp-age-input").value)) {
+				document.getElementById("error-line").innerText = `To ${j} must be lower or equal to FFP Age`;
+				return false;
+			}
+		}
+		return true;
+	}
+
 	function calculate() {
+		if (!validateOnCalculate()) return;
+		document.getElementById("error-line").innerText = "";
+
 		// What-if input
-		const currentAge = parseInt(document.getElementById("current-age-input-1").value);
-		const ffpAge = parseInt(document.getElementById("ffp-age-input-1").value); // Financial freedom point age
+		const ageLife = parseInt(document.getElementById("current-age-input").value);
+		const ffpLife = parseInt(document.getElementById("ffp-age-input").value);
 		const moneyFFP = parseInt(document.getElementById("spend-input").value); // Monthly money required after financial freedom point
 		const inflation = parseFloat(document.getElementById("inflation-input").value) / 100; // Inflation of the country
-		const annualIncrease = parseFloat(document.getElementById("increase-input").value) / 100;
-		const saveMonthly = parseInt(document.getElementById("save-monthly").value);
+		const bankAsset = parseInt(document.getElementById("bank-input").value); // Total money in the bank NOW
+		const bankROI = parseFloat(document.getElementById("roi-input").value) / 100; // Bank return_of_investment (e.g., 6%)
+
+		const currentAge = parseInt(document.getElementById("current-age-input-1").value);
+		const ffpAge = parseInt(document.getElementById("ffp-age-input-1").value); // Financial freedom point age
+		const annualIncrease = parseFloat(document.getElementById("increase-input-1").value) / 100;
+		const saveMonthly = parseInt(document.getElementById("save-monthly-1").value);
 
 		const currentAge2 = parseInt(document.getElementById("current-age-input-2").value);
 		const ffpAge2 = parseInt(document.getElementById("ffp-age-input-2").value); // Financial freedom point age
@@ -290,17 +474,11 @@
 		const saveMonthly3 = parseInt(document.getElementById("save-monthly-3").value);
 
 		//xvalue for chart
-		const ageLife = parseInt(document.getElementById("current-age-input").value);
-		const ffpLife = parseInt(document.getElementById("ffp-age-input").value);
 		var life = [];
 		var last = ffpLife - ageLife;
 		for (var i = 0; i <= last; i++) {
 			life[i] = currentAge + i;
-		}
-		
-		// Capital Asset
-		const bankAsset = parseInt(document.getElementById("bank-input").value); // Total money in the bank NOW
-		const bankROI = parseFloat(document.getElementById("roi-input").value) / 100; // Bank return_of_investment (e.g., 6%)
+		}		
 
 		// Event
 		const eventAge = 30;
@@ -341,7 +519,6 @@
 		];
 		
 		const stages = generateStages(stageInfo);
-		// console.log(stages);
 
 		// Calculation Total Money needed
 		const moneyNeed = (moneyFFP - pension) * 12 * 25 * Math.pow(1 + inflation, ffpLife - ageLife); // Money required after FFP
@@ -429,34 +606,10 @@
 
 		const moneyToSavePerMonth = findReverseSigma(totalMoneyNeed, (x) => calculateTotalAnnualSavingWithBankROI(stages, x, bankROI), initialGuess, tolerance);
 
-		// console.log("Money needed to save:", (moneyToSavePerMonth));
-		// console.log(inflation);
-		// console.log(bankROI);
-
-		// function computeMoneyLeftToSave(stages) {
-		// 	let computedSum = 0;
-		// 	stages.forEach((stage) => {
-		// 		if (stage.toSavePerMonth) {
-		// 			stage.moneyEarnAnnual = calculateMoneyEarnAnnual(stage.start, stage.end, stage.toSavePerMonth, stage.annualIncrease);
-		// 			stage.totalSave = sigma(0, stage.end - stage.start, (i) => stage.moneyEarnAnnual[i].amount);
-		// 			computedSum += stage.totalSave;
-		// 		}
-		// 	});
-		// 	return computedSum;
-		// }
-
 		
 		// Generate new stages info
 		function StageInfoUpdate(stages, moneyToSavePerMonth) {
 			const filledStages = stages.map((stage, index) => {
-				// if (index === 0) {
-				// 	// For the first stage, set toSavePerMonth to moneyToSavePerMonth if it's null
-				// 	stage.toSavePerMonth = stage.toSavePerMonth || moneyToSavePerMonth;
-				// } else {
-				// 	// For subsequent stages, set toSavePerMonth to the value from the previous stage
-				// 	stage.toSavePerMonth =
-				// 		stage.toSavePerMonth || stages[index - 1].toSavePerMonth;
-				// }
 				stage.toSavePerMonth = stage.toSavePerMonth || moneyToSavePerMonth;
 
 				return stage;
@@ -530,12 +683,39 @@
 			goal.push(totalMoneyNeed);
 		}
 
-		document.getElementById("answer").innerHTML = moneyToSavePerMonth;
 
-		
+		let saveEnough = false;
+		if (moneyToSavePerMonth.toString().includes("Infinity") && moneyToSavePerMonth.toString().slice(0,1) === "-") {
+			document.getElementById("span-answer").innerHTML= "";
+			document.getElementById("answer").innerHTML= "You will achieve FFP at the desired age";
+			saveEnough = true;
+		}
+		else if (moneyToSavePerMonth.toString().includes("Infinity")) {
+			document.getElementById("span-answer").innerHTML= "";
+			document.getElementById("answer").innerHTML= "You will not achieve FFP at the desired age";
+			saveEnough = false;
+		}
+		else {
+			document.getElementById("span-answer").innerHTML= `To achieve FFP, you will need to save this much per month for stage `;
+			let i = document.getElementById("myList").getElementsByTagName("li").length;
+			for (let j = 1; j <= i; j++) {
+				if (document.getElementById("save-monthly-" + j).value.length === 0) {
+					document.getElementById("span-answer").innerHTML+= `${j}, `;
+				}
+			}
+			document.getElementById("span-answer").innerHTML= document.getElementById("span-answer").innerHTML.slice(0, -2);
+			document.getElementById("answer").innerHTML= moneyToSavePerMonth;
+			saveEnough = true;
+		}
+
+		//destroy current chart
+		var currentChart = Chart.getChart("myChart");
+		if (currentChart !== undefined) {
+			currentChart.destroy();
+		}
+	
 		const xValues = life;
-
-		new Chart("myChart", {
+		var newChart = new Chart("myChart", {
 			type: "line",
 			data: {
 				labels: xValues,
@@ -562,7 +742,7 @@
 					title: {
 					display: true,
 					text: "Life Chart"
-				},
+				}
 			}
 		});
 	}
