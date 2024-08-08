@@ -35,7 +35,7 @@
 
 	.nav-item {
 		font-weight: normal;
-		!important
+		important
 	}
 
 	.logo-space {
@@ -62,19 +62,150 @@
 		align-items: center;
 	}
 
-	.nav-item-logout {
+	.nav-link-help {
 		background-color: white;
 		padding: 5px 10px 5px 10px;
 		border-radius: 20px;
+		cursor: pointer;
+		transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.nav-link-help:hover {
+		color: #fff; /* White text on hover */
+		background-color: #ff6347; /* Tomato color on hover */
+		border-color: #ff6347; /* Tomato border on hover */
 	}
 
 	.nav-link-logout {
+		background-color: white;
+		padding: 5px 10px 5px 10px;
+		border-radius: 20px;
+		font-size: large;
 		color: black;
+	}
+
+	.nav-link-logout:hover {
+		background-color: #ff6347; /* Tomato color on hover */
+		border-color: #ff6347; /* Tomato border on hover */
+		color: #fff; /* White text on hover */
+	}
+
+	.nav-link-lang:hover {
+		color: red;
 	}
 
 	iframe {
 		display: none;
 	}
+
+	/* Styling for the modal (pop-up) */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1000; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		justify-content: center;
+		align-items: center;
+	}
+
+	.modal-content {
+		position: relative;
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 60%;
+		max-width: 700px;
+		border-radius: 10px;
+		text-align: center;
+		opacity: 0;
+		transform: scale(0.8);
+		transition: opacity 0.3s ease, transform 0.3s ease;
+		position: absolute;
+		cursor: move;
+	}
+
+	#modalContent > h1, h2, h3, h4, span {
+		-webkit-user-select: none; /* Safari */
+		-ms-user-select: none; /* IE 10 and IE 11 */
+		user-select: none; /* Standard syntax */
+	}
+
+	.modal.show .modal-content {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+
+	.modal-content img {
+		width: 100%;
+		height: auto;
+	}
+
+	.image-container {
+		position: relative;
+		display: inline-block;
+	}
+
+	#intro > p, img {
+		-webkit-user-select: none; /* Safari */
+		-ms-user-select: none; /* IE 10 and IE 11 */
+		user-select: none; /* Standard syntax */
+	}
+
+	#prev-btn, #next-btn {
+		background-color: cornflowerblue;
+		color: #fff;
+		border: none;
+		padding: 10px;
+		font-size: 16px;
+		font-weight: bold;
+		border-radius: 5px;
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+
+	#prev-btn {
+		left: -85px; /* Position to the left of the image */
+	}
+
+	#next-btn {
+		right: -90px; /* Position to the right of the image */
+	}
+
+	.close {
+		color: #aaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.nav-buttons {
+		margin-top: 10px;
+	}
+
+	.nav-buttons button {
+		margin: 5px;
+	}
+
 </style>
 
 <html lang="en">
@@ -97,24 +228,18 @@
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">
-					
-
-						@* <li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
-						</li> *@
-						@* <li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Portfolio">Portfolio</a>
-						</li> *@
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="WhatIf">What-If Scenario</a>
-						</li>
-						@* <li class="nav-item" id="moneyLover">
-							<a class="nav-link" id="show-text" asp-area="" asp-controller="Home" asp-action="MoneyLover">Money Lover</a>
-							<a class="hidden-text">Fill all limits to unlock</a>
-						</li> *@
-						<li class="nav-item-logout">
-							<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
-						</li>
+					<li class="nav-item">
+						<a class="nav-link-lang" id="nav-en" href="?culture=en-US">English</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link-lang" id="nav-de" href="?culture=de-DE">Deutsch</a>
+					</li>
+					<li class="nav-item-help">
+						<button class="nav-link-help" id="openModalBtn">Help</button>
+					</li>
+					<li class="nav-item-logout">
+						<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
+					</li>
 					
 				</ul>
 				
@@ -123,9 +248,32 @@
 		</nav>
 	</header>
 	<div class="container">
-
 		@RenderBody()
 
+		<div id="myModal" class="modal">
+			<div id="modalContent" class="modal-content">
+				<span class="close">&times;</span>
+				<h1 class="help-about-main">MoneyMinder</h1>
+				<h2 class="help-about">In support of our thesis studies</h2>
+				<h3 class="help-about">This is a web application created as a means of gathering financial data necessary for research on the topic of financial freedom point (FFP)</h3>
+				<h3 class="help-about">Your participation is greatly appreciated!</h3>
+				<div class="image-container">
+					<button id="prev-btn">←</button>
+					<div id="intro">
+						<p>How to use our application:</p>
+						<p>This is the first page (introduction page)</p>
+						<p>You can use the "&#8592;" and "&#8594;" buttons to navigate between pages</p>
+						<p>An image with exaplanation will be displayed on each following page</p>
+						<p>You can also use the drag feature to move this pop-up around</p>
+
+						<p style="color: red">Important note: Inputs are not affected by inflation</p>
+						<p style="color: red">Important note: The data provided will only be used for research purposes</p>
+					</div>
+					<img id="modalImage" src="" alt="Image Carousel">
+					<button id="next-btn">→</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<footer class="border-top footer text-muted">
@@ -146,26 +294,136 @@
 </html>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-	var btn = document.getElementById("moneyLover");
-	var externalFrame = document.getElementById('externalFrame');
-	externalFrame.addEventListener('load', function () {
-		var externalDocument = externalFrame.contentDocument || externalFrame.contentWindow.document;
-		var groceries = externalDocument.getElementById('groceries-input').value;
-			var utilities = externalDocument.getElementById('utilities-input').value;
-			var entertainment = externalDocument.getElementById('entertainment-input').value;
-			var rent = externalDocument.getElementById('rent-input').value;
-			var mortgages = externalDocument.getElementById('mortgages-input').value;
-			var others = externalDocument.getElementById('others1-input').value;
-		// Manipulate the element or perform other actions
-		if (groceries == "" || entertainment =="" || utilities == "" || rent == "" || mortgages == "" || others == "" ) {
-			btn.setAttribute("id", "block");
+
+	$("#nav-en, #nav-de").click(function() {
+		var userConfirmed = confirm("Warning: Your inputs will be deleted. Are you sure?");
+		// Check the user's response
+		if (!userConfirmed) {
+			// Prevent the default action of the link (navigating to a new page)
+			event.preventDefault();
+		}
+	})
+
+	//popup
+	// Image data
+	const images = [
+		"https://via.placeholder.com/600x400?text=Image+1",
+		"https://via.placeholder.com/600x400?text=Image+2",
+		"https://via.placeholder.com/600x400?text=Image+3"
+	];
+	let currentIndex = -1; //-1 represents intro page
+
+	// Get the modal elements
+	const modal = document.getElementById("myModal");
+	const modalImage = document.getElementById("modalImage");
+	const modalContent = document.getElementById("modalContent");
+	const openModalBtn = document.getElementById("openModalBtn");
+	const closeModalBtn = document.getElementsByClassName("close")[0];
+	const prevBtn = document.getElementById("prev-btn");
+	const nextBtn = document.getElementById("next-btn");
+
+	// Function to open the popup
+	function openPopup() {
+		modal.style.display = 'flex';
+		// Add a small delay to trigger the animation
+		setTimeout(() => modal.classList.add('show'), 10);
+		if (currentIndex === -1) {
+			$('#intro').show();
+			$('.help-about').show();
+			$('#modalImage').hide();
 		}
 		else {
-			
-			btn.removeAttribute("id", "block");
+			$('#intro').hide();
+			$('.help-about').hide();
+			showImage(currentIndex);
 		}
-		});
-		
+	}
+
+	// Function to close the popup
+	function closePopup() {
+		modal.classList.remove('show');
+		// Wait for the transition to finish before hiding the popup
+		setTimeout(() => modal.style.display = 'none', 200);
+	}
+
+	// Open the modal and display the first image
+	openModalBtn.onclick = openPopup;
+
+	// Close the modal
+	closeModalBtn.onclick = closePopup;
+
+	// Show the previous image
+	prevBtn.onclick = function () {
+		currentIndex = (currentIndex > -1) ? currentIndex - 1 : images.length - 1;
+		if (currentIndex === -1) {
+			$('#intro').show();
+			$('.help-about').show();
+			$('#modalImage').hide();
+		}
+		else {
+			$('#intro').hide();
+			$('.help-about').hide();
+			showImage(currentIndex);
+		}
+	}
+
+	// Show the next image
+	nextBtn.onclick = function () {
+		currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : -1;
+		if (currentIndex === -1) {
+			$('#intro').show();
+			$('.help-about').show();
+			$('#modalImage').hide();
+		}
+		else {
+			$('#intro').hide();
+			$('.help-about').hide();
+			showImage(currentIndex);
+		}
+	}
+
+	// Function to display the image
+	function showImage(index) {
+		$('#modalImage').show();
+		modalImage.src = images[index];
+	}
+
+	// Close the modal when clicking outside of it
+	window.onclick = function (event) {
+		if (event.target === modal) {
+			closePopup();
+		}
+	}
+
+	// Dragging logic
+	let isDragging = false;
+	let startX, startY, initialX, initialY;
+
+	modalContent.addEventListener('mousedown', (e) => {
+		if (e.target !== prevBtn && e.target !== nextBtn && e.target !== modalImage) {
+			isDragging = true;
+			startX = e.clientX;
+			startY = e.clientY;
+			initialX = modalContent.offsetLeft;
+			initialY = modalContent.offsetTop;
+			document.addEventListener('mousemove', onMouseMove);
+			document.addEventListener('mouseup', onMouseUp);
+		}
 	});
+
+	function onMouseMove(e) {
+		if (isDragging) {
+			let deltaX = e.clientX - startX;
+			let deltaY = e.clientY - startY;
+			modalContent.style.left = initialX + deltaX + 'px';
+			modalContent.style.top = initialY + deltaY + 'px';
+		}
+	}
+
+	function onMouseUp() {
+		isDragging = false;
+		document.removeEventListener('mousemove', onMouseMove);
+		document.removeEventListener('mouseup', onMouseUp);
+	}
+
 </script>
