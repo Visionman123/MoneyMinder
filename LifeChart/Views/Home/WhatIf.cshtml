@@ -7,6 +7,7 @@
 }
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
 
 <div class="what-if">
 	<div class="input-container">
@@ -21,15 +22,17 @@
 		<input type="text" placeholder="Ex: 30,000,000" id="spend-input" required />
 
 		<label title="@Localizer["TitleInflation"]" for="inflation-input" class="whatif-labels">@Localizer["Inflation"]</label>
-		<input type="number" placeholder="Ex: 3.7" id="inflation-input" value="4.3" required disabled />
+		<input type="number" placeholder="Ex: 3.7" id="inflation-input" value="4.3" required />
 
 		<label title="@Localizer["TitleBankInput"]" for="bank-input" class="whatif-labels">@Localizer["BankInput"]</label>
 		<input type="text" placeholder="Ex: 100,000,000" id="bank-input" required />
+		
+		<label title="@Localizer["TitleRoI"]" for="roi-input" class="whatif-labels">@Localizer["RoI"]</label>
 		<input type="text" id="roi-input" placeholder="Ex: 4.7" required />
 
 		<label title="@Localizer["TitleNumberOfStages"]" for="stage-number-input" class="whatif-labels">@Localizer["NumberOfStages"]</label>
 		<div class="stage-number-input-wrapper">
-			<input type="number" placeholder="Ex: 3" id="stage-number-input" required />
+			<input type="number" step="1" placeholder="Ex: 3" id="stage-number-input" required />
 			<button onclick="bulkAddToList()" id="btn-list-stages">Expand</button>
 		</div>
 		<div class="stages-list">
@@ -41,50 +44,50 @@
 		</div>
 		<div class="stages-input" id="1">
 
-			<label title="@Localizer["TitleFromAge"]" id="lbl-current-age-input-1" for="current-age-input-1" class="whatif-labels">@Localizer["FromAge"] 1</label>
+			<label title="@Localizer["TitleFromAge"]" id="lbl-current-age-input-1" for="current-age-input-1" class="whatif-labels">@Localizer["FromAge"]</label>
 			<input type="number" placeholder="Ex: 18"  id="current-age-input-1" required disabled/>
 
-			<label title="@Localizer["TitleToAge"]" id="lbl-ffp-age-input-1" for="ffp-age-input-1" class="whatif-labels">@Localizer["ToAge"] 1</label>
+			<label title="@Localizer["TitleToAge"]" id="lbl-ffp-age-input-1" for="ffp-age-input-1" class="whatif-labels">@Localizer["ToAge"]</label>
 			<input type="number" placeholder="Ex: 39" id="ffp-age-input-1" required/>
 
-			<label title="@Localizer["TitleAnnualIncrease"]" id="lbl-increase-input-1" for="increase-input-1" class="whatif-labels">@Localizer["AnnualIncrease"] 1 (%)</label>
+			<label title="@Localizer["TitleAnnualIncrease"]" id="lbl-increase-input-1" for="increase-input-1" class="whatif-labels">@Localizer["AnnualIncrease"] (%)</label>
 			<input type="number" placeholder="Ex: 10" id="increase-input-1" required/>
 
-			<label title="@Localizer["TitleSavePerMonth"]" id="lbl-save-monthly-1" for="save-monthly-1" class="whatif-labels">@Localizer["SavePerMonth"] 1 (VND)</label>
-			<input type="number" placeholder="Ex: 7,000,000" id="save-monthly-1" />
+			<label title="@Localizer["TitleSavePerMonth"]" id="lbl-save-monthly-1" for="save-monthly-1" class="whatif-labels">@Localizer["SavePerMonth"] (VND)</label>
+			<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-1" />
 
 		</div>
 
 		<div class="stages-input" id="2">
 
-			<label title="@Localizer["TitleFromAge"]" for="current-age-input-2" class="whatif-labels">@Localizer["FromAge"] 2</label>
+			<label title="@Localizer["TitleFromAge"]" for="current-age-input-2" class="whatif-labels">@Localizer["FromAge"]</label>
 			<input type="number" placeholder="Ex: 40" id="current-age-input-2" required disabled/>
 
-			<label title="@Localizer["TitleToAge"]" for="ffp-age-input-2" class="whatif-labels">@Localizer["ToAge"] 2</label>
+			<label title="@Localizer["TitleToAge"]" for="ffp-age-input-2" class="whatif-labels">@Localizer["ToAge"]</label>
 			<input type="number" placeholder="Ex: 54" id="ffp-age-input-2" required/>
 
-			<label title="@Localizer["TitleAnnualIncrease"]" for="increase-input-2" class="whatif-labels">@Localizer["AnnualIncrease"] 2 (%)</label>
+			<label title="@Localizer["TitleAnnualIncrease"]" for="increase-input-2" class="whatif-labels">@Localizer["AnnualIncrease"] (%)</label>
 			<input type="number" placeholder="Ex: 10" id="increase-input-2" required/>
 
-			<label title="@Localizer["TitleAnnualIncrease"]" for="save-monthly-2" class="whatif-labels">@Localizer["SavePerMonth"] 2 (VND)</label>
-			<input type="number" placeholder="Ex: 10000" id="save-monthly-2"/>
+			<label title="@Localizer["TitleSavePerMonth"]" for="save-monthly-2" class="whatif-labels">@Localizer["SavePerMonth"] (VND)</label>
+			<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-2" />
 			
 
 		</div>
 
 		<div class="stages-input" id="3">
 
-			<label title="@Localizer["TitleFromAge"]" for="current-age-input-3" class="whatif-labels">@Localizer["FromAge"] 3</label>
+			<label title="@Localizer["TitleFromAge"]" for="current-age-input-3" class="whatif-labels">@Localizer["FromAge"]</label>
 			<input type="number" placeholder="Ex: 55" id="current-age-input-3" required disabled/>
 
-			<label title="@Localizer["TitleToAge"]" for="ffp-age-input-3" class="whatif-labels">@Localizer["ToAge"] 3</label>
+			<label title="@Localizer["TitleToAge"]" for="ffp-age-input-3" class="whatif-labels">@Localizer["ToAge"]</label>
 			<input type="number" placeholder="Ex: 65" id="ffp-age-input-3" required/>
 
-			<label title="@Localizer["TitleAnnualIncrease"]" for="increase-input-3" class="whatif-labels">@Localizer["AnnualIncrease"] 3 (%)</label>
+			<label title="@Localizer["TitleAnnualIncrease"]" for="increase-input-3" class="whatif-labels">@Localizer["AnnualIncrease"] (%)</label>
 			<input type="number" placeholder="Ex: 10" id="increase-input-3" required/>
 
-			<label title="@Localizer["TitleAnnualIncrease"]" for="save-monthly-3" class="whatif-labels">@Localizer["SavePerMonth"] 3 (VND)</label>
-			<input type="number" placeholder="Ex: 10000" id="save-monthly-3" />
+			<label title="@Localizer["TitleSavePerMonth"]" for="save-monthly-3" class="whatif-labels">@Localizer["SavePerMonth"] (VND)</label>
+			<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-3" />
 
 
 		</div>
@@ -149,6 +152,7 @@
 		margin-left: 5vw;
 		border-radius: 30px;
 	}
+
 	.stages-list{
 		font-family: "Outfit";
 		display: flex;
@@ -160,7 +164,6 @@
 		display: flex;
 		flex-direction: row;
 		gap: 25px;
-		/* align-items: start;  */
 		margin-left: 9px;
 	}
 
@@ -361,7 +364,6 @@
 		}
 	}
 
-
 	//garage
 	function validateInputOnAddStage(i) {
 		if (!validateTopMostInput()) return false;
@@ -473,6 +475,33 @@
 		}
 	};
 
+	//autonumeric
+	new AutoNumeric('#spend-input', {
+		digitGroupSeparator: ',',
+		decimalCharacter: '.',
+		decimalPlaces: 0
+	});
+	new AutoNumeric('#bank-input', {
+		digitGroupSeparator: ',',
+		decimalCharacter: '.',
+		decimalPlaces: 0
+	});
+	new AutoNumeric('#save-monthly-1', {
+		digitGroupSeparator: ',',
+		decimalCharacter: '.',
+		decimalPlaces: 0
+	});
+	new AutoNumeric('#save-monthly-2', {
+		digitGroupSeparator: ',',
+		decimalCharacter: '.',
+		decimalPlaces: 0
+	});
+	new AutoNumeric('#save-monthly-3', {
+		digitGroupSeparator: ',',
+		decimalCharacter: '.',
+		decimalPlaces: 0
+	});
+
 	//input events
 	document.getElementById("current-age-input").addEventListener("input", (e) => {
 		document.getElementById("current-age-input-1").value = e.target.value;
@@ -493,10 +522,53 @@
 		document.getElementById("current-age-input-3").value = parseInt(e.target.value) + 1;
 	})
 
+	document.getElementById("stage-number-input").addEventListener("input", (e) => {
+		e.target.value = Math.round(e.target.value);
+	})
+
 	document.getElementById("btn-list-stages").addEventListener("click", (e) => {
 		bulkAddToList();
 	})
 
+	//stage events
+	document.body.addEventListener('click', function (e) {
+		if (e.target.id === 'a-stage-1') {
+			document.getElementById(1).classList.add("active");
+			document.getElementById(2).classList.remove("active");
+			document.getElementById(3).classList.remove("active");
+			e.target.style.color = "gray";
+			if (document.getElementById('a-stage-2') && document.getElementById('a-stage-2').style.color === "gray") {
+				document.getElementById('a-stage-2').style.color = "black";
+			}
+			else if (document.getElementById('a-stage-3') && document.getElementById('a-stage-3').style.color === "gray") {
+				document.getElementById('a-stage-3').style.color = "black";
+			}
+		}
+		else if (e.target.id === 'a-stage-2') {
+			document.getElementById(2).classList.add("active");
+			document.getElementById(1).classList.remove("active");
+			document.getElementById(3).classList.remove("active");
+			e.target.style.color = "gray";
+			if (document.getElementById('a-stage-1') && document.getElementById('a-stage-1').style.color === "gray") {
+				document.getElementById('a-stage-1').style.color = "black";
+			}
+			else if (document.getElementById('a-stage-3') && document.getElementById('a-stage-3').style.color === "gray") {
+				document.getElementById('a-stage-3').style.color = "black";
+			}
+		}
+		else if (e.target.id === 'a-stage-3') {
+			document.getElementById(3).classList.add("active");
+			document.getElementById(2).classList.remove("active");
+			document.getElementById(1).classList.remove("active");
+			e.target.style.color = "gray";
+			if (document.getElementById('a-stage-2') && document.getElementById('a-stage-2').style.color === "gray") {
+				document.getElementById('a-stage-2').style.color = "black";
+			}
+			else if (document.getElementById('a-stage-1') && document.getElementById('a-stage-1').style.color === "gray") {
+				document.getElementById('a-stage-1').style.color = "black";
+			}
+		}
+	});
 
 	function validateTopMostInput() {
 		if (document.getElementById("current-age-input").value.length === 0
@@ -533,19 +605,21 @@
 		for (let i = 0; i < stageNumber; i++) {
 			const newListItem = document.createElement("li");
 			const linkElement = document.createElement("a");
+			linkElement.setAttribute("id", "a-stage-" + (i + 1));
 			linkElement.innerText = "Stage " + (i + 1);
 			linkElement.href = "#" + (i + 1);
 			linkElement.style.color = "black";
 
 			newListItem.appendChild(linkElement);
-			newListItem.setAttribute("id", "stage" + (i + 1));
+			newListItem.setAttribute("id", "li-stage-" + (i + 1));
 			myList.appendChild(newListItem);
 
-			//remove display none
-			document.getElementById(i+1).style.display = "";
+			//appear
+			document.getElementById(i + 1).style.display = "";
 		}
 		
 		hideDeletedStages(stageNumber);
+		addClickEffectsToActiveStage(stageNumber);
 		autoCompleteBulk(stageNumber);
 
 		document.getElementById("calculate").style.display = "block";
@@ -553,7 +627,7 @@
 	}
 
 	function resetAllStages() {
-		for (let i = 1; i < 3; i++) {
+		for (let i = 1; i <= 3; i++) {
 			document.getElementById("current-age-input-" + i).value = "";
 			document.getElementById("ffp-age-input-" + i).value = "";
 			document.getElementById("increase-input-" + i).value = "";
@@ -565,6 +639,14 @@
 	function hideDeletedStages(stageNumber) {
 		for (let i = stageNumber + 1; i <= 3; i++) {
 			document.getElementById(i).style.display = "none";
+		}
+	}
+
+	function addClickEffectsToActiveStage(stageNumber) {
+		for (let i = 1; i <= stageNumber; i++) {
+			if (document.getElementById(i).classList.contains("active")) {
+				document.getElementById("a-stage-" + i).style.color = "gray";
+			}
 		}
 	}
 
@@ -610,25 +692,25 @@
 		// What-if input
 		const ageLife = parseInt(document.getElementById("current-age-input").value);
 		const ffpLife = parseInt(document.getElementById("ffp-age-input").value);
-		const moneyFFP = parseInt(document.getElementById("spend-input").value); // Monthly money required after financial freedom point
+		const moneyFFP = parseInt(document.getElementById("spend-input").value.replaceAll(",", "")); // Monthly money required after financial freedom point
 		const inflation = parseFloat(document.getElementById("inflation-input").value) / 100; // Inflation of the country
-		const bankAsset = parseInt(document.getElementById("bank-input").value); // Total money in the bank NOW
+		const bankAsset = parseInt(document.getElementById("bank-input").value.replaceAll(",", "")); // Total money in the bank NOW
 		const bankROI = parseFloat(document.getElementById("roi-input").value) / 100; // Bank return_of_investment (e.g., 6%)
 
 		const currentAge = parseInt(document.getElementById("current-age-input-1").value);
 		const ffpAge = parseInt(document.getElementById("ffp-age-input-1").value); // Financial freedom point age
 		const annualIncrease = parseFloat(document.getElementById("increase-input-1").value) / 100;
-		const saveMonthly = parseInt(document.getElementById("save-monthly-1").value);
+		const saveMonthly = parseInt(document.getElementById("save-monthly-1").value.replaceAll(",", ""));
 
 		const currentAge2 = parseInt(document.getElementById("current-age-input-2").value);
 		const ffpAge2 = parseInt(document.getElementById("ffp-age-input-2").value); // Financial freedom point age
 		const annualIncrease2 = parseFloat(document.getElementById("increase-input-2").value) / 100;
-		const saveMonthly2 = parseInt(document.getElementById("save-monthly-2").value);
+		const saveMonthly2 = parseInt(document.getElementById("save-monthly-2").value.replaceAll(",", ""));
 
 		const currentAge3 = parseInt(document.getElementById("current-age-input-3").value);
 		const ffpAge3 = parseInt(document.getElementById("ffp-age-input-3").value); // Financial freedom point age
 		const annualIncrease3 = parseFloat(document.getElementById("increase-input-3").value) / 100;
-		const saveMonthly3 = parseInt(document.getElementById("save-monthly-3").value);
+		const saveMonthly3 = parseInt(document.getElementById("save-monthly-3").value.replaceAll(",", ""));
 
 		//xvalue for chart
 		var life = [];
@@ -761,8 +843,7 @@
 		const tolerance = 0.01; // Tolerance for stopping the iteration
 
 		const moneyToSavePerMonth = findReverseSigma(totalMoneyNeed, (x) => calculateTotalAnnualSavingWithBankROI(stages, x, bankROI), initialGuess, tolerance);
-		document.getElementById("money-to-save").value = Math.round(moneyToSavePerMonth);
-
+		document.getElementById("money-to-save").value = Math.ceil(moneyToSavePerMonth);
 		
 		// Generate new stages info
 		function StageInfoUpdate(stages, moneyToSavePerMonth) {
@@ -851,7 +932,7 @@
 			saveEnough = false;
 		}
 		else {
-			document.getElementById("answer").innerText= "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND"  + " @Localizer["AnswerSecondPart"] " + Math.round(moneyToSavePerMonth) + " VND";
+			document.getElementById("answer").innerText= "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND"  + " @Localizer["AnswerSecondPart"] " + Math.ceil(moneyToSavePerMonth) + " VND";
 			let i = document.getElementById("myList").getElementsByTagName("li").length;
 			for (let j = 1; j <= i; j++) {
 				if (document.getElementById("save-monthly-" + j).value.length === 0) {

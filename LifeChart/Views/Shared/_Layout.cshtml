@@ -206,6 +206,10 @@
 		margin: 5px;
 	}
 
+	.navbar-brand {
+		pointer-events: none;
+	}
+
 </style>
 
 <html lang="en">
@@ -224,7 +228,7 @@
 		<nav class="nav">
 			<div class="logo-space" >
 				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative" >
-				<a class="navbar-brand" asp-area="" asp-page="/Index"  style="text-decoration:none">MoneyMinder</a>
+				<a class="navbar-brand" asp-area="" asp-page=""  style="text-decoration:none">MoneyMinder</a>
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">
@@ -296,7 +300,12 @@
 <script>
 
 	$("#nav-en, #nav-de").click(function() {
-		var userConfirmed = confirm("Warning: Your inputs will be deleted. Are you sure?");
+		if (window.location.href.includes("?culture=en-US")) {
+			var userConfirmed = confirm("Warning: Your inputs will be deleted. Are you sure?");
+		}
+		else if (window.location.href.includes("?culture=de-DE")) {
+			var userConfirmed = confirm("Warnung: Ihre Eingaben werden gelöscht. Sind Sie sicher?");
+		}
 		// Check the user's response
 		if (!userConfirmed) {
 			// Prevent the default action of the link (navigating to a new page)
@@ -354,7 +363,7 @@
 
 	// Show the previous image
 	prevBtn.onclick = function () {
-		currentIndex = (currentIndex > -1) ? currentIndex - 1 : images.length - 1;
+		currentIndex = (currentIndex > -1) ? currentIndex - 1 : currentIndex;
 		if (currentIndex === -1) {
 			$('#intro').show();
 			$('.help-about').show();
@@ -369,7 +378,7 @@
 
 	// Show the next image
 	nextBtn.onclick = function () {
-		currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : -1;
+		currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : currentIndex;
 		if (currentIndex === -1) {
 			$('#intro').show();
 			$('.help-about').show();

@@ -136,7 +136,7 @@
     <value>each month after retirement or when you stop generating income, you will need to save</value>
   </data>
   <data name="BankInput" xml:space="preserve">
-    <value>Bank Asset (VND) &amp; Interest Rate (%)</value>
+    <value>Bank Asset (VND)</value>
   </data>
   <data name="CurrentAge" xml:space="preserve">
     <value>Current Age</value>
@@ -162,6 +162,9 @@
   <data name="RequestError" xml:space="preserve">
     <value>There is an error with your request</value>
   </data>
+  <data name="RoI" xml:space="preserve">
+    <value>Interest Rate (%)</value>
+  </data>
   <data name="SavePerMonth" xml:space="preserve">
     <value>Save Per Month</value>
   </data>
@@ -172,7 +175,7 @@
     <value>Expected annual increase in your monthly savings in this stage</value>
   </data>
   <data name="TitleBankInput" xml:space="preserve">
-    <value>Current amount of money in your bank &amp; The interest rate on your bank savings</value>
+    <value>Current amount of money in your bank </value>
   </data>
   <data name="TitleCurrentAge" xml:space="preserve">
     <value>Your current age</value>
@@ -189,8 +192,11 @@
   <data name="TitleNumberOfStages" xml:space="preserve">
     <value>Different stages of your life (Up to a maximum of 3)</value>
   </data>
+  <data name="TitleRoI" xml:space="preserve">
+    <value>The interest rate on your bank savings</value>
+  </data>
   <data name="TitleSavePerMonth" xml:space="preserve">
-    <value>The amount you can save each month in this stage</value>
+    <value>The amount you can save each month in this stage. If this field is left blank, the app will automatically calculate the amount for you based on your input data and financial goals. For multiple stages, ensure at least one stage is left blank for accurate calculations</value>
   </data>
   <data name="TitleSpending" xml:space="preserve">
     <value>Expected monthly expenditure after retirement</value>
@@ -211,6 +217,6 @@
     <value>To Age must be lower or equal to FFP Age</value>
   </data>
   <data name="ValidStageNumber" xml:space="preserve">
-    <value>Valid stage number is between 1-3</value>
+    <value>Valid number of stages is between 1-3</value>
   </data>
 </root>
