@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
 
-<div class="what-if">
+<div class="what-if" id="what-if" style="display: none">
 	<div class="input-container">
 		<p>What-If Scenario</p>
 		<label title="@Localizer["TitleCurrentAge"]" for="current-age-input" class="whatif-labels">@Localizer["CurrentAge"]</label>
@@ -321,125 +321,6 @@
 	}
 </style>
 <script>
-
-	//garage
-	function addToList() {
-		let i = document.getElementById("myList").getElementsByTagName("li").length;
-		if (!validateInputOnAddStage(i)) return;
-		document.getElementById("error-line").innerText = "";
-
-		autoCompleteFields(i);
-
-		const myList = document.getElementById("myList");
-		const newListItem = document.createElement("li");
-		const linkElement = document.createElement("a");
-		
-		const firstElement = document.getElementById("stage1");
-		const firstCurrentAgeInput = document.getElementById("lbl-current-age-input-1");
-		const firstFFPAgeInput = document.getElementById("lbl-ffp-age-input-1");
-		const firstIncreaseInput = document.getElementById("lbl-increase-input-1");
-		const firstSaveInput = document.getElementById("lbl-save-monthly-1");
-		firstElement.innerText = "Stage 1"; 
-		firstCurrentAgeInput.innerText = "From 1";
-		firstFFPAgeInput.innerText = "To 1";
-		firstIncreaseInput.innerText = "Annual Increase Saving 1 (%)";
-		firstSaveInput.innerText = "Save per month 1 (USD)";
-
-		linkElement.innerText = "Stage " + (i + 1);
-		linkElement.href = "#" + (i + 1);
-		linkElement.style.color = "black";
-
-		newListItem.appendChild(linkElement);
-		newListItem.setAttribute("id", "stage" + (i+1));
-		myList.appendChild(newListItem);
-
-		const removeBtn = document.getElementById("remove");
-		removeBtn.removeAttribute("disabled");
-		const addBtn = document.getElementById("add");
-		//force display on stage
-		addBtn.setAttribute("href", "#" + (i+1));
-
-		if (i+1 === 3) {
-			addBtn.setAttribute("disabled", "disabled");
-		}
-	}
-
-	//garage
-	function validateInputOnAddStage(i) {
-		if (!validateTopMostInput()) return false;
-		if (parseInt(document.getElementById("ffp-age-input-" + i).value) >= parseInt(document.getElementById("ffp-age-input").value)) {
-			document.getElementById("error-line").innerText = `To ${i} must be lower than FFP age`;
-			return false;
-		}
-
-		for (let j = 1; j <= i; j++) {
-			if (document.getElementById("current-age-input-" + j).value.length === 0 || document.getElementById("ffp-age-input-" + j).value.length === 0 || document.getElementById("increase-input-" + j).value.length === 0) {
-				document.getElementById("error-line").innerText = `Missing value on required input fields (Stage ${j})`;
-				return false;
-			}
-			if (parseInt(document.getElementById("current-age-input-" + j).value) >= parseInt(document.getElementById("ffp-age-input-" + j).value)) {
-				document.getElementById("error-line").innerText = `To ${j} must be higher than From ${j}`;
-				return false;
-			}
-			if (parseInt(document.getElementById("ffp-age-input-" + j).value) > parseInt(document.getElementById("ffp-age-input").value)) {
-				document.getElementById("error-line").innerText = `To ${j} must be lower or equal to FFP Age`;
-				return false;
-			}
-		}
-		return true;
-	}
-
-	//garage
-	function autoCompleteFields(i) {
-		document.getElementById("current-age-input-" + (i+1)).value = parseInt(document.getElementById("ffp-age-input-" + i).value) + 1;
-		document.getElementById("ffp-age-input-" + (i + 1)).value = parseInt(document.getElementById("ffp-age-input").value);
-	}
-
-	//garage
-	function removeFromList() {
-		let i = document.getElementById("myList").getElementsByTagName("li").length;
-		const item = document.getElementById("stage" + i);
-		item.parentNode.removeChild(item);
-
-		//invalidate all inputs from removed stage
-		document.getElementById("current-age-input-" + i).value = "";
-		document.getElementById("ffp-age-input-" + i).value = "";
-		document.getElementById("increase-input-" + i).value = "";
-		document.getElementById("save-monthly-" + i).value = "";
-
-		//default ffp age of latest stage to ffp age
-		document.getElementById("ffp-age-input-" + (i - 1)).value = parseInt(document.getElementById("ffp-age-input").value);
-		const removeBtn = document.getElementById("remove");
-		const addBtn = document.getElementById("add");
-		if (addBtn.hasAttribute("disabled")) { 
-			addBtn.removeAttribute("disabled");
-		}
-
-		//force display on stage
-		removeBtn.setAttribute("href", "#" + (i-1));
-		addBtn.setAttribute("href", "#" + (i-1));		
-		
-		if (i-1 === 1) {
-			const firstElement = document.getElementById("stage1");
-			const firstCurrentAgeInput = document.getElementById("lbl-current-age-input-1");
-			const firstFFPAgeInput = document.getElementById("lbl-ffp-age-input-1");
-			const firstIncreaseInput = document.getElementById("lbl-increase-input-1");
-			const firstSaveInput = document.getElementById("lbl-save-monthly-1");
-			firstElement.innerText = "Stage";
-			firstCurrentAgeInput.innerText = "From";
-			firstFFPAgeInput.innerText = "To";
-			firstIncreaseInput.innerText = "Annual Increase Saving (%)";
-			firstSaveInput.innerText = "Save per month (USD)";
-			
-			removeBtn.setAttribute("disabled", "disabled");
-		} 
-	}
-
-	
-
-
-
-
 	function checkUrlForLang() {
 		const currentUrl = window.location.href; 
 		let lang = "";
@@ -467,6 +348,7 @@
 
 	// Check URL on page load
 	window.onload = function () {
+		document.getElementById("what-if").style.display = "";
 		checkUrlForLang();
 		const lang = sessionStorage.getItem("lang");
 		const currentUrl = window.location.href;
