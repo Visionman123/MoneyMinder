@@ -52,8 +52,18 @@ namespace LifeChart.Controllers
                     if (tokenString != null)
                     {
                         HttpContext.Session.SetString("jwtoken", tokenString);
-                        //Console.WriteLine("Token:" + HttpContext.Session.GetString("jwtoken"));
-                        return Redirect("../Home/WhatIf");
+						// Retrieve the language preference from the cookie
+						var languagePreference = Request.Cookies["UserLanguagePreference"] ?? "en-US"; // Default to English
+
+						// Optionally retrieve from the database if stored there
+
+						// Redirect based on language preference
+						if (languagePreference == "de-DE")
+						{
+							return Redirect("../Home/WhatIf?culture=de-DE");
+						}
+
+						return Redirect("../Home/WhatIf?culture=en-US"); ;
                     }
                     else
                     {
@@ -110,84 +120,95 @@ namespace LifeChart.Controllers
             }
 		}
 
+		public async Task<IActionResult> Logout()
+		{
+			await _signInManager.SignOutAsync();
+			//Console.WriteLine("Logged out");
+			return Redirect("../Account/Login");
+		}
 
-        //register
-        //[HttpPost]
-        //public async Task<ActionResult> Register(RegisterModel model)
-        //{
-        //    string email = "", username = "", password = "", rePassword = "", phoneNumber = "";
-        //    if (ModelState.IsValid)
-        //    {
-        //        email = model.Email!;
-        //        username = model.Username!;
-        //        password = model.Password!;
-        //        rePassword = model.RePassword!;
-        //        phoneNumber = model.PhoneNumber!;
-        //    }
-        //    var user = await _userManager.FindByEmailAsync(email);
-        //    if (user != null)
-        //    {
-        //        ViewBag.RegistrationResultMessage = "User already exists";
+		[HttpPost]
+		public IActionResult SetLanguagePreference(string language)
+		{
+			Console.WriteLine(language);
+			// Save the preference in a cookie
+			Response.Cookies.Append("UserLanguagePreference", language, new CookieOptions
+			{
+				Expires = DateTimeOffset.UtcNow.AddYears(1) // Set cookie expiration (e.g., 1 year)
+			});
 
-        //    }
+			return Ok(new { message = "Language preference saved." });
+		}
 
-        //    else if (password != rePassword)
-        //    {
-        //        ViewBag.RegistrationResultMessage = "Passwords do not match";
-        //    }
+		//register
+		//[HttpPost]
+		//public async Task<ActionResult> Register(RegisterModel model)
+		//{
+		//    string email = "", username = "", password = "", rePassword = "", phoneNumber = "";
+		//    if (ModelState.IsValid)
+		//    {
+		//        email = model.Email!;
+		//        username = model.Username!;
+		//        password = model.Password!;
+		//        rePassword = model.RePassword!;
+		//        phoneNumber = model.PhoneNumber!;
+		//    }
+		//    var user = await _userManager.FindByEmailAsync(email);
+		//    if (user != null)
+		//    {
+		//        ViewBag.RegistrationResultMessage = "User already exists";
 
-        //    else
-        //    {
-        //        var newUser = new IdentityUser
-        //        {
-        //            UserName = username,
-        //            Email = email,
-        //            PhoneNumber = phoneNumber
-        //        };
-        //        var result = await _userManager.CreateAsync(newUser, password);
-        //        if (result.Succeeded)
-        //        {
-        //            //add token
-        //            var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-        //            var confirmLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = newUser.Email }, Request.Scheme);
-        //            var message = new Message(new string[] { newUser.Email }, "Confirmation Link", confirmLink!);
-        //            _emailService.SendEmail(message);
-        //            ViewBag.RegistrationResultMessage = "A confirmation email has been sent to your mailbox";
+		//    }
 
-        //        }
-        //        else
-        //        {
-        //            ViewBag.RegistrationResultMessage = "Failed to register account";
-        //        }
-        //    }
-        //    return View();
-        //}
+		//    else if (password != rePassword)
+		//    {
+		//        ViewBag.RegistrationResultMessage = "Passwords do not match";
+		//    }
 
-        //[HttpGet("ConfirmEmail")]
-        //public async Task<IActionResult> ConfirmEmail(string token, string email)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(email);
-        //    if (user != null)
-        //    {
-        //        var result = await _userManager.ConfirmEmailAsync(user, token);
-        //        if (result.Succeeded)
-        //        {
-        //            return Redirect("Account/Login");
-        //        }
-        //    }
-        //    return StatusCode(StatusCodes.Status500InternalServerError,
-        //        new Response("Error", "User does not exist")
-        //    );
-        //}
+		//    else
+		//    {
+		//        var newUser = new IdentityUser
+		//        {
+		//            UserName = username,
+		//            Email = email,
+		//            PhoneNumber = phoneNumber
+		//        };
+		//        var result = await _userManager.CreateAsync(newUser, password);
+		//        if (result.Succeeded)
+		//        {
+		//            //add token
+		//            var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+		//            var confirmLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = newUser.Email }, Request.Scheme);
+		//            var message = new Message(new string[] { newUser.Email }, "Confirmation Link", confirmLink!);
+		//            _emailService.SendEmail(message);
+		//            ViewBag.RegistrationResultMessage = "A confirmation email has been sent to your mailbox";
 
-        // logout
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            //Console.WriteLine("Logged out");
-            return Redirect("../Account/Login");
-        }
-    }
+		//        }
+		//        else
+		//        {
+		//            ViewBag.RegistrationResultMessage = "Failed to register account";
+		//        }
+		//    }
+		//    return View();
+		//}
+
+		//[HttpGet("ConfirmEmail")]
+		//public async Task<IActionResult> ConfirmEmail(string token, string email)
+		//{
+		//    var user = await _userManager.FindByEmailAsync(email);
+		//    if (user != null)
+		//    {
+		//        var result = await _userManager.ConfirmEmailAsync(user, token);
+		//        if (result.Succeeded)
+		//        {
+		//            return Redirect("Account/Login");
+		//        }
+		//    }
+		//    return StatusCode(StatusCodes.Status500InternalServerError,
+		//        new Response("Error", "User does not exist")
+		//    );
+		//}
+	}
 }
 
 class Response

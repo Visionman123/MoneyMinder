@@ -338,7 +338,7 @@
 			lang = "en-US";
 		}
 
-		sessionStorage.setItem('lang', lang);
+		saveLanguagePreference(lang);
 	}
 
 	// Event listener for popstate (back/forward navigation)
@@ -350,12 +350,25 @@
 	window.onload = function () {
 		document.getElementById("what-if").style.display = "";
 		checkUrlForLang();
-		const lang = sessionStorage.getItem("lang");
-		const currentUrl = window.location.href;
-		if (!currentUrl.includes(`?culture=${lang}`)) { 
-			window.location.href = `?culture=${lang}`;
-		}
 	};
+
+	function saveLanguagePreference(lang) {
+		console.log(lang);
+		$.ajax({
+			url: '@Url.Action("SetLanguagePreference", "Account")',
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				language: lang
+			}, 
+			success: function (response) {
+				console.log(response.message);
+;			},
+			error: function (xhr, status, error) {
+				console.error('Error:', error);
+			}
+		});
+	}
 
 	//autonumeric
 	new AutoNumeric('#spend-input', {
