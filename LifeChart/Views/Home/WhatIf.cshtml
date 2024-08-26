@@ -615,7 +615,7 @@
 		}		
 
 		// Event
-		const eventAge = 30;
+		const eventAge = 0;
 		const eventIncome = 0;
 
 		// Pension expected
@@ -657,9 +657,10 @@
 		// Calculation Total Money needed
 		const moneyNeed = (moneyFFP - pension) * 12 * 25 * Math.pow(1 + inflation, ffpLife - ageLife); // Money required after FFP
 		const moneyEvent = eventIncome * Math.pow(1 + bankROI, ffpLife - eventAge);
-		const BankAsset = bankAsset * Math.pow(1 + bankROI, ffpLife - eventAge);
+		const BankAsset = bankAsset * Math.pow(1 + bankROI, ffpLife - currentAge);
 		const totalMoneyNeed = moneyNeed - moneyEvent - BankAsset;
 	
+
 		// Function to calculate sigma of a given function
 		function sigma(start, end, func) {
 			let sum = 0;
@@ -740,6 +741,7 @@
 		const moneyToSavePerMonth = findReverseSigma(totalMoneyNeed, (x) => calculateTotalAnnualSavingWithBankROI(stages, x, bankROI), initialGuess, tolerance);
 		document.getElementById("money-to-save").value = Math.ceil(moneyToSavePerMonth);
 		
+
 		// Generate new stages info
 		function StageInfoUpdate(stages, moneyToSavePerMonth) {
 			const filledStages = stages.map((stage, index) => {
