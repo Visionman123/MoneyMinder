@@ -130,7 +130,6 @@ namespace LifeChart.Controllers
 		[HttpPost]
 		public IActionResult SetLanguagePreference(string language)
 		{
-			Console.WriteLine(language);
 			// Save the preference in a cookie
 			Response.Cookies.Append("UserLanguagePreference", language, new CookieOptions
 			{

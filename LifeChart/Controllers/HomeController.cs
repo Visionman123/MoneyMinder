@@ -21,51 +21,72 @@ namespace LifeChart.Controllers
         }
 
 
-		public IActionResult WhatIf()
+		public async Task<IActionResult> WhatIf()
 		{
+			Response.Cookies.Append("AnsweredSurvey", "false", new CookieOptions
+			{
+				Expires = DateTimeOffset.UtcNow.AddDays(1)
+			});
+
 			if (string.IsNullOrEmpty(HttpContext.Request.Headers.Authorization))
 			{
 				Console.WriteLine("Redirecting to logout...");
 				return RedirectToAction("Logout", "Account");
 			}
-			return View();
+			var response = await GetWhatIf();
+			if (ModelState.IsValid && response != null)
+			{
+				WhatIfModel model = response;
+				if (model.FFPStages != null && model.FFPStages.Count > 0)
+				{
+					Console.WriteLine("Yessss");
+					Response.Cookies.Append("AnsweredSurvey", "true", new CookieOptions
+					{
+						Expires = DateTimeOffset.UtcNow.AddDays(1)
+					});
+				}
+				return View(model);
+			}
+			return RedirectToAction("Logout", "Account");
+		}
+
+
+		public async Task<WhatIfModel> GetWhatIf()
+		{
+			var client = new HttpClient();
+			string apiUrl = _configuration.GetConnectionString("BaseURL") + "/api/WhatIf";
+
+			var request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
+			//set up auth header
+			string authHeader = HttpContext.Request.Headers.Authorization;
+			//add auth header
+			request.Headers.Add("Authorization", authHeader);
+
+			// Send the GET request with the request body
+			HttpResponseMessage response = await client.SendAsync(request);
+			//Console.WriteLine(response);
+			if (response.IsSuccessStatusCode)
+			{
+				// Request was successful
+				WhatIfModel responseContent = await response.Content.ReadFromJsonAsync<WhatIfModel>();
+				// Handle the response content
+				return responseContent;
+			}
+			// Request failed, handle the error
+			return null;
 		}
 
 		public async Task<IActionResult> SaveWhatIf(
-			int currentAge, int ffpAge, double inflation, double bankAsset, double bankROI,
+			int currentAge, int ffpAge, double monthlySpending, double inflation, double bankAsset, double bankROI,
 			int startStage1, int endStage1, double annualIncreaseStage1, double saveMonthlyStage1,
 			int startStage2, int endStage2, double annualIncreaseStage2, double saveMonthlyStage2,
 			int startStage3, int endStage3, double annualIncreaseStage3, double saveMonthlyStage3,
 			double saveFirstMonth, int saveAtStage)
 		{
-
-
-			Console.WriteLine(currentAge);
-			Console.WriteLine(ffpAge);
-			Console.WriteLine(inflation);
-			Console.WriteLine(bankAsset);
-			Console.WriteLine(bankROI);
-			Console.WriteLine(startStage1);
-			Console.WriteLine(endStage1);
-			Console.WriteLine(annualIncreaseStage1);
-			Console.WriteLine(saveMonthlyStage1);
-			Console.WriteLine(startStage2);
-			Console.WriteLine(endStage2);
-			Console.WriteLine(annualIncreaseStage2);
-			Console.WriteLine(saveMonthlyStage2);
-			Console.WriteLine(startStage3);
-			Console.WriteLine(endStage3);
-			Console.WriteLine(annualIncreaseStage3);
-			Console.WriteLine(saveMonthlyStage3);
-			Console.WriteLine(saveFirstMonth);
-			Console.WriteLine(saveAtStage);
-
 			try
 			{
 				var client = new HttpClient();
 				string apiUrl = _configuration.GetConnectionString("BaseURL") + "/api/WhatIf/SaveWhatIf";
-
-				Console.WriteLine("Fine after api url");
 
 				var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
 				//set up auth header
@@ -75,6 +96,7 @@ namespace LifeChart.Controllers
 				{
 					CurrentAge = currentAge,
 					FFPAge = ffpAge,
+					MonthlySpending = monthlySpending,
 					Inflation = inflation,
 					BankAsset = bankAsset,
 					BankROI = bankROI,
@@ -90,6 +112,8 @@ namespace LifeChart.Controllers
 					SaveMonthlyStage1 = saveMonthlyStage1,
 					SaveMonthlyStage2 = saveMonthlyStage2,
 					SaveMonthlyStage3 = saveMonthlyStage3,
+					SaveFirstMonth = saveFirstMonth,
+					SaveAtStage = saveAtStage
 				};
 				// Serialize the request body to JSON
 				string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
@@ -102,19 +126,59 @@ namespace LifeChart.Controllers
 
 				// Send request with request body
 				HttpResponseMessage response = await client.SendAsync(request);
-
-				Console.WriteLine("Fine after client send");
-				Console.WriteLine(response);
-
 				if (response.IsSuccessStatusCode)
 				{
-					Console.WriteLine("Ok");
 					// Request was successful
+					return Ok(response);
 				}
 
 				return RedirectToAction("WhatIf");
 			}
 			catch (Exception ex) 
+			{
+				Console.WriteLine("Exception occured: " + ex);
+				return RedirectToAction("Logout", "Account");
+			}
+
+		}
+
+		public async Task<IActionResult> SaveSurvey([FromForm] SurveyModel model)
+		{
+			try
+			{
+				var client = new HttpClient();
+				string apiUrl = _configuration.GetConnectionString("BaseURL") + "/api/WhatIf/SaveSurvey";
+
+				var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);
+				//set up auth header
+				string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+				//set up request body
+				var requestBody = new
+				{
+					Name = model.Name,
+					Age = model.Age,
+					Gender = model.Gender
+				};
+				// Serialize the request body to JSON
+				string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
+
+				//add auth header
+				request.Headers.Add("Authorization", authHeader);
+				//add body
+				request.Content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
+
+
+				// Send request with request body
+				HttpResponseMessage response = await client.SendAsync(request);
+				if (response.IsSuccessStatusCode)
+				{
+					// Request was successful
+					return Ok(response);
+				}
+
+				return RedirectToAction("WhatIf");
+			}
+			catch (Exception ex)
 			{
 				Console.WriteLine("Exception occured: " + ex);
 				return RedirectToAction("Logout", "Account");

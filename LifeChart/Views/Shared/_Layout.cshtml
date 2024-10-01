@@ -33,7 +33,7 @@
 		font-weight: normal;
 	}
 
-	.nav-item {
+	.nav-item-lang {
 		font-weight: normal;
 		important
 	}
@@ -53,6 +53,12 @@
 		width: 70%
 	}
 
+	.navbar-nav {
+		display: flex;
+		align-items: center;
+		gap: 10px; 
+	}
+
 	a {
 		color: white;
 		text-decoration: none;
@@ -62,14 +68,78 @@
 		align-items: center;
 	}
 
+	.dropbtn {
+		background-color: white;
+		color: black;
+		padding: 10px;
+		font-size: 16px;
+		border: none;
+		border-radius: 20px;
+		cursor: pointer;
+	}
+
+	.dropbtn span {
+		padding-right: 10px;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 135px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.dropdown-content li {
+		padding: 8px 16px;
+	}
+
+	.dropdown-content li a {
+		color: black;
+		text-decoration: none;
+		display: block;
+		padding-left: 10px;
+	}
+
+
+	.dropdown-content li a:hover {
+		background-color: #ddd;
+	}
+
+	.dropdown-content li a span {
+		padding-right: 10px;
+	}
+
+	.language-dropdown:hover .dropdown-content {
+		display: block;
+	}
+
+	.language-dropdown:hover .dropbtn {
+		background-color: #ff6347;
+		color: white
+	}
+
+	.selected-language {
+		background-color: lightgray; /* Light gray background for selected language */
+		font-weight: bold;
+		padding: 8px;
+	}
+
 	.nav-link-help {
 		background-color: white;
 		padding: 5px 10px 5px 10px;
+		border: none;
 		border-radius: 20px;
 		cursor: pointer;
 		transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 		font-size: 16px;
 		font-weight: bold;
+		width: 84px;
+		height: 33px;
 	}
 
 	.nav-link-help:hover {
@@ -90,6 +160,11 @@
 		background-color: #ff6347; /* Tomato color on hover */
 		border-color: #ff6347; /* Tomato border on hover */
 		color: #fff; /* White text on hover */
+	}
+
+	.selected-language {
+		pointer-events: none;
+		cursor: default;
 	}
 
 	.nav-link-lang:hover {
@@ -209,7 +284,6 @@
 	.navbar-brand {
 		pointer-events: none;
 	}
-
 </style>
 
 <html lang="en">
@@ -221,6 +295,7 @@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/LifeChart.styles.css" asp-append-version="true" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
 </head>
 <body>
 	<header>
@@ -232,12 +307,21 @@
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link-lang" id="nav-en" href="?culture=en-US">English</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link-lang" id="nav-de" href="?culture=de-DE">Deutsch</a>
-					</li>
+					<div class="language-dropdown">
+						<button class="dropbtn" id="langbtn">Select Language</button>
+						<ul id="dropdown-lang" class="dropdown-content">
+							<li class="nav-item-lang">
+								<a class="nav-link-lang" id="nav-en" href="?culture=en-US">
+									<span class="fi fi-gb"></span> English
+								</a>
+							</li>
+							<li class="nav-item-lang">
+								<a class="nav-link-lang" id="nav-de" href="?culture=de-DE">
+									<span class="fi fi-de"></span> Deutsch
+								</a>
+							</li>
+						</ul>
+					</div>
 					<li class="nav-item-help">
 						<button class="nav-link-help" id="openModalBtn">Help</button>
 					</li>
@@ -256,7 +340,7 @@
 
 		<div id="myModal" class="modal">
 			<div id="modalContent" class="modal-content">
-				<span class="close">&times;</span>
+				<span id="closeModal" class="close">&times;</span>
 				<h1 class="help-about-main">MoneyMinder</h1>
 				<h2 class="help-about">In support of our thesis studies</h2>
 				<h3 class="help-about">This is a web application created as a means of gathering financial data necessary for research on the topic of financial freedom point (FFP)</h3>
@@ -287,6 +371,7 @@
 	</footer>
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jqueryui/jquery-ui.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -298,6 +383,86 @@
 </html>
 
 <script>
+	function chooseLanguage() {
+		const currentUrl = window.location.href;
+		let lang = "";
+
+		if (currentUrl.includes("?culture=en-US")) {
+			lang = "en-US";
+		}
+		else if (currentUrl.includes("?culture=de-DE")) {
+			lang = "de-DE";
+		}
+		else if (sessionStorage.getItem("lang") && sessionStorage.getItem("lang").length > 0) {
+			lang = sessionStorage.getItem("lang");
+		}
+		else {
+			lang = "en-US";
+		}
+
+		let element;
+		if (lang === "en-US") {
+			element = document.getElementById("nav-en");
+		}
+		else if (lang === "de-DE") {
+			element = document.getElementById("nav-de");
+		}
+
+		// Remove active class from all language options
+		var items = document.querySelectorAll('.dropdown-content li a');
+		items.forEach(function (item) {
+			item.classList.remove('selected-language');
+			item.innerHTML = item.innerHTML.replace(' ✔', ''); // Remove checkmark if exists
+		});
+
+		// Add active class to the selected language and insert checkmark
+		element.classList.add('selected-language');
+		element.innerHTML += ' ✔'; // Add checkmark to the selected option
+
+		return lang;
+	}
+
+	window.addEventListener('popstate', function (event) {
+		let iconName = "", lang = "";
+		if (chooseLanguage() === "en-US") {
+			iconName = "fi fi-gb";
+			lang = "English";
+		}
+		else if (chooseLanguage() === "de-DE") {
+			iconName = "fi fi-de";
+			lang = "Deutsch";
+		}
+
+		let element = document.createElement("span");
+		let langBtn = document.getElementById("langbtn");
+		element.setAttribute("class", iconName);
+		element.setAttribute("class", iconName);
+		langBtn.innerHTML = "";
+		langBtn.appendChild(element);
+		langBtn.innerHTML += lang;
+		langBtn.setAttribute("width", "84");
+	});
+
+	// Check URL on page load
+	window.addEventListener('load', function () {
+		let iconName = "", lang = "";
+		if (chooseLanguage() === "en-US") {
+			iconName = "fi fi-gb";
+			lang = "English";
+		}
+		else if (chooseLanguage() === "de-DE") {
+			iconName = "fi fi-de";
+			lang = "Deutsch";
+		}
+
+		let element = document.createElement("span");
+		let langBtn = document.getElementById("langbtn");
+		element.setAttribute("class", iconName);
+		langBtn.innerHTML = "";
+		langBtn.appendChild(element);
+		langBtn.innerHTML += lang;
+		langBtn.setAttribute("width", "84");
+	});
 
 	$("#nav-en, #nav-de").click(function() {
 		if (window.location.href.includes("?culture=en-US")) {
@@ -327,7 +492,7 @@
 	const modalImage = document.getElementById("modalImage");
 	const modalContent = document.getElementById("modalContent");
 	const openModalBtn = document.getElementById("openModalBtn");
-	const closeModalBtn = document.getElementsByClassName("close")[0];
+	const closeModalBtn = document.getElementById("closeModal");
 	const prevBtn = document.getElementById("prev-btn");
 	const nextBtn = document.getElementById("next-btn");
 
