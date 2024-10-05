@@ -151,16 +151,16 @@
     <value>aktuelles Alter</value>
   </data>
   <data name="ErrorCurrentAge" xml:space="preserve">
-    <value />
+    <value>aktuelles Alter sollte mindestens 1 Jahr betragen</value>
   </data>
   <data name="ErrorFFPAge" xml:space="preserve">
-    <value />
+    <value>FFP-Alter sollte mindestens 1 Jahr betragen</value>
   </data>
   <data name="ErrorSpending" xml:space="preserve">
-    <value />
+    <value>erwartete Ausgabe sollte nicht negativ sein</value>
   </data>
   <data name="FFPAge" xml:space="preserve">
-    <value>FFP Alter</value>
+    <value>FFP-Alter</value>
   </data>
   <data name="FromAge" xml:space="preserve">
     <value>vom Alter</value>
