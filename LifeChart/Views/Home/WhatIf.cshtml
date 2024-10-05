@@ -85,7 +85,7 @@
 			{
 				<input type="number" step="1" placeholder="Ex: 3" id="stage-number-input" required />
 			}
-			<button onclick="bulkAddToList()" id="btn-list-stages">Expand</button>
+			<button onclick="bulkAddToList()" id="btn-list-stages">@Localizer["ButtonExpand"]</button>
 		</div>
 		<div class="stages-list">
 			<ul id="myList">
@@ -225,8 +225,8 @@
 		</div>
 
 		<div class="whatif-buttons">
-			<button style="display: none" onclick="calculate()" id="calculate">Calculate</button>
-			<button style="display: none" onclick="save()" id="save">Save</button>
+			<button style="display: none" onclick="calculate()" id="calculate">@Localizer["ButtonCalculate"]</button>
+			<button style="display: none" onclick="save()" id="save">@Localizer["ButtonSave"]</button>
 		</div>
 
 		<br />
@@ -564,6 +564,9 @@
 </style>
 @section scripts {
 <script>
+
+	let outerLang = "";
+
 	function checkUrlForLang() {
 		const currentUrl = window.location.href; 
 		let lang = "";
@@ -582,6 +585,7 @@
 		}
 
 		saveLanguagePreference(lang);
+		outerLang = lang;
 	}
 
 	// Event listener for popstate (back/forward navigation)
@@ -766,7 +770,7 @@
 			const newListItem = document.createElement("li");
 			const linkElement = document.createElement("a");
 			linkElement.setAttribute("id", "a-stage-" + (i + 1));
-			linkElement.innerText = "Stage " + (i + 1);
+			linkElement.innerText = "@Localizer["Stage"] " + (i + 1);
 			linkElement.href = "#" + (i + 1);
 			linkElement.style.color = "black";
 
@@ -1094,12 +1098,28 @@
 			saveEnough = false;
 		}
 		else {
-			document.getElementById("answer").innerText= "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND"  + " @Localizer["AnswerSecondPart"] " + Math.ceil(moneyToSavePerMonth) + " VND";
+			const formattedSavePerMonth = AutoNumeric.format(Math.ceil(moneyToSavePerMonth), {
+				digitGroupSeparator: ',',
+				decimalCharacter: '.',
+				decimalPlaces: 0
+			});
+
+			if (outerLang === "en-US") {
+				document.getElementById("answer").innerText = "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND" + " @Localizer["AnswerSecondPart"] " + formattedSavePerMonth + " VND";
+			}
+			else if (outerLang === "de-DE") {
+					document.getElementById("answer").innerText = "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND" + " @Localizer["AnswerSecondPart"]";
+			}
 			let i = document.getElementById("myList").getElementsByTagName("li").length;
 			for (let j = 1; j <= i; j++) {
 				if (document.getElementById("save-monthly-" + j).value.length === 0) {
 					document.getElementById("at-stage").value = j;
-					document.getElementById("answer").innerText+= " @Localizer["AnswerLastPart"]" + ` ${j}`;
+						if (outerLang === "en-US") {
+							document.getElementById("answer").innerText += " @Localizer["AnswerLastPart"]" + ` ${j}`;
+						}
+						else if (outerLang === "de-DE") {
+							document.getElementById("answer").innerText += ` ${j} ` + formattedSavePerMonth + " VND" + " @Localizer["AnswerLastPart"]";
+						}
 					break;
 				}
 			}
@@ -1118,18 +1138,18 @@
 			data: {
 				labels: xValues,
 				datasets: [{
-					label: 'Money to save annual',
+					label: "@Localizer["LabelToSaveAnnually"]",
 					data: moneyAnnual,
 					borderColor: "yellow",
 					fill: false
 				}, {
-					label: 'Goal',
+					label: "@Localizer["LabelGoal"]",
 					data: goal,
 					borderColor: "green",
 					fill: false
 				}
 					, {
-					label: 'Money generated',
+					label: "@Localizer["LabelGenerated"]",
 					data: moneyCreated,
 					borderColor: "red",
 					fill: false

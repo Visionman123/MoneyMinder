@@ -1,4 +1,102 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - LifeChart</title>
+	<link rel="icon" type="image/x-icon" href="/Assets/logo.png">
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/LifeChart.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+</head>
+<body>
+	<header>
+		<iframe src="../Home/Portfolio" id="externalFrame"> </iframe>
+		<nav class="nav">
+			<div class="logo-space">
+				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative">
+				<a class="navbar-brand" asp-area="" asp-page="" style="text-decoration:none">MoneyMinder</a>
+			</div>
+			<div class="navbar-collapse">
+				<ul class="navbar-nav">
+					<div class="language-dropdown">
+						<button class="dropbtn" id="langbtn">@Localizer["SelectLanguage"]</button>
+						<ul id="dropdown-lang" class="dropdown-content">
+							<li class="nav-item-lang">
+								<a class="nav-link-lang" id="nav-en" href="?culture=en-US">
+									<span class="fi fi-gb"></span> English
+								</a>
+							</li>
+							<li class="nav-item-lang">
+								<a class="nav-link-lang" id="nav-de" href="?culture=de-DE">
+									<span class="fi fi-de"></span> Deutsch
+								</a>
+							</li>
+						</ul>
+					</div>
+					<li class="nav-item-help">
+						<button class="nav-link-help" id="openModalBtn">@Localizer["ButtonHelp"]</button>
+					</li>
+					<li class="nav-item-logout">
+						<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["ButtonLogOut"]</a>
+					</li>
+
+				</ul>
+
+			</div>
+
+		</nav>
+	</header>
+	<div class="container">
+		@RenderBody()
+
+		<div id="myModal" class="modal">
+			<div id="modalContent" class="modal-content">
+				<span id="closeModal" class="close">&times;</span>
+				<h1 class="help-about-main">MoneyMinder</h1>
+				<h2 class="help-about">@Localizer["HelpAbout1"]</h2>
+				<h3 class="help-about">@Localizer["HelpAbout2"]</h3>
+				<h3 class="help-about">@Localizer["HelpAbout3"]</h3>
+				<div class="image-container">
+					<button id="prev-btn">←</button>
+					<div id="intro">
+						<p>@Localizer["IntroAbout1"]</p>
+						<p>@Localizer["IntroAbout2"]</p>
+						<p>@Localizer["IntroAbout3"]</p>
+						<p>@Localizer["IntroAbout4"]</p>
+						<p>@Localizer["IntroAbout5"]</p>
+
+						<p style="color: red">@Localizer["IntroNote1"]</p>
+						<p style="color: red">@Localizer["IntroNote2"]</p>
+					</div>
+					<img id="modalImage" src="" alt="Image Carousel">
+					<button id="next-btn">→</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; 2023 - LifeChart - <a asp-area="" asp-page="/Privacy">Privacy</a>
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</>
+
 <style>
 	li {
 		display: inline;
@@ -286,101 +384,7 @@
 	}
 </style>
 
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - LifeChart</title>
-	<link rel="icon" type="image/x-icon" href="/Assets/logo.png">
-	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/LifeChart.styles.css" asp-append-version="true" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
-</head>
-<body>
-	<header>
-		<iframe src="../Home/Portfolio" id="externalFrame"> </iframe>
-		<nav class="nav">
-			<div class="logo-space" >
-				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative" >
-				<a class="navbar-brand" asp-area="" asp-page=""  style="text-decoration:none">MoneyMinder</a>
-			</div>
-			<div class="navbar-collapse">
-				<ul class="navbar-nav">
-					<div class="language-dropdown">
-						<button class="dropbtn" id="langbtn">Select Language</button>
-						<ul id="dropdown-lang" class="dropdown-content">
-							<li class="nav-item-lang">
-								<a class="nav-link-lang" id="nav-en" href="?culture=en-US">
-									<span class="fi fi-gb"></span> English
-								</a>
-							</li>
-							<li class="nav-item-lang">
-								<a class="nav-link-lang" id="nav-de" href="?culture=de-DE">
-									<span class="fi fi-de"></span> Deutsch
-								</a>
-							</li>
-						</ul>
-					</div>
-					<li class="nav-item-help">
-						<button class="nav-link-help" id="openModalBtn">Help</button>
-					</li>
-					<li class="nav-item-logout">
-						<a class="nav-link-logout" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
-					</li>
-					
-				</ul>
-				
-			</div>
 
-		</nav>
-	</header>
-	<div class="container">
-		@RenderBody()
-
-		<div id="myModal" class="modal">
-			<div id="modalContent" class="modal-content">
-				<span id="closeModal" class="close">&times;</span>
-				<h1 class="help-about-main">MoneyMinder</h1>
-				<h2 class="help-about">In support of our thesis studies</h2>
-				<h3 class="help-about">This is a web application created as a means of gathering financial data necessary for research on the topic of financial freedom point (FFP)</h3>
-				<h3 class="help-about">Your participation is greatly appreciated!</h3>
-				<div class="image-container">
-					<button id="prev-btn">←</button>
-					<div id="intro">
-						<p>How to use our application:</p>
-						<p>This is the first page (introduction page)</p>
-						<p>You can use the "&#8592;" and "&#8594;" buttons to navigate between pages</p>
-						<p>An image with exaplanation will be displayed on each following page</p>
-						<p>You can also use the drag feature to move this pop-up around</p>
-
-						<p style="color: red">Important note: Inputs are not affected by inflation</p>
-						<p style="color: red">Important note: The data provided will only be used for research purposes</p>
-					</div>
-					<img id="modalImage" src="" alt="Image Carousel">
-					<button id="next-btn">→</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2023 - LifeChart - <a asp-area="" asp-page="/Privacy">Privacy</a>
-		</div>
-	</footer>
-
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/jqueryui/jquery-ui.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-	<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-
-	@await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
 
 <script>
 	function chooseLanguage() {

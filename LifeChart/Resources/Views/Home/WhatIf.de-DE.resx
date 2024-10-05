@@ -117,7 +117,127 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnnualIncrease" xml:space="preserve">
+    <value>jährliche Steigerung</value>
+  </data>
+  <data name="AnswerFirstPart" xml:space="preserve">
+    <value>Wenn Sie nach der Pensionierung oder wenn Sie kein Einkommen mehr verdienen,</value>
+  </data>
+  <data name="AnswerInfinity" xml:space="preserve">
+    <value>Im gewünschten Alter werden Sie den Financial Freedom Point nicht erreichen</value>
+  </data>
+  <data name="AnswerLastPart" xml:space="preserve">
+    <value>sparen</value>
+  </data>
+  <data name="AnswerMinusInfinity" xml:space="preserve">
+    <value>Den Financial Freedom Point erreichen Sie im gewünschten Alter</value>
+  </data>
+  <data name="AnswerSecondPart" xml:space="preserve">
+    <value>ausgeben möchten, müssen Sie im ersten Monat der Phase</value>
+  </data>
+  <data name="BankInput" xml:space="preserve">
+    <value>Bankguthaben (VND)</value>
+  </data>
+  <data name="ButtonCalculate" xml:space="preserve">
+    <value>berechnen</value>
+  </data>
+  <data name="ButtonExpand" xml:space="preserve">
+    <value>expandieren</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>speichern</value>
+  </data>
   <data name="CurrentAge" xml:space="preserve">
     <value>aktuelles Alter</value>
+  </data>
+  <data name="FFPAge" xml:space="preserve">
+    <value>FFP Alter</value>
+  </data>
+  <data name="FromAge" xml:space="preserve">
+    <value>vom Alter</value>
+  </data>
+  <data name="Inflation" xml:space="preserve">
+    <value>Inflation (%)</value>
+  </data>
+  <data name="LabelGenerated" xml:space="preserve">
+    <value>Geld eingebracht</value>
+  </data>
+  <data name="LabelGoal" xml:space="preserve">
+    <value>Ziel</value>
+  </data>
+  <data name="LabelToSaveAnnually" xml:space="preserve">
+    <value>Geld, das jährlich gespart werden muss</value>
+  </data>
+  <data name="MissingValueOnInputFields" xml:space="preserve">
+    <value>Fehlender Wert in den erforderlichen Eingabefeldern</value>
+  </data>
+  <data name="MissingValueOnTopInputFields" xml:space="preserve">
+    <value>Fehlender Wert in den oberen Eingabefeldern</value>
+  </data>
+  <data name="NumberOfStages" xml:space="preserve">
+    <value>Anzahl der Phasen</value>
+  </data>
+  <data name="RequestError" xml:space="preserve">
+    <value>Bei Ihrer Anfrage ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="RoI" xml:space="preserve">
+    <value>Zinssatz (%)</value>
+  </data>
+  <data name="SavePerMonth" xml:space="preserve">
+    <value>Erspanis pro Monat</value>
+  </data>
+  <data name="Spending" xml:space="preserve">
+    <value>erwartete Ausgabe (VND)</value>
+  </data>
+  <data name="Stage" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="TitleAnnualIncrease" xml:space="preserve">
+    <value>Erwarteter jährlicher Anstieg Ihrer monatlichen Ersparnisse in dieser Phase</value>
+  </data>
+  <data name="TitleBankInput" xml:space="preserve">
+    <value>Aktueller Geldbetrag auf Ihrer Bank</value>
+  </data>
+  <data name="TitleCurrentAge" xml:space="preserve">
+    <value>Ihr aktuelles Alter</value>
+  </data>
+  <data name="TitleFFPAge" xml:space="preserve">
+    <value>Das Alter, in dem Sie planen, nicht mehr zu arbeiten oder kein Einkommen zu erwirtschaften</value>
+  </data>
+  <data name="TitleFromAge" xml:space="preserve">
+    <value>Ihr Einstiegsalter in dieser Phase</value>
+  </data>
+  <data name="TitleInflation" xml:space="preserve">
+    <value>Inflationsrate in Ihrem Land</value>
+  </data>
+  <data name="TitleNumberOfStages" xml:space="preserve">
+    <value>Verschiedene Lebensabschnitte (maximal 3)</value>
+  </data>
+  <data name="TitleRoI" xml:space="preserve">
+    <value>Der Zinssatz für Ihre Bankersparnisse</value>
+  </data>
+  <data name="TitleSavePerMonth" xml:space="preserve">
+    <value>Der Betrag, den Sie in dieser Phase jeden Monat sparen können. Wenn dieses Feld leer bleibt, berechnet die App den Betrag automatisch für Sie basierend auf Ihren Eingabedaten und finanziellen Zielen. Wenn es mehrere Stufen gibt, stellen Sie sicher, dass mindestens eine Stufe leer bleibt, um genaue Berechnungen zu ermöglichen</value>
+  </data>
+  <data name="TitleSpending" xml:space="preserve">
+    <value>Erwartete monatliche Ausgaben nach der Pensionierung</value>
+  </data>
+  <data name="TitleToAge" xml:space="preserve">
+    <value>Ihr letztes Alter in dieser Phase</value>
+  </data>
+  <data name="ToAge" xml:space="preserve">
+    <value>bis zum Alter</value>
+  </data>
+  <data name="ToAgeEqualToFFPAge" xml:space="preserve">
+    <value>Bis zum Alter muss dem FFP-Alter entsprechen</value>
+  </data>
+  <data name="ToAgeHigherThanFromAge" xml:space="preserve">
+    <value>Bis zum Alter muss höher sein als Von Alter</value>
+  </data>
+  <data name="ToAgeLowerOrEqualToFFPAge" xml:space="preserve">
+    <value>Bis zum Alter muss kleiner oder gleich dem FFP-Alter sein</value>
+  </data>
+  <data name="ValidStageNumber" xml:space="preserve">
+    <value>Die gültige Anzahl der Ebenen liegt zwischen 1 und 3</value>
   </data>
 </root>

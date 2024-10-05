@@ -117,127 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnnualIncrease" xml:space="preserve">
-    <value>Annual Increase</value>
+  <data name="ButtonHelp" xml:space="preserve">
+    <value>Help</value>
   </data>
-  <data name="AnswerFirstPart" xml:space="preserve">
-    <value>If you want to spend</value>
+  <data name="ButtonLogOut" xml:space="preserve">
+    <value>Log out</value>
   </data>
-  <data name="AnswerInfinity" xml:space="preserve">
-    <value>You will not achieve Financial Freedom Point at the desired age</value>
+  <data name="HelpAbout1" xml:space="preserve">
+    <value>In support of our thesis studies</value>
   </data>
-  <data name="AnswerLastPart" xml:space="preserve">
-    <value>at the first month of stage</value>
+  <data name="HelpAbout2" xml:space="preserve">
+    <value>This is a web application created as a means of gathering financial data necessary for research on the topic of financial freedom point (FFP)</value>
   </data>
-  <data name="AnswerMinusInfinity" xml:space="preserve">
-    <value>You will achieve Financial Freedom Point at the desired age</value>
+  <data name="HelpAbout3" xml:space="preserve">
+    <value>Your participation is greatly appreciated!</value>
   </data>
-  <data name="AnswerSecondPart" xml:space="preserve">
-    <value>each month after retirement or when you stop generating income, you will need to save</value>
+  <data name="IntroAbout1" xml:space="preserve">
+    <value>How to use our application:</value>
   </data>
-  <data name="BankInput" xml:space="preserve">
-    <value>Bank Asset (VND)</value>
+  <data name="IntroAbout2" xml:space="preserve">
+    <value>This is the first page (introduction)</value>
   </data>
-  <data name="ButtonCalculate" xml:space="preserve">
-    <value>Calculate</value>
+  <data name="IntroAbout3" xml:space="preserve">
+    <value>You can use the "&amp;#8592;" and "&amp;#8594;" buttons to navigate between pages</value>
   </data>
-  <data name="ButtonExpand" xml:space="preserve">
-    <value>Expand</value>
+  <data name="IntroAbout4" xml:space="preserve">
+    <value>An image with explanation will be displayed on each subsequent page</value>
   </data>
-  <data name="ButtonSave" xml:space="preserve">
-    <value>Save</value>
+  <data name="IntroAbout5" xml:space="preserve">
+    <value>You can also drag this popup around</value>
   </data>
-  <data name="CurrentAge" xml:space="preserve">
-    <value>Current Age</value>
+  <data name="IntroNote1" xml:space="preserve">
+    <value>Important note: Inputs are not affected by inflation</value>
   </data>
-  <data name="FFPAge" xml:space="preserve">
-    <value>Financial Freedom Point (FFP) Age </value>
+  <data name="IntroNote2" xml:space="preserve">
+    <value>Important note: The data provided will only be used for research purposes</value>
   </data>
-  <data name="FromAge" xml:space="preserve">
-    <value>From Age</value>
-  </data>
-  <data name="Inflation" xml:space="preserve">
-    <value>Inflation (%)</value>
-  </data>
-  <data name="LabelGenerated" xml:space="preserve">
-    <value>Money generated</value>
-  </data>
-  <data name="LabelGoal" xml:space="preserve">
-    <value>Goal</value>
-  </data>
-  <data name="LabelToSaveAnnually" xml:space="preserve">
-    <value>Money to save annually</value>
-  </data>
-  <data name="MissingValueOnInputFields" xml:space="preserve">
-    <value>Missing value on required input fields</value>
-  </data>
-  <data name="MissingValueOnTopInputFields" xml:space="preserve">
-    <value>Missing value on top input fields</value>
-  </data>
-  <data name="NumberOfStages" xml:space="preserve">
-    <value>Number of stages</value>
-  </data>
-  <data name="RequestError" xml:space="preserve">
-    <value>There is an error with your request</value>
-  </data>
-  <data name="RoI" xml:space="preserve">
-    <value>Interest Rate (%)</value>
-  </data>
-  <data name="SavePerMonth" xml:space="preserve">
-    <value>Save Per Month</value>
-  </data>
-  <data name="Spending" xml:space="preserve">
-    <value>Expected Spending (VND)</value>
-  </data>
-  <data name="Stage" xml:space="preserve">
-    <value>Stage</value>
-  </data>
-  <data name="TitleAnnualIncrease" xml:space="preserve">
-    <value>Expected annual increase in your monthly savings in this stage</value>
-  </data>
-  <data name="TitleBankInput" xml:space="preserve">
-    <value>Current amount of money in your bank </value>
-  </data>
-  <data name="TitleCurrentAge" xml:space="preserve">
-    <value>Your current age</value>
-  </data>
-  <data name="TitleFFPAge" xml:space="preserve">
-    <value>The age at which you plan to stop working or generating income</value>
-  </data>
-  <data name="TitleFromAge" xml:space="preserve">
-    <value>Your starting age in this stage</value>
-  </data>
-  <data name="TitleInflation" xml:space="preserve">
-    <value>Inflation rate in your country</value>
-  </data>
-  <data name="TitleNumberOfStages" xml:space="preserve">
-    <value>Different stages of your life (Up to a maximum of 3)</value>
-  </data>
-  <data name="TitleRoI" xml:space="preserve">
-    <value>The interest rate on your bank savings</value>
-  </data>
-  <data name="TitleSavePerMonth" xml:space="preserve">
-    <value>The amount you can save each month in this stage. If this field is left blank, the app will automatically calculate the amount for you based on your input data and financial goals. For multiple stages, ensure at least one stage is left blank for accurate calculations</value>
-  </data>
-  <data name="TitleSpending" xml:space="preserve">
-    <value>Expected monthly expenditure after retirement</value>
-  </data>
-  <data name="TitleToAge" xml:space="preserve">
-    <value>Your ending age in this stage</value>
-  </data>
-  <data name="ToAge" xml:space="preserve">
-    <value>To Age</value>
-  </data>
-  <data name="ToAgeEqualToFFPAge" xml:space="preserve">
-    <value>To Age must be equal to FFP Age</value>
-  </data>
-  <data name="ToAgeHigherThanFromAge" xml:space="preserve">
-    <value>To Age must be higher than From Age</value>
-  </data>
-  <data name="ToAgeLowerOrEqualToFFPAge" xml:space="preserve">
-    <value>To Age must be lower or equal to FFP Age</value>
-  </data>
-  <data name="ValidStageNumber" xml:space="preserve">
-    <value>Valid number of stages is between 1-3</value>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select language</value>
   </data>
 </root>
