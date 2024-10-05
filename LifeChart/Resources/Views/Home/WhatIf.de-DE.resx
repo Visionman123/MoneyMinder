@@ -150,6 +150,15 @@
   <data name="CurrentAge" xml:space="preserve">
     <value>aktuelles Alter</value>
   </data>
+  <data name="ErrorCurrentAge" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ErrorFFPAge" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ErrorSpending" xml:space="preserve">
+    <value />
+  </data>
   <data name="FFPAge" xml:space="preserve">
     <value>FFP Alter</value>
   </data>
@@ -170,9 +179,6 @@
   </data>
   <data name="MissingValueOnInputFields" xml:space="preserve">
     <value>Fehlender Wert in den erforderlichen Eingabefeldern</value>
-  </data>
-  <data name="MissingValueOnTopInputFields" xml:space="preserve">
-    <value>Fehlender Wert in den oberen Eingabefeldern</value>
   </data>
   <data name="NumberOfStages" xml:space="preserve">
     <value>Anzahl der Phasen</value>

@@ -11,79 +11,80 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
 
+
 <div class="what-if" id="what-if" style="display: none">
-	<div class="input-container">
+	<div id="topmost-input-container" class="input-container">
 		<p>What-If Scenario</p>
 		<label title="@Localizer["TitleCurrentAge"]" for="current-age-input" class="whatif-labels">@Localizer["CurrentAge"]</label>
 		@if (Model.CurrentAge != -1)
 		{
-			<input type="number" placeholder="Ex: 18" id="current-age-input" value="@Model.CurrentAge" required />
+			<input type="number" min="1" placeholder="Ex: 18" id="current-age-input" value="@Model.CurrentAge" autocomplete="off" required />
 		}
 		else
 		{
-			<input type="number" placeholder="Ex: 18" id="current-age-input" required />
+			<input type="number" min="1" placeholder="Ex: 18" id="current-age-input" autocomplete="off" required />
 		}
 
 		<label title="@Localizer["TitleFFPAge"]" for="ffp-age-input" class="whatif-labels">@Localizer["FFPAge"]</label>
 		@if (Model.FFPAge != -1)
 		{
-			<input type="number" placeholder="Ex: 65" id="ffp-age-input" value="@Model.FFPAge" required />
+			<input type="number" min="1" placeholder="Ex: 65" id="ffp-age-input" value="@Model.FFPAge" autocomplete="off" required />
 		}
 		else
 		{
-			<input type="number" placeholder="Ex: 65" id="ffp-age-input" required />
+			<input type="number" min="1" placeholder="Ex: 65" id="ffp-age-input" autocomplete="off" required />
 		}
 
 		<label title="@Localizer["TitleSpending"]" for="spend-input" class="whatif-labels">@Localizer["Spending"]</label>
 		@if (Model.MonthlySpending != -1) 
 		{
-			<input type="text" placeholder="Ex: 30,000,000" id="spend-input" value="@Model.MonthlySpending" required />
+			<input type="text" min="0" placeholder="Ex: 30,000,000" id="spend-input" value="@Model.MonthlySpending" autocomplete="off" required />
 		}
 		else
 		{
-			<input type="text" placeholder="Ex: 30,000,000" id="spend-input"  required />
+			<input type="text" min="0" placeholder="Ex: 30,000,000" id="spend-input" autocomplete="off" required />
 			
 		}
 
 		<label title="@Localizer["TitleInflation"]" for="inflation-input" class="whatif-labels">@Localizer["Inflation"]</label>
 		@if (Model.Inflation != -1)
 		{
-			<input type="number" placeholder="Ex: 3.7" id="inflation-input" value="@Model.Inflation" required />
+			<input type="number" placeholder="Ex: 3.7" id="inflation-input" value="@Model.Inflation" autocomplete="off" required />
 		}
 		else
 		{
-			<input type="number" placeholder="Ex: 3.7" id="inflation-input" value="@Model.DefaultInflation" required />
+			<input type="number" placeholder="Ex: 3.7" id="inflation-input" value="@Model.DefaultInflation" autocomplete="off" required />
 		}
 
 		<label title="@Localizer["TitleBankInput"]" for="bank-input" class="whatif-labels">@Localizer["BankInput"]</label>
 		@if (Model.BankAsset != -1)
 		{
-			<input type="text" placeholder="Ex: 100,000,000" id="bank-input" value="@Model.BankAsset" required />
+			<input type="text" placeholder="Ex: 100,000,000" id="bank-input" value="@Model.BankAsset" autocomplete="off" required />
 		}
 		else
 		{
-			<input type="text" placeholder="Ex: 100,000,000" id="bank-input" required />
+			<input type="text" placeholder="Ex: 100,000,000" id="bank-input" autocomplete="off" required />
 		}
 
 		<label title="@Localizer["TitleRoI"]" for="roi-input" class="whatif-labels">@Localizer["RoI"]</label>
 		@if (Model.BankROI != -1)
 		{
-			<input type="text" id="roi-input" placeholder="Ex: 4.7" value="@Model.BankROI" required />
+			<input type="text" id="roi-input" placeholder="Ex: 4.7" value="@Model.BankROI" autocomplete="off" required />
 		}
 		else
 		{
-			<input type="text" id="roi-input" placeholder="Ex: 4.7" required />
+			<input type="text" id="roi-input" placeholder="Ex: 4.7" autocomplete="off" required />
 		}
 
 		<label title="@Localizer["TitleNumberOfStages"]" for="stage-number-input" class="whatif-labels">@Localizer["NumberOfStages"]</label>
 		<div class="stage-number-input-wrapper">
 			@if (@Model.FFPStages.Count > 0)
 			{
-				<input type="number" step="1" placeholder="Ex: 3" id="stage-number-input" value="@Model.FFPStages.Count" required />
+				<input type="number" min="1" step="1" placeholder="Ex: 3" id="stage-number-input" value="@Model.FFPStages.Count" autocomplete="off" required />
 			}
 			else
 			{
-				<input type="number" step="1" placeholder="Ex: 3" id="stage-number-input" required />
+				<input type="number" min="1" step="1" placeholder="Ex: 3" id="stage-number-input" autocomplete="off" required />
 			}
 			<button onclick="bulkAddToList()" id="btn-list-stages">@Localizer["ButtonExpand"]</button>
 		</div>
@@ -99,40 +100,40 @@
 			<label title="@Localizer["TitleFromAge"]" id="lbl-current-age-input-1" for="current-age-input-1" class="whatif-labels">@Localizer["FromAge"]</label>
 			@if (Model.FFPStages.Count >= 1) 
 			{
-				<input type="number" placeholder="Ex: 18" id="current-age-input-1" value="@Model.FFPStages[0].FromAge" required disabled/>
+				<input type="number" placeholder="Ex: 18" id="current-age-input-1" value="@Model.FFPStages[0].FromAge" autocomplete="off" required disabled />
 			}
 			else
 			{
-				<input type="number" placeholder="Ex: 18" id="current-age-input-1" required disabled />
+				<input type="number" placeholder="Ex: 18" id="current-age-input-1" autocomplete="off" required disabled />
 			}
 
 			<label title="@Localizer["TitleToAge"]" id="lbl-ffp-age-input-1" for="ffp-age-input-1" class="whatif-labels">@Localizer["ToAge"]</label>
 			@if (Model.FFPStages.Count >= 1) 
 			{
-				<input type="number" placeholder="Ex: 39" id="ffp-age-input-1" value="@Model.FFPStages[0].ToAge" required />
+				<input type="number" placeholder="Ex: 39" id="ffp-age-input-1" value="@Model.FFPStages[0].ToAge" autocomplete="off" required />
 			}
 			else
 			{
-				<input type="number" placeholder="Ex: 39" id="ffp-age-input-1" required />
+				<input type="number" placeholder="Ex: 39" id="ffp-age-input-1" autocomplete="off" required />
 			}
 
 			<label title="@Localizer["TitleAnnualIncrease"]" id="lbl-increase-input-1" for="increase-input-1" class="whatif-labels">@Localizer["AnnualIncrease"] (%)</label>
 			@if (Model.FFPStages.Count >= 1) 
 			{
-				<input type="number" placeholder="Ex: 10" id="increase-input-1" value="@Model.FFPStages[0].AnnualSavingIncrease" required />
+				<input type="number" placeholder="Ex: 10" id="increase-input-1" value="@Model.FFPStages[0].AnnualSavingIncrease" autocomplete="off" required />
 			}
 			else
 			{
-				<input type="number" placeholder="Ex: 10" id="increase-input-1" required />
+				<input type="number" placeholder="Ex: 10" id="increase-input-1" autocomplete="off" required />
 				
 			}
 			<label title="@Localizer["TitleSavePerMonth"]" id="lbl-save-monthly-1" for="save-monthly-1" class="whatif-labels">@Localizer["SavePerMonth"] (VND)</label>
 			@if (Model.FFPStages.Count >= 1) {
-				<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-1" value="@Model.FFPStages[0].SavePerMonth" />
+				<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-1" value="@Model.FFPStages[0].SavePerMonth" autocomplete="off" />
 			}
 			else
 			{
-				<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-1" />
+				<input type="text" placeholder="Ex: 7,000,000" id="save-monthly-1" autocomplete="off" />
 			}
 		</div>
 
@@ -314,7 +315,7 @@
 		flex-direction: column;
 		align-items: start;
 		width: 25vw;
-		height: 105vh;
+		height: fit-content;
 		margin-left: 5vw;
 		border-radius: 30px;
 	}
@@ -463,18 +464,19 @@
 	  margin: 0; 
 	}
 
-	.ans{
+	.ans {
 		font-family:"Outfit";
 	}
-	.answer{
+	.answer {
 		background-color: white;
 		border-radius: 30px;
-		margin-top:20px;
-		height:15vh;
-		display:flex;
-		flex-direction:column;
-		justify-content:center;
-		align-items:center;
+		margin-top: 20px;
+		height: 15vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 60vw;
 	}
 
 	#answer {
@@ -560,6 +562,10 @@
 
 	footer {
 		display: none;
+	}
+
+	.invalid {
+		box-shadow: 0 0 5px 2px red;
 	}
 </style>
 @section scripts {
@@ -735,6 +741,16 @@
 	});
 
 	function validateTopMostInput() {
+		const inputs = document.querySelectorAll('#topmost-input-container input[required]');
+		inputs.forEach(input => {
+			if (input.value.length === 0) {
+				input.classList.add('invalid');
+			} 
+			else {
+				input.classList.remove('invalid');
+			}
+		});
+
 		if (document.getElementById("current-age-input").value.length === 0
 			|| document.getElementById("ffp-age-input").value.length === 0
 			|| document.getElementById("spend-input").value.length === 0
@@ -743,9 +759,23 @@
 			|| document.getElementById("roi-input").value.length === 0
 			|| document.getElementById("stage-number-input").value.length === 0
 		) {
-			document.getElementById("error-line").innerText = "@Localizer["MissingValueOnTopInputFields"]";
+			document.getElementById("error-line").innerText = "@Localizer["MissingValueOnInputFields"]";
 			return false;
 		}
+
+		if (parseInt(document.getElementById("current-age-input").value) < 1) {
+			document.getElementById("error-line").innerText = "@Localizer["ErrorCurrentAge"]";
+			return false;
+		}
+		if (parseInt(document.getElementById("ffp-age-input").value) < 1) {
+			document.getElementById("error-line").innerText = "@Localizer["ErrorFFPAge"]";
+			return false;
+		}
+		if (parseFloat(document.getElementById("spend-input").value.replaceAll(",", "")) < 0) {
+			document.getElementById("error-line").innerText = "@Localizer["ErrorSpending"]";
+			return false;
+		}
+
 		return true;
 	}
 

@@ -150,6 +150,15 @@
   <data name="CurrentAge" xml:space="preserve">
     <value>Current Age</value>
   </data>
+  <data name="ErrorCurrentAge" xml:space="preserve">
+    <value>Current Age should be at least 1</value>
+  </data>
+  <data name="ErrorFFPAge" xml:space="preserve">
+    <value>FFP Age should be at least 1</value>
+  </data>
+  <data name="ErrorSpending" xml:space="preserve">
+    <value>Expected Spending should not be negative</value>
+  </data>
   <data name="FFPAge" xml:space="preserve">
     <value>Financial Freedom Point (FFP) Age </value>
   </data>
@@ -170,9 +179,6 @@
   </data>
   <data name="MissingValueOnInputFields" xml:space="preserve">
     <value>Missing value on required input fields</value>
-  </data>
-  <data name="MissingValueOnTopInputFields" xml:space="preserve">
-    <value>Missing value on top input fields</value>
   </data>
   <data name="NumberOfStages" xml:space="preserve">
     <value>Number of stages</value>
@@ -238,6 +244,6 @@
     <value>To Age must be lower or equal to FFP Age</value>
   </data>
   <data name="ValidStageNumber" xml:space="preserve">
-    <value>Valid number of stages is between 1-3</value>
+    <value>Number of stages from 1-3</value>
   </data>
 </root>

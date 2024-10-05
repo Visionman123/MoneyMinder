@@ -39,7 +39,6 @@ namespace LifeChart.Controllers
 				WhatIfModel model = response;
 				if (model.FFPStages != null && model.FFPStages.Count > 0)
 				{
-					Console.WriteLine("Yessss");
 					Response.Cookies.Append("AnsweredSurvey", "true", new CookieOptions
 					{
 						Expires = DateTimeOffset.UtcNow.AddDays(1)
@@ -146,6 +145,11 @@ namespace LifeChart.Controllers
 		{
 			try
 			{
+				Response.Cookies.Append("AnsweredSurvey", "true", new CookieOptions
+				{
+					Expires = DateTimeOffset.UtcNow.AddDays(1)
+				});
+
 				var client = new HttpClient();
 				string apiUrl = _configuration.GetConnectionString("BaseURL") + "/api/WhatIf/SaveSurvey";
 
