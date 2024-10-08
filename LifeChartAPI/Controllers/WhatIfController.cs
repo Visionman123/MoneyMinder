@@ -71,7 +71,7 @@ namespace LifeChartAPI.Controllers
 				saveWhatIf.StartStage1, saveWhatIf.EndStage1, saveWhatIf.AnnualIncreaseStage1, saveWhatIf.SaveMonthlyStage1,
 				saveWhatIf.StartStage2, saveWhatIf.EndStage2, saveWhatIf.AnnualIncreaseStage2, saveWhatIf.SaveMonthlyStage2,
 				saveWhatIf.StartStage3, saveWhatIf.EndStage3, saveWhatIf.AnnualIncreaseStage3, saveWhatIf.SaveMonthlyStage3,
-				saveWhatIf.SaveFirstMonth, saveWhatIf.SaveAtStage);
+				saveWhatIf.SaveFirstMonth, saveWhatIf.SaveAtStage, saveWhatIf.SaveEnough, saveWhatIf.FFPAtAge);
 			if (status == "200")
 			{
 				return Ok(200);
@@ -131,5 +131,7 @@ namespace LifeChartAPI.Controllers
 		public double SaveMonthlyStage3 { get; set; }
 		public double SaveFirstMonth { get; set; }
 		public int SaveAtStage { get; set; }
+		public bool SaveEnough { get; set ; }
+		public int FFPAtAge { get; set; }
 	}
 }

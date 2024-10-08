@@ -90,7 +90,7 @@ namespace LifeChartAPI.Models
 			int? startStage1, int? endStage1, double? annualIncreaseStage1, double? saveMonthlyStage1,
 			int? startStage2, int? endStage2, double? annualIncreaseStage2, double? saveMonthlyStage2,
 			int? startStage3, int? endStage3, double? annualIncreaseStage3, double? saveMonthlyStage3,
-			double? saveFirstMonth, int? saveAtStage)
+			double? saveFirstMonth, int? saveAtStage, bool? saveEnough, int? ffpAtAge)
 		{
 			SqlConnection connection = null;
 
@@ -122,6 +122,8 @@ namespace LifeChartAPI.Models
 				cmd.Parameters.AddWithValue("@Save3", (saveMonthlyStage3 != null && !double.IsNaN((double) saveMonthlyStage3) ? saveMonthlyStage3 : DBNull.Value));
 				cmd.Parameters.AddWithValue("@SaveFirstMonth", (saveFirstMonth != null && !double.IsNaN((double) saveFirstMonth) ? saveFirstMonth : DBNull.Value));
 				cmd.Parameters.AddWithValue("@SaveAtStage", (saveAtStage != null && saveAtStage != 0 && saveFirstMonth != 0) ? saveAtStage : DBNull.Value);
+				cmd.Parameters.AddWithValue("@SaveEnough", (saveEnough != null && saveEnough == true) ? 1 : 0);
+				cmd.Parameters.AddWithValue("@FFPAtAge", (ffpAtAge != null) ? ffpAtAge : DBNull.Value);
 				cmd.ExecuteNonQuery();
 
 				return "200";

@@ -130,10 +130,13 @@
     <value>at the first month of stage</value>
   </data>
   <data name="AnswerMinusInfinity" xml:space="preserve">
-    <value>You will achieve Financial Freedom Point at the desired age</value>
+    <value>You will achieve Financial Freedom Point at age</value>
   </data>
   <data name="AnswerSecondPart" xml:space="preserve">
-    <value>each month after retirement or when you stop generating income, you will need to save</value>
+    <value>each month after the age of </value>
+  </data>
+  <data name="AnswerThirdPart" xml:space="preserve">
+    <value>, you will need to save </value>
   </data>
   <data name="BankInput" xml:space="preserve">
     <value>Bank Asset (VND)</value>
@@ -215,6 +218,9 @@
   </data>
   <data name="TitleInflation" xml:space="preserve">
     <value>Inflation rate in your country</value>
+  </data>
+  <data name="TitleInput" xml:space="preserve">
+    <value>What-If Scenario</value>
   </data>
   <data name="TitleNumberOfStages" xml:space="preserve">
     <value>Different stages of your life (Up to a maximum of 3)</value>

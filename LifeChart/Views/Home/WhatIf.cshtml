@@ -13,8 +13,8 @@
 
 
 <div class="what-if" id="what-if" style="display: none">
-	<div id="topmost-input-container" class="input-container">
-		<p>What-If Scenario</p>
+	<div id="input-container" class="input-container">
+		<p>@Localizer["TitleInput"]</p>
 		<label title="@Localizer["TitleCurrentAge"]" for="current-age-input" class="whatif-labels">@Localizer["CurrentAge"]</label>
 		@if (Model.CurrentAge != -1)
 		{
@@ -226,7 +226,7 @@
 		</div>
 
 		<div class="whatif-buttons">
-			<button style="display: none" onclick="calculate()" id="calculate">@Localizer["ButtonCalculate"]</button>
+			<button style="display: none" onclick="displayResults()" id="calculate">@Localizer["ButtonCalculate"]</button>
 			<button style="display: none" onclick="save()" id="save">@Localizer["ButtonSave"]</button>
 		</div>
 
@@ -700,6 +700,38 @@
 		bulkAddToList();
 	})
 
+	const inputs = document.querySelectorAll('#input-container input[required]');
+	inputs.forEach(input => {
+		input.addEventListener('input', () => {
+			if (input.value.trim() !== '') {
+				input.classList.remove('invalid');
+				if (input.id.includes("ffp-age-input-") && (input.id.slice(-1) === "1" || input.id.slice(-1) === "2")) {
+					document.getElementById("current-age-input-" + (parseInt(input.id.slice(-1)) + 1)).classList.remove('invalid');
+				}
+				else if (input.id === "current-age-input") {
+					document.getElementById("current-age-input-1").classList.remove('invalid');
+				}
+				else if (input.id === "ffp-age-input") {
+					const stages = parseInt(document.getElementById("stage-number-input").value);
+					document.getElementById("ffp-age-input-" + stages).classList.remove('invalid');
+				}
+			} 
+			else {
+				input.classList.add('invalid');
+				if (input.id.includes("ffp-age-input-") && (input.id.slice(-1) === "1" || input.id.slice(-1) === "2")) {
+					document.getElementById("current-age-input-" + (parseInt(input.id.slice(-1)) + 1)).classList.add('invalid');
+				}
+				else if (input.id === "current-age-input") {
+					document.getElementById("current-age-input-1").classList.add('invalid');
+				}
+				else if (input.id === "ffp-age-input") {
+					const stages = parseInt(document.getElementById("stage-number-input").value);
+					document.getElementById("ffp-age-input-" + stages).classList.add('invalid');
+				}
+			}
+		});
+	});
+
 	//stage events
 	document.body.addEventListener('click', function (e) {
 		if (e.target.id === 'a-stage-1') {
@@ -741,16 +773,6 @@
 	});
 
 	function validateTopMostInput() {
-		const inputs = document.querySelectorAll('#topmost-input-container input[required]');
-		inputs.forEach(input => {
-			if (input.value.length === 0) {
-				input.classList.add('invalid');
-			} 
-			else {
-				input.classList.remove('invalid');
-			}
-		});
-
 		if (document.getElementById("current-age-input").value.length === 0
 			|| document.getElementById("ffp-age-input").value.length === 0
 			|| document.getElementById("spend-input").value.length === 0
@@ -851,6 +873,16 @@
 
 
 	function validateOnCalculate() {
+		const inputs = document.querySelectorAll('#input-container input[required]');
+		inputs.forEach(input => {
+			if (input.value.length === 0) {
+				input.classList.add('invalid');
+			}
+			else {
+				input.classList.remove('invalid');
+			}
+		});
+
 		if (!validateTopMostInput()) return false;
 
 		let i = document.getElementById("myList").getElementsByTagName("li").length;
@@ -905,13 +937,6 @@
 		const ffpAge3 = parseInt(document.getElementById("ffp-age-input-3").value); // Financial freedom point age
 		const annualIncrease3 = parseFloat(document.getElementById("increase-input-3").value) / 100;
 		const saveMonthly3 = parseFloat(document.getElementById("save-monthly-3").value.replaceAll(",", ""));
-
-		//xvalue for chart
-		var life = [];
-		var last = ffpLife - ageLife;
-		for (var i = 0; i <= last; i++) {
-			life[i] = currentAge + i;
-		}		
 
 		// Event
 		const eventAge = 0;
@@ -1036,10 +1061,15 @@
 		// Example usage: Find the money_save needed to achieve the target Total_money_need
 		const initialGuess = 1000; // Replace with an initial guess close to the solution
 		const tolerance = 0.01; // Tolerance for stopping the iteration
-
 		const moneyToSavePerMonth = findReverseSigma(totalMoneyNeed, (x) => calculateTotalAnnualSavingWithBankROI(stages, x, bankROI), initialGuess, tolerance);
-		document.getElementById("money-to-save").value = Math.ceil(moneyToSavePerMonth);
 		
+
+		//xvalue for chart
+		var life = [];
+		var last = ffpLife - ageLife;
+		for (var i = 0; i <= last; i++) {
+			life[i] = currentAge + i;
+		}
 
 		// Generate new stages info
 		function StageInfoUpdate(stages, moneyToSavePerMonth) {
@@ -1076,21 +1106,21 @@
 		}
 
 		// Usage with the provided stages (Yellow Line = ArrayAnnualSaving)
-		const ArrayAnnualSaving = generateCombinedMonthlySavings(stages);
-		
+		const arrayAnnualSaving = generateCombinedMonthlySavings(stages);
+
 
 		var moneyAnnual = [];
-		for (var i = 0; i < ArrayAnnualSaving.length; i++) {
-			moneyAnnual.push(ArrayAnnualSaving[i].monthlySaving);
+		for (var i = 0; i < arrayAnnualSaving.length; i++) {
+			moneyAnnual.push(arrayAnnualSaving[i].monthlySaving);
 		}
 
 		// An Array of Bank account amount from the begin to the end:
-		function calculateTotalSavingsAtEachAge(ArrayAnnualSaving) {
+		function calculateTotalSavingsAtEachAge(arrayAnnualSaving) {
 			const totalSavingsAtEachAge = [];
 
 			let accumulator = 0;
 
-			for (const savings of ArrayAnnualSaving) {
+			for (const savings of arrayAnnualSaving) {
 				if (accumulator == 0) {
 					accumulator = (accumulator + savings.monthlySaving);
 				} else {
@@ -1104,29 +1134,87 @@
 
 
 		// Usage with the previously generated ArrayAnnualSaving array (Red line = totalSavingsAtEachAge)
-		const totalSavingsAtEachAge = calculateTotalSavingsAtEachAge(ArrayAnnualSaving);
-		
+		const totalSavingsAtEachAge = calculateTotalSavingsAtEachAge(arrayAnnualSaving);
+
 		var moneyCreated = [];
 		for (var i = 0; i < totalSavingsAtEachAge.length; i++) {
 			moneyCreated.push(totalSavingsAtEachAge[i].total)
 		}
+
 		// Total Money (Green Line = totalMoneyNeed)
-		
 		var goal = [];
 		for (var i = ageLife; i <= ffpLife; i++) {
 			goal.push(totalMoneyNeed);
 		}
 
-
 		let saveEnough = false;
-		if (moneyToSavePerMonth.toString().includes("Infinity") && moneyToSavePerMonth.toString().slice(0,1) === "-") {
-			document.getElementById("answer").innerText= "@Localizer["AnswerMinusInfinity"]";
+		let ffpAtAge = null;
+		// will save enough (possible even before desired ffp age)
+		if (moneyToSavePerMonth.toString().includes("Infinity") && moneyToSavePerMonth.toString().slice(0, 1) === "-") {
 			saveEnough = true;
+			for (let i = 0; i < life.length; i++) {
+				if (moneyCreated[i] >= goal[i]) {
+					ffpAtAge = life[i];
+					break;
+				}
+			}
 		}
+		// will not save enough
 		else if (moneyToSavePerMonth.toString().includes("Infinity")) {
-			document.getElementById("answer").innerText= "@Localizer["AnswerInfinity"]";
 			saveEnough = false;
 		}
+		// will save enough at desired ffp age
+		else {
+			saveEnough = true;
+			ffpAtAge = life[life.length - 1];
+			let i = document.getElementById("myList").getElementsByTagName("li").length;
+			for (let j = 1; j <= i; j++) {
+				if (document.getElementById("save-monthly-" + j).value.length === 0) {
+					document.getElementById("at-stage").value = j;
+					break;
+				}
+			}
+		}
+
+
+		const saveAtFirstMonth = Math.ceil(moneyToSavePerMonth);
+		const saveAtStage = parseInt(document.getElementById("at-stage").value);
+
+		return { currentAge, ffpAge, annualIncrease, saveMonthly, 
+			currentAge2, ffpAge2, annualIncrease2, saveMonthly2,
+			currentAge3, ffpAge3, annualIncrease3, saveMonthly3, ageLife, ffpLife,
+			moneyFFP, inflation, bankROI, bankAsset, stages, life, moneyAnnual, moneyCreated, goal,
+			totalMoneyNeed, moneyToSavePerMonth, saveAtFirstMonth, saveAtStage, saveEnough, ffpAtAge
+		};
+	}
+
+
+
+	function displayResults() {
+		const { currentAge, ffpAge, annualIncrease, saveMonthly,
+			currentAge2, ffpAge2, annualIncrease2, saveMonthly2,
+			currentAge3, ffpAge3, annualIncrease3, saveMonthly3, ageLife, ffpLife,
+			moneyFFP, inflation, bankROI, bankAsset, stages, life, moneyAnnual, moneyCreated, goal,
+			totalMoneyNeed, moneyToSavePerMonth, saveAtFirstMonth, saveAtStage, saveEnough, ffpAtAge
+		} = calculate();
+	
+		document.getElementById("money-to-save").value = saveAtFirstMonth;
+
+
+		// will save enough (possible even before desired ffp age)
+		if (moneyToSavePerMonth.toString().includes("Infinity") && moneyToSavePerMonth.toString().slice(0, 1) === "-") {
+			if (outerLang === "en-US") {
+				document.getElementById("answer").innerText = "@Localizer["AnswerMinusInfinity"] " + ffpAtAge;
+			}
+			else if (outerLang === "de-DE") {
+				document.getElementById("answer").innerText = "Mit " + ffpAtAge + " @Localizer["AnswerMinusInfinity"]";
+			}
+		}
+		// will not save enough
+		else if (moneyToSavePerMonth.toString().includes("Infinity")) {
+			document.getElementById("answer").innerText = "@Localizer["AnswerInfinity"]";
+		}
+		// will save enough at desired ffp age
 		else {
 			const formattedSavePerMonth = AutoNumeric.format(Math.ceil(moneyToSavePerMonth), {
 				digitGroupSeparator: ',',
@@ -1135,25 +1223,23 @@
 			});
 
 			if (outerLang === "en-US") {
-				document.getElementById("answer").innerText = "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND" + " @Localizer["AnswerSecondPart"] " + formattedSavePerMonth + " VND";
+				document.getElementById("answer").innerText = "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND" + " @Localizer["AnswerSecondPart"] " + ffpAtAge + "@Localizer["AnswerThirdPart"] " + formattedSavePerMonth + " VND";
 			}
 			else if (outerLang === "de-DE") {
-					document.getElementById("answer").innerText = "@Localizer["AnswerFirstPart"] " + document.getElementById("spend-input").value + " VND" + " @Localizer["AnswerSecondPart"]";
+				document.getElementById("answer").innerText = "@Localizer["AnswerFirstPart"] " + ffpAtAge + "@Localizer["AnswerSecondPart"] " + document.getElementById("spend-input").value + " VND" + " @Localizer["AnswerThirdPart"]";
 			}
 			let i = document.getElementById("myList").getElementsByTagName("li").length;
 			for (let j = 1; j <= i; j++) {
 				if (document.getElementById("save-monthly-" + j).value.length === 0) {
-					document.getElementById("at-stage").value = j;
-						if (outerLang === "en-US") {
-							document.getElementById("answer").innerText += " @Localizer["AnswerLastPart"]" + ` ${j}`;
-						}
-						else if (outerLang === "de-DE") {
-							document.getElementById("answer").innerText += ` ${j} ` + formattedSavePerMonth + " VND" + " @Localizer["AnswerLastPart"]";
-						}
+					if (outerLang === "en-US") {
+						document.getElementById("answer").innerText += " @Localizer["AnswerLastPart"]" + ` ${j}`;
+					}
+					else if (outerLang === "de-DE") {
+						document.getElementById("answer").innerText += ` ${j} ` + formattedSavePerMonth + " VND" + " @Localizer["AnswerLastPart"]";
+					}
 					break;
 				}
 			}
-			saveEnough = true;
 		}
 
 		//destroy current chart
@@ -1161,7 +1247,7 @@
 		if (currentChart !== undefined) {
 			currentChart.destroy();
 		}
-	
+
 		const xValues = life;
 		var newChart = new Chart("myChart", {
 			type: "line",
@@ -1187,7 +1273,7 @@
 			},
 			options: {
 				legend: {},
-					title: {
+				title: {
 					display: true,
 					text: "Life Chart"
 				}
@@ -1195,38 +1281,15 @@
 		});
 	}
 
+
+
 	function save() {
-		if (!validateOnCalculate()) return;
-		document.getElementById("error-line").innerText = "";
-
-		const currentAge = parseInt(document.getElementById("current-age-input-1").value);
-		const ffpAge = parseInt(document.getElementById("ffp-age-input-1").value); // Financial freedom point age
-		const moneyFFP = parseFloat(document.getElementById("spend-input").value.replaceAll(",", "")); // Monthly money required after financial freedom point
-		const inflation = parseFloat(document.getElementById("inflation-input").value) / 100; // Inflation of the country
-		const annualIncrease = parseFloat(document.getElementById("increase-input-1").value) / 100;
-		const saveMonthly = parseFloat(document.getElementById("save-monthly-1").value.replaceAll(",", ""));
-
-		const currentAge2 = parseInt(document.getElementById("current-age-input-2").value);
-		const ffpAge2 = parseInt(document.getElementById("ffp-age-input-2").value); // Financial freedom point age
-		const annualIncrease2 = parseFloat(document.getElementById("increase-input-2").value) / 100;
-		const saveMonthly2 = parseFloat(document.getElementById("save-monthly-2").value.replaceAll(",", ""));
-
-		const currentAge3 = parseInt(document.getElementById("current-age-input-3").value);
-		const ffpAge3 = parseInt(document.getElementById("ffp-age-input-3").value); // Financial freedom point age
-		const annualIncrease3 = parseFloat(document.getElementById("increase-input-3").value) / 100;
-		const saveMonthly3 = parseFloat(document.getElementById("save-monthly-3").value.replaceAll(",", ""));
-
-		//xvalue for chart
-		const ageLife = parseInt(document.getElementById("current-age-input").value);
-		const ffpLife = parseInt(document.getElementById("ffp-age-input").value);
-
-		// Capital Asset
-		const bankAsset = parseFloat(document.getElementById("bank-input").value.replaceAll(",", "")); // Total money in the bank NOW
-		const bankROI = parseFloat(document.getElementById("roi-input").value) / 100;
-
-		const saveAtFirstMonth = parseFloat(document.getElementById("money-to-save").value.replaceAll(",", ""));
-		const saveAtStage = parseInt(document.getElementById("at-stage").value);
-
+		const { currentAge, ffpAge, annualIncrease, saveMonthly,
+			currentAge2, ffpAge2, annualIncrease2, saveMonthly2,
+			currentAge3, ffpAge3, annualIncrease3, saveMonthly3, ageLife, ffpLife,
+			moneyFFP, inflation, bankROI, bankAsset, stages, life, moneyAnnual, moneyCreated, goal,
+			totalMoneyNeed, moneyToSavePerMonth, saveAtFirstMonth, saveAtStage, saveEnough, ffpAtAge
+		} = calculate();
 
 		$.ajax({
 			url: '@Url.Action("SaveWhatIf", "Home")',
@@ -1236,7 +1299,8 @@
 				startStage1: currentAge, endStage1: ffpAge, annualIncreaseStage1: annualIncrease, saveMonthlyStage1: saveMonthly, 
 				startStage2: currentAge2, endStage2: ffpAge2, annualIncreaseStage2: annualIncrease2, saveMonthlyStage2: saveMonthly2,
 				startStage3: currentAge3, endStage3: ffpAge3, annualIncreaseStage3: annualIncrease3, saveMonthlyStage3: saveMonthly3,
-				saveFirstMonth: saveAtFirstMonth, saveAtStage: saveAtStage
+				saveFirstMonth: saveAtFirstMonth, saveAtStage: saveAtStage, saveEnough: saveEnough, 
+				ffpAtAge: ffpAtAge
 			},
 			success: function (response) {
 				// Handle the API response

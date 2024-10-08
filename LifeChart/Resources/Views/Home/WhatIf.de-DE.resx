@@ -121,7 +121,7 @@
     <value>jährliche Steigerung</value>
   </data>
   <data name="AnswerFirstPart" xml:space="preserve">
-    <value>Wenn Sie nach der Pensionierung oder wenn Sie kein Einkommen mehr verdienen,</value>
+    <value>Wenn Sie nach Ihrem</value>
   </data>
   <data name="AnswerInfinity" xml:space="preserve">
     <value>Im gewünschten Alter werden Sie den Financial Freedom Point nicht erreichen</value>
@@ -130,9 +130,12 @@
     <value>sparen</value>
   </data>
   <data name="AnswerMinusInfinity" xml:space="preserve">
-    <value>Den Financial Freedom Point erreichen Sie im gewünschten Alter</value>
+    <value>Jahren erreichen Sie den Financial Freedom Point</value>
   </data>
   <data name="AnswerSecondPart" xml:space="preserve">
+    <value>. Lebensjahr jeden Monat</value>
+  </data>
+  <data name="AnswerThirdPart" xml:space="preserve">
     <value>ausgeben möchten, müssen Sie im ersten Monat der Phase</value>
   </data>
   <data name="BankInput" xml:space="preserve">
@@ -215,6 +218,9 @@
   </data>
   <data name="TitleInflation" xml:space="preserve">
     <value>Inflationsrate in Ihrem Land</value>
+  </data>
+  <data name="TitleInput" xml:space="preserve">
+    <value>What-If Szenario</value>
   </data>
   <data name="TitleNumberOfStages" xml:space="preserve">
     <value>Verschiedene Lebensabschnitte (maximal 3)</value>

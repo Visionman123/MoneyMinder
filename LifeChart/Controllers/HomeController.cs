@@ -80,7 +80,7 @@ namespace LifeChart.Controllers
 			int startStage1, int endStage1, double annualIncreaseStage1, double saveMonthlyStage1,
 			int startStage2, int endStage2, double annualIncreaseStage2, double saveMonthlyStage2,
 			int startStage3, int endStage3, double annualIncreaseStage3, double saveMonthlyStage3,
-			double saveFirstMonth, int saveAtStage)
+			double saveFirstMonth, int saveAtStage, bool saveEnough, int ffpAtAge)
 		{
 			try
 			{
@@ -112,7 +112,9 @@ namespace LifeChart.Controllers
 					SaveMonthlyStage2 = saveMonthlyStage2,
 					SaveMonthlyStage3 = saveMonthlyStage3,
 					SaveFirstMonth = saveFirstMonth,
-					SaveAtStage = saveAtStage
+					SaveAtStage = saveAtStage,
+					SaveEnough = saveEnough,
+					FFPAtAge = ffpAtAge,
 				};
 				// Serialize the request body to JSON
 				string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
