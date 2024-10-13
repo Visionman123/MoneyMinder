@@ -25,8 +25,13 @@
         <input type="password" id="password-input" asp-for="Password" required/><br /><br />
         <button class="loginBtn" type="submit">Login</button>
         <p id="login-error">@ViewBag.LoginErrorMessage</p>
-        @* <p style="font-weight:lighter;" >Don't have an account? <a style="text-decoration:none" id="register-account" asp-controller="Account" asp-action="Register">Register</a> </p> *@
     </form>
+
+    <p id="login-intro">
+        This is a simplified login page. If you already have an account, please enter your username
+        and password to access your data. New users can create an account by providing a username and
+        password. Let’s get started on your journey to financial freedom!
+    </p>
 </div>
 
 <style>
@@ -93,12 +98,19 @@
         border: 1px solid white;
         border-radius: 50px;
         width: 30vw;
-        height: 90vh;
+        height: 75vh;
         margin-top: 4vh;
         margin-left: 25vw;
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    #login-intro {
+        margin-inline-end: auto;
+        margin-inline-start: auto;
+        margin-block-end: auto;
+        padding-left: 10px;
     }
 
     input {
@@ -115,7 +127,6 @@
         border-radius:50px;
         width: 300px;
         height: 30px;
-        margin-left: 7px;
     }
 
     #login-error {

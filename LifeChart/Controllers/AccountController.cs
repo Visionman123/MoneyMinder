@@ -123,6 +123,7 @@ namespace LifeChart.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();
+			HttpContext.Session.Remove("jwtoken");
 			//Console.WriteLine("Logged out");
 			return Redirect("../Account/Login");
 		}

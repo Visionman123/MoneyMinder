@@ -153,11 +153,17 @@
   <data name="CurrentAge" xml:space="preserve">
     <value>Current Age</value>
   </data>
-  <data name="ErrorCurrentAge" xml:space="preserve">
+  <data name="ErrorCurrentAge1" xml:space="preserve">
     <value>Current Age should be at least 1</value>
   </data>
-  <data name="ErrorFFPAge" xml:space="preserve">
+  <data name="ErrorCurrentAge2" xml:space="preserve">
+    <value>Current Age should not exceed 100</value>
+  </data>
+  <data name="ErrorFFPAge1" xml:space="preserve">
     <value>FFP Age should be at least 1</value>
+  </data>
+  <data name="ErrorFFPAge2" xml:space="preserve">
+    <value>FFP Age should not exceed 100</value>
   </data>
   <data name="ErrorSpending" xml:space="preserve">
     <value>Expected Spending should not be negative</value>
@@ -229,7 +235,7 @@
     <value>The interest rate on your bank savings</value>
   </data>
   <data name="TitleSavePerMonth" xml:space="preserve">
-    <value>The amount you can save each month in this stage. If this field is left blank, the app will automatically calculate the amount for you based on your input data and financial goals. For multiple stages, ensure at least one stage is left blank for accurate calculations</value>
+    <value>This is the amount of money you plan to spend each month during retirement. If you leave this field blank, the app will automatically calculate the amount based on your entered data and financial goals. If you are working with multiple stages, please ensure that at least one stage is left blank for accurate calculations.</value>
   </data>
   <data name="TitleSpending" xml:space="preserve">
     <value>Expected monthly expenditure after retirement</value>

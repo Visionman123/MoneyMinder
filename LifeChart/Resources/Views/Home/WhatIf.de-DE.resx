@@ -153,11 +153,17 @@
   <data name="CurrentAge" xml:space="preserve">
     <value>aktuelles Alter</value>
   </data>
-  <data name="ErrorCurrentAge" xml:space="preserve">
+  <data name="ErrorCurrentAge1" xml:space="preserve">
     <value>aktuelles Alter sollte mindestens 1 Jahr betragen</value>
   </data>
-  <data name="ErrorFFPAge" xml:space="preserve">
+  <data name="ErrorCurrentAge2" xml:space="preserve">
+    <value>aktuelles Alter sollte 100 Jahre nicht überschreiten</value>
+  </data>
+  <data name="ErrorFFPAge1" xml:space="preserve">
     <value>FFP-Alter sollte mindestens 1 Jahr betragen</value>
+  </data>
+  <data name="ErrorFFPAge2" xml:space="preserve">
+    <value>FFP-Alter sollte 100 Jahre nicht überschreiten</value>
   </data>
   <data name="ErrorSpending" xml:space="preserve">
     <value>erwartete Ausgabe sollte nicht negativ sein</value>
@@ -229,7 +235,7 @@
     <value>Der Zinssatz für Ihre Bankersparnisse</value>
   </data>
   <data name="TitleSavePerMonth" xml:space="preserve">
-    <value>Der Betrag, den Sie in dieser Phase jeden Monat sparen können. Wenn dieses Feld leer bleibt, berechnet die App den Betrag automatisch für Sie basierend auf Ihren Eingabedaten und finanziellen Zielen. Wenn es mehrere Stufen gibt, stellen Sie sicher, dass mindestens eine Stufe leer bleibt, um genaue Berechnungen zu ermöglichen</value>
+    <value>Dies ist der Geldbetrag, den Sie jeden Monat im Ruhestand ausgeben möchten. Wenn Sie dieses Feld leer lassen, berechnet die App automatisch den Betrag basierend auf Ihren eingegebenen Daten und finanziellen Zielen. Wenn Sie mit mehreren Stufen arbeiten, stellen Sie bitte sicher, dass mindestens eine Phase leer bleibt, um genaue Berechnungen zu ermöglichen.</value>
   </data>
   <data name="TitleSpending" xml:space="preserve">
     <value>Erwartete monatliche Ausgaben nach der Pensionierung</value>

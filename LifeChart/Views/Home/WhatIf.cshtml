@@ -738,36 +738,36 @@
 			document.getElementById(1).classList.add("active");
 			document.getElementById(2).classList.remove("active");
 			document.getElementById(3).classList.remove("active");
-			e.target.style.color = "gray";
-			if (document.getElementById('a-stage-2') && document.getElementById('a-stage-2').style.color === "gray") {
-				document.getElementById('a-stage-2').style.color = "black";
+			e.target.style.color = "black";
+			if (document.getElementById('a-stage-2') && document.getElementById('a-stage-2').style.color === "black") {
+				document.getElementById('a-stage-2').style.color = "gray";
 			}
-			else if (document.getElementById('a-stage-3') && document.getElementById('a-stage-3').style.color === "gray") {
-				document.getElementById('a-stage-3').style.color = "black";
+			else if (document.getElementById('a-stage-3') && document.getElementById('a-stage-3').style.color === "black") {
+				document.getElementById('a-stage-3').style.color = "gray";
 			}
 		}
 		else if (e.target.id === 'a-stage-2') {
 			document.getElementById(2).classList.add("active");
 			document.getElementById(1).classList.remove("active");
 			document.getElementById(3).classList.remove("active");
-			e.target.style.color = "gray";
-			if (document.getElementById('a-stage-1') && document.getElementById('a-stage-1').style.color === "gray") {
-				document.getElementById('a-stage-1').style.color = "black";
+			e.target.style.color = "black";
+			if (document.getElementById('a-stage-1') && document.getElementById('a-stage-1').style.color === "black") {
+				document.getElementById('a-stage-1').style.color = "gray";
 			}
-			else if (document.getElementById('a-stage-3') && document.getElementById('a-stage-3').style.color === "gray") {
-				document.getElementById('a-stage-3').style.color = "black";
+			else if (document.getElementById('a-stage-3') && document.getElementById('a-stage-3').style.color === "black") {
+				document.getElementById('a-stage-3').style.color = "gray";
 			}
 		}
 		else if (e.target.id === 'a-stage-3') {
 			document.getElementById(3).classList.add("active");
 			document.getElementById(2).classList.remove("active");
 			document.getElementById(1).classList.remove("active");
-			e.target.style.color = "gray";
-			if (document.getElementById('a-stage-2') && document.getElementById('a-stage-2').style.color === "gray") {
-				document.getElementById('a-stage-2').style.color = "black";
+			e.target.style.color = "black";
+			if (document.getElementById('a-stage-2') && document.getElementById('a-stage-2').style.color === "black") {
+				document.getElementById('a-stage-2').style.color = "gray";
 			}
-			else if (document.getElementById('a-stage-1') && document.getElementById('a-stage-1').style.color === "gray") {
-				document.getElementById('a-stage-1').style.color = "black";
+			else if (document.getElementById('a-stage-1') && document.getElementById('a-stage-1').style.color === "black") {
+				document.getElementById('a-stage-1').style.color = "gray";
 			}
 		}
 	});
@@ -786,11 +786,19 @@
 		}
 
 		if (parseInt(document.getElementById("current-age-input").value) < 1) {
-			document.getElementById("error-line").innerText = "@Localizer["ErrorCurrentAge"]";
+			document.getElementById("error-line").innerText = "@Localizer["ErrorCurrentAge1"]";
 			return false;
 		}
 		if (parseInt(document.getElementById("ffp-age-input").value) < 1) {
-			document.getElementById("error-line").innerText = "@Localizer["ErrorFFPAge"]";
+			document.getElementById("error-line").innerText = "@Localizer["ErrorFFPAge1"]";
+			return false;
+		}
+		if (parseInt(document.getElementById("current-age-input").value) > 100) {
+			document.getElementById("error-line").innerText = "@Localizer["ErrorCurrentAge2"]";
+			return false;
+		}
+		if (parseInt(document.getElementById("ffp-age-input").value) > 100) {
+			document.getElementById("error-line").innerText = "@Localizer["ErrorFFPAge2"]";
 			return false;
 		}
 		if (parseFloat(document.getElementById("spend-input").value.replaceAll(",", "")) < 0) {
@@ -824,7 +832,7 @@
 			linkElement.setAttribute("id", "a-stage-" + (i + 1));
 			linkElement.innerText = "@Localizer["Stage"] " + (i + 1);
 			linkElement.href = "#" + (i + 1);
-			linkElement.style.color = "black";
+			linkElement.style.color = "gray";
 
 			newListItem.appendChild(linkElement);
 			newListItem.setAttribute("id", "li-stage-" + (i + 1));
@@ -861,7 +869,7 @@
 	function addClickEffectsToActiveStage(stageNumber) {
 		for (let i = 1; i <= stageNumber; i++) {
 			if (document.getElementById(i).classList.contains("active")) {
-				document.getElementById("a-stage-" + i).style.color = "gray";
+				document.getElementById("a-stage-" + i).style.color = "black";
 			}
 		}
 	}

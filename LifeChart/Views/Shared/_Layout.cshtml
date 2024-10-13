@@ -389,6 +389,9 @@
 
 
 <script>
+
+	let images = [];
+
 	function chooseLanguage() {
 		const currentUrl = window.location.href;
 		let lang = "";
@@ -426,7 +429,7 @@
 		return lang;
 	}
 
-	window.addEventListener('popstate', function (event) {
+	function initLanguageChanges() {
 		let iconName = "", lang = "";
 		if (chooseLanguage() === "en-US") {
 			iconName = "fi fi-gb";
@@ -440,32 +443,36 @@
 		let element = document.createElement("span");
 		let langBtn = document.getElementById("langbtn");
 		element.setAttribute("class", iconName);
-		element.setAttribute("class", iconName);
 		langBtn.innerHTML = "";
 		langBtn.appendChild(element);
 		langBtn.innerHTML += lang;
 		langBtn.setAttribute("width", "84");
+
+		if (lang === "English") {
+			images = [
+				"/Assets/mm1_en.png",
+				"/Assets/mm2_en.png",
+				"/Assets/mm3_en.png",
+				"/Assets/mm4_en.png",
+			]
+		}
+		else if (lang === "Deutsch") {
+			images = [
+				"/Assets/mm1_de.png",
+				"/Assets/mm2_de.png",
+				"/Assets/mm3_de.png",
+				"/Assets/mm4_de.png",
+			]
+		}
+	}
+
+	window.addEventListener('popstate', function (event) {
+		initLanguageChanges();
 	});
 
 	// Check URL on page load
 	window.addEventListener('load', function () {
-		let iconName = "", lang = "";
-		if (chooseLanguage() === "en-US") {
-			iconName = "fi fi-gb";
-			lang = "English";
-		}
-		else if (chooseLanguage() === "de-DE") {
-			iconName = "fi fi-de";
-			lang = "Deutsch";
-		}
-
-		let element = document.createElement("span");
-		let langBtn = document.getElementById("langbtn");
-		element.setAttribute("class", iconName);
-		langBtn.innerHTML = "";
-		langBtn.appendChild(element);
-		langBtn.innerHTML += lang;
-		langBtn.setAttribute("width", "84");
+		initLanguageChanges();
 	});
 
 	$("#nav-en, #nav-de").click(function() {
@@ -482,13 +489,8 @@
 		}
 	})
 
-	//popup
-	// Image data
-	const images = [
-		"https://via.placeholder.com/600x400?text=Image+1",
-		"https://via.placeholder.com/600x400?text=Image+2",
-		"https://via.placeholder.com/600x400?text=Image+3"
-	];
+
+
 	let currentIndex = -1; //-1 represents intro page
 
 	// Get the modal elements
