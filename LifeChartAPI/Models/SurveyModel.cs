@@ -6,13 +6,15 @@ namespace LifeChartAPI.Models
 {
 	public class SurveyModel
 	{
-		public string Name { get; set; }
-		public int Age { get; set; }
+		public int Intake { get; set; }
+		public string Major { get; set; }
 		public string Gender { get; set; }
+		public string FFPAchieveAge { get; set; }
+		public string FFPStrategy { get; set; }
 
 		public SurveyModel() { }
 
-		public string SaveSurvey(string? connectionString, string? userId, string name, int age, string gender)
+		public string SaveSurvey(string? connectionString, string? userId, int intake, string major, string gender, string ffpAchieveAge, string ffpStrategy)
 		{
 			SqlConnection connection = null;
 
@@ -23,9 +25,11 @@ namespace LifeChartAPI.Models
 				SqlCommand cmd = new("dbo.SaveSurvey", connection);
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@UserId", userId);
-				cmd.Parameters.AddWithValue("@Name", name);
-				cmd.Parameters.AddWithValue("@Age", age);
+				cmd.Parameters.AddWithValue("@Intake", intake);
+				cmd.Parameters.AddWithValue("@Major", major);
 				cmd.Parameters.AddWithValue("@Gender", gender);
+				cmd.Parameters.AddWithValue("@FFPAchieveAge", ffpAchieveAge);
+				cmd.Parameters.AddWithValue("@FFPStrategy", ffpStrategy);
 				cmd.ExecuteNonQuery();
 
 				return "200";

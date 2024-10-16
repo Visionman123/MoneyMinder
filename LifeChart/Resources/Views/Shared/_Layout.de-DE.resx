@@ -123,36 +123,6 @@
   <data name="ButtonLogOut" xml:space="preserve">
     <value>ausloggen</value>
   </data>
-  <data name="HelpAbout1" xml:space="preserve">
-    <value>Zur Unterstützung unserer These</value>
-  </data>
-  <data name="HelpAbout2" xml:space="preserve">
-    <value>Hierbei handelt es sich um eine Webanwendung, die zum Sammeln von Finanzdaten erstellt wurde, die für die Financial Freedom Point (FFP)-Recherche erforderlich sind</value>
-  </data>
-  <data name="HelpAbout3" xml:space="preserve">
-    <value>Wir freuen uns auf Ihre Teilnahme!</value>
-  </data>
-  <data name="IntroAbout1" xml:space="preserve">
-    <value>So nutzen Sie unsere Anwendung:</value>
-  </data>
-  <data name="IntroAbout2" xml:space="preserve">
-    <value>Dies ist die erste Seite (Einleitung)</value>
-  </data>
-  <data name="IntroAbout3" xml:space="preserve">
-    <value>Sie können das „&amp;#8592;“ verwenden. und „&amp;#8594;“ Schaltflächen zum Navigieren zwischen den Seiten</value>
-  </data>
-  <data name="IntroAbout4" xml:space="preserve">
-    <value>Auf jeder Folgeseite wird ein Bild mit Erläuterung angezeigt</value>
-  </data>
-  <data name="IntroAbout5" xml:space="preserve">
-    <value>Sie können dieses Popup auch verschieben</value>
-  </data>
-  <data name="IntroNote1" xml:space="preserve">
-    <value>Wichtiger Hinweis: Die Einträge werden nicht von der Inflation beeinflusst</value>
-  </data>
-  <data name="IntroNote2" xml:space="preserve">
-    <value>Wichtiger Hinweis: Die bereitgestellten Daten werden ausschließlich zu Forschungszwecken verwendet</value>
-  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Sprache auswählen</value>
   </data>

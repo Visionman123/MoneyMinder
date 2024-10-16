@@ -101,7 +101,7 @@ namespace LifeChartAPI.Controllers
 			//init with no attribute
 			SurveyModel model = new();
 
-			string status = model.SaveSurvey(connectionString, userId, saveSurvey.Name, saveSurvey.Age, saveSurvey.Gender);
+			string status = model.SaveSurvey(connectionString, userId, saveSurvey.Intake, saveSurvey.Major, saveSurvey.Gender, saveSurvey.FFPAchieveAge, saveSurvey.FFPStrategy);
 			if (status == "200")
 			{
 				return Ok(200);

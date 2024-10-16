@@ -142,13 +142,13 @@
     <value>Bankguthaben (VND)</value>
   </data>
   <data name="ButtonCalculate" xml:space="preserve">
-    <value>berechnen</value>
+    <value>Berechnen</value>
   </data>
   <data name="ButtonExpand" xml:space="preserve">
-    <value>expandieren</value>
+    <value>Expandieren</value>
   </data>
   <data name="ButtonSave" xml:space="preserve">
-    <value>speichern</value>
+    <value>Speichern</value>
   </data>
   <data name="CurrentAge" xml:space="preserve">
     <value>aktuelles Alter</value>
@@ -206,6 +206,60 @@
   </data>
   <data name="Stage" xml:space="preserve">
     <value>Phase</value>
+  </data>
+  <data name="SurveyAchieveFFPOption1" xml:space="preserve">
+    <value>Vor 40</value>
+  </data>
+  <data name="SurveyAchieveFFPOption4" xml:space="preserve">
+    <value>Nach 60</value>
+  </data>
+  <data name="SurveyAppreciation" xml:space="preserve">
+    <value>Vielen Dank, dass Sie unsere App ausprobiert haben. Wir würden auch gerne etwas über Sie erfahren.</value>
+  </data>
+  <data name="SurveyButtonNext" xml:space="preserve">
+    <value>Nächste</value>
+  </data>
+  <data name="SurveyButtonPrev" xml:space="preserve">
+    <value>Vorherig</value>
+  </data>
+  <data name="SurveyButtonSubmit" xml:space="preserve">
+    <value>Einreichen</value>
+  </data>
+  <data name="SurveyFFPStratOption1" xml:space="preserve">
+    <value>Ja, ich habe einen detaillierten Plan</value>
+  </data>
+  <data name="SurveyFFPStratOption2" xml:space="preserve">
+    <value>Ich habe eine allgemeine Idee, aber keinen formellen Plan</value>
+  </data>
+  <data name="SurveyFFPStratOption3" xml:space="preserve">
+    <value>Nein, ich habe überhaupt keinen Plan</value>
+  </data>
+  <data name="SurveyGenderOptionFemale" xml:space="preserve">
+    <value>Weiblich</value>
+  </data>
+  <data name="SurveyGenderOptionMale" xml:space="preserve">
+    <value>Männlich</value>
+  </data>
+  <data name="SurveyGenderOptionOther" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="SurveyLabelGender" xml:space="preserve">
+    <value>Geschlecht</value>
+  </data>
+  <data name="SurveyLabelIntake" xml:space="preserve">
+    <value>Immatrikulationsjahr</value>
+  </data>
+  <data name="SurveyLabelMajor" xml:space="preserve">
+    <value>Hauptfach</value>
+  </data>
+  <data name="SurveyTitle" xml:space="preserve">
+    <value>Umfrage</value>
+  </data>
+  <data name="SurveyTitleAchieveFFP" xml:space="preserve">
+    <value>In welchem ​​Alter erhoffen Sie sich finanzielle Freiheit?</value>
+  </data>
+  <data name="SurveyTitleFFPStrat" xml:space="preserve">
+    <value>Haben Sie einen klaren Plan oder eine klare Strategie, um finanzielle Freiheit zu erreichen?</value>
   </data>
   <data name="TitleAnnualIncrease" xml:space="preserve">
     <value>Erwarteter jährlicher Anstieg Ihrer monatlichen Ersparnisse in dieser Phase</value>

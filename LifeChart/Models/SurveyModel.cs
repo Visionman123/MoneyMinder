@@ -2,8 +2,10 @@
 {
 	public class SurveyModel
 	{
-		public string Name { get; set; }
-		public int Age { get; set; }
+		public int Intake { get; set; }
+		public string Major { get; set; }
 		public string Gender { get; set; }
+		public string FFPAchieveAge { get; set; }
+		public string FFPStrategy { get; set; }	
 	}
 }

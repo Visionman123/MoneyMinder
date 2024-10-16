@@ -248,32 +248,65 @@
 	<div id="survey-popup" class="popup">
 		<div id="survey-popup-content" class="popup-content">
 			<span id="close-survey-popup" class="close">&times;</span>
-			<h2>Survey</h2>
-			<p>Thank you for giving our app a try. We would also like to know a little bit about yourself.</p>
+			<h2>@Localizer["SurveyTitle"]</h2>
+			<p>@Localizer["SurveyAppreciation"]</p>
 			<form id="survey-form">
 				<div class="survey-page" id="page1">
-					<label for="name">Your full name?</label>
-					<input type="text" id="name" name="name" required>
-					<button type="button" class="next-btn">Next</button>
+					<label for="intake">@Localizer["SurveyLabelIntake"]</label>
+					<input type="number" id="intake" name="intake" required>
+					<button type="button" class="next-btn">@Localizer["SurveyButtonNext"]</button>
 				</div>
 
 				<div class="survey-page" id="page2" style="display:none;">
-					<label for="age">Your age?</label>
-					<input type="number" id="age" name="age" required min="1">
-					<button type="button" class="prev-btn">Previous</button>
-					<button type="button" class="next-btn">Next</button>
+					<label for="major">@Localizer["SurveyLabelMajor"]</label>
+					<input type="text" id="major" name="major" required>
+					<button type="button" class="prev-btn">@Localizer["SurveyButtonPrev"]</button>
+					<button type="button" class="next-btn">@Localizer["SurveyButtonNext"]</button>
 				</div>
 
 				<div class="survey-page" id="page3" style="display:none;">
-					<label for="gender">Your gender?</label>
+					<label for="gender">@Localizer["SurveyLabelGender"]</label>
 					<select id="gender" name="gender" required>
 						<option value="">Select</option>
-						<option value="Male">Male</option>
-						<option value="Female">Female</option>
-						<option value="Other">Other</option>
+						<option value="Male">@Localizer["SurveyGenderOptionMale"]</option>
+						<option value="Female">@Localizer["SurveyGenderOptionFemale"]</option>
+						<option value="Other">@Localizer["SurveyGenderOptionOther"]</option>
 					</select>
-					<button type="button" class="prev-btn">Previous</button>
-					<button type="submit">Submit</button>
+					<button type="button" class="prev-btn">@Localizer["SurveyButtonPrev"]</button>
+					<button type="button" class="next-btn">@Localizer["SurveyButtonNext"]</button>
+				</div>
+
+				<div class="survey-page" id="page4" style="display:none;">
+					<p>@Localizer["SurveyTitleAchieveFFP"]</p>
+					<label>
+						<input type="radio" name="FFPAchieveAge" required value="Before 40"> @Localizer["SurveyAchieveFFPOption1"]
+					</label><br>
+					<label>
+						<input type="radio" name="FFPAchieveAge" value="40-50"> 40-50
+					</label><br>
+					<label>
+						<input type="radio" name="FFPAchieveAge" value="50-60"> 50-60
+					</label><br>
+					<label>
+						<input type="radio" name="FFPAchieveAge" value="After 60"> @Localizer["SurveyAchieveFFPOption4"]
+					</label><br>
+					<button type="button" class="prev-btn">@Localizer["SurveyButtonPrev"]</button>
+					<button type="button" class="next-btn">@Localizer["SurveyButtonNext"]</button>
+				</div>
+
+				<div class="survey-page" id="page5" style="display:none;">
+					<p>@Localizer["SurveyTitleFFPStrat"]</p>
+					<label>
+						<input type="radio" name="FFPStrategy" required value="Yes, I have a detailed plan"> @Localizer["SurveyFFPStratOption1"]
+					</label><br>
+					<label>
+						<input type="radio" name="FFPStrategy" value="I have a general idea, but no formal plan"> @Localizer["SurveyFFPStratOption2"]
+					</label><br>
+					<label>
+						<input type="radio" name="FFPStrategy" value="No, I don’t have a plan at all"> @Localizer["SurveyFFPStratOption3"]
+					</label><br>
+					<button type="button" class="prev-btn">@Localizer["SurveyButtonPrev"]</button>
+					<button type="submit">@Localizer["SurveyButtonSubmit"]</button>
 				</div>
 			</form>
 		</div>
@@ -590,7 +623,6 @@
 			lang = "en-US";
 		}
 
-		saveLanguagePreference(lang);
 		outerLang = lang;
 	}
 
@@ -627,23 +659,6 @@
 			document.getElementById("increase-input-3").value = Number.parseFloat(increase3) % 1 == 0 ? Number.parseFloat(increase3).toFixed(0) : Number.parseFloat(increase3).toFixed(2);
 		}
 	});
-
-	function saveLanguagePreference(lang) {
-		$.ajax({
-			url: '@Url.Action("SetLanguagePreference", "Account")',
-			type: 'POST',
-			dataType: 'json',
-			data: {
-				language: lang
-			}, 
-			success: function (response) {
-				// console.log(response.message);
-;			},
-			error: function (xhr, status, error) {
-				console.error('Error:', error);
-			}
-		});
-	}
 
 	//autonumeric
 	new AutoNumeric('#spend-input', {
@@ -852,8 +867,8 @@
 
 	function resetAllStages() {
 		for (let i = 1; i <= 3; i++) {
-			document.getElementById("current-age-input-" + i).value = "";
-			document.getElementById("ffp-age-input-" + i).value = "";
+			// document.getElementById("current-age-input-" + i).value = "";
+			// document.getElementById("ffp-age-input-" + i).value = "";
 			// document.getElementById("increase-input-" + i).value = "";
 			// document.getElementById("save-monthly-" + i).value = "";
 		}
@@ -1363,9 +1378,19 @@
 
 		// Loop through inputs to validate
 		$input.each(function () {
-			if ($(this).val() === '') {
+			if ($(this).attr('type') === 'radio') {
+				const name = $(this).attr('name');
+				const $radioGroup = $('input[name="' + name + '"]'); // All radio buttons in the group
+				const $prevButton = $currentPage.find('.prev-btn');
+
+				if (!$radioGroup.is(':checked')) {
+					isValid = false;
+					$('<p class="error-message" style="color:red;">Please select an option.</p>').insertBefore($prevButton);
+					return false; 
+				}
+			}
+			else if ($(this).val() === '') {
 				isValid = false;
-				// Add error message if input is empty
 				$('<p class="error-message" style="color:red;">This field is required.</p>').insertAfter($(this));
 			}
 		});
@@ -1402,7 +1427,6 @@
 		if (validatePage(currentPage)) {
 			// Serialize form data
 			const formData = $(this).serialize();
-
 			// AJAX request to the controller
 			$.ajax({
 				type: 'POST',

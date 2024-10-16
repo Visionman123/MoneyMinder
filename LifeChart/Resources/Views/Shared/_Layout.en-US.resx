@@ -123,36 +123,6 @@
   <data name="ButtonLogOut" xml:space="preserve">
     <value>Log out</value>
   </data>
-  <data name="HelpAbout1" xml:space="preserve">
-    <value>In support of our thesis studies</value>
-  </data>
-  <data name="HelpAbout2" xml:space="preserve">
-    <value>This is a web application created as a means of gathering financial data necessary for research on the topic of financial freedom point (FFP)</value>
-  </data>
-  <data name="HelpAbout3" xml:space="preserve">
-    <value>Your participation is greatly appreciated!</value>
-  </data>
-  <data name="IntroAbout1" xml:space="preserve">
-    <value>How to use our application:</value>
-  </data>
-  <data name="IntroAbout2" xml:space="preserve">
-    <value>This is the first page (introduction)</value>
-  </data>
-  <data name="IntroAbout3" xml:space="preserve">
-    <value>You can use the "&amp;#8592;" and "&amp;#8594;" buttons to navigate between pages</value>
-  </data>
-  <data name="IntroAbout4" xml:space="preserve">
-    <value>An image with explanation will be displayed on each subsequent page</value>
-  </data>
-  <data name="IntroAbout5" xml:space="preserve">
-    <value>You can also drag this popup around</value>
-  </data>
-  <data name="IntroNote1" xml:space="preserve">
-    <value>Important note: Inputs are not affected by inflation</value>
-  </data>
-  <data name="IntroNote2" xml:space="preserve">
-    <value>Important note: The data provided will only be used for research purposes</value>
-  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select language</value>
   </data>

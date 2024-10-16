@@ -152,6 +152,7 @@ namespace LifeChart.Controllers
 					Expires = DateTimeOffset.UtcNow.AddDays(1)
 				});
 
+
 				var client = new HttpClient();
 				string apiUrl = _configuration.GetConnectionString("BaseURL") + "/api/WhatIf/SaveSurvey";
 
@@ -161,9 +162,11 @@ namespace LifeChart.Controllers
 				//set up request body
 				var requestBody = new
 				{
-					Name = model.Name,
-					Age = model.Age,
-					Gender = model.Gender
+					Intake = model.Intake,
+					Major = model.Major,
+					Gender = model.Gender,
+					FFPAchieveAge = model.FFPAchieveAge,
+					FFPStrategy = model.FFPStrategy,
 				};
 				// Serialize the request body to JSON
 				string jsonRequestBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);

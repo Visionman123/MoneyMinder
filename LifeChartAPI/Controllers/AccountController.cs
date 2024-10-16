@@ -51,9 +51,9 @@ namespace LifeChartAPI.Controllers
 						SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 					};
 					var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
-					Console.WriteLine(token.ToString());
+					//Console.WriteLine(token.ToString());
 					var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-					Console.WriteLine(jwt);
+					//Console.WriteLine(jwt);
 					return Ok(jwt);
 				}
 				return BadRequest("Failed to login");
@@ -96,15 +96,15 @@ namespace LifeChartAPI.Controllers
 			{
 				UserName = username,
 			};
-			Console.WriteLine(newUser);
+			//Console.WriteLine(newUser);
 			var result = await _userManager.CreateAsync(newUser, password);
 			var errors = result.Errors;
 			var message = string.Join(", ", errors.Select(x => "Code " + x.Code + " Description" + x.Description));
-			Console.WriteLine(message);
-			Console.WriteLine(result.Succeeded);
+			//Console.WriteLine(message);
+			//Console.WriteLine(result.Succeeded);
 			if (result.Succeeded)
 			{
-				Console.WriteLine("Success!");
+				//Console.WriteLine("Success!");
 				user = await _userManager.FindByNameAsync(username);
 			}
 			return user;

@@ -52,10 +52,16 @@ namespace LifeChart.Controllers
                     if (tokenString != null)
                     {
                         HttpContext.Session.SetString("jwtoken", tokenString);
-						// Retrieve the language preference from the cookie
-						var languagePreference = Request.Cookies["UserLanguagePreference"] ?? "en-US"; // Default to English
 
-						// Optionally retrieve from the database if stored there
+						// Save the preference in a cookie
+						Response.Cookies.Append("LoggedIn", "true", new CookieOptions
+						{
+							Expires = DateTimeOffset.UtcNow.AddYears(1) 
+						});
+
+						// Retrieve the language preference from the cookie
+						var languagePreference = Request.Cookies["UserLanguagePreference"] ?? "en-US";
+
 
 						// Redirect based on language preference
 						if (languagePreference == "de-DE")

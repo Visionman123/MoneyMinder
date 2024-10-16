@@ -347,22 +347,9 @@
 			<div id="modalContent" class="modal-content">
 				<span id="closeModal" class="close">&times;</span>
 				<h1 class="help-about-main">MoneyMinder</h1>
-				<h2 class="help-about">@Localizer["HelpAbout1"]</h2>
-				<h3 class="help-about">@Localizer["HelpAbout2"]</h3>
-				<h3 class="help-about">@Localizer["HelpAbout3"]</h3>
 				<div class="image-container">
 					<button id="prev-btn">←</button>
-					<div id="intro">
-						<p>@Localizer["IntroAbout1"]</p>
-						<p>@Localizer["IntroAbout2"]</p>
-						<p>@Localizer["IntroAbout3"]</p>
-						<p>@Localizer["IntroAbout4"]</p>
-						<p>@Localizer["IntroAbout5"]</p>
-
-						<p style="color: red">@Localizer["IntroNote1"]</p>
-						<p style="color: red">@Localizer["IntroNote2"]</p>
-					</div>
-					<img id="modalImage" src="" alt="Image Carousel">
+					<img id="modalImage" src="" alt="Help Center">
 					<button id="next-btn">→</button>
 				</div>
 			</div>
@@ -473,25 +460,59 @@
 	// Check URL on page load
 	window.addEventListener('load', function () {
 		initLanguageChanges();
+		if (getCookie("LoggedIn") === "true") {
+			openPopup();
+			deleteCookie("LoggedIn");
+		}
 	});
+
+	function getCookie(name) {
+		const value = `; ${document.cookie}`;
+		const parts = value.split(`; ${name}=`);
+		if (parts.length === 2) return parts.pop().split(';').shift();
+		return null;
+	}
+
+	function deleteCookie(name) {
+		document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	}
+
 
 	$("#nav-en, #nav-de").click(function() {
 		if (window.location.href.includes("?culture=en-US")) {
 			var userConfirmed = confirm("Warning: Your inputs will be deleted. Are you sure?");
+			saveLanguagePreference("de-DE");
 		}
 		else if (window.location.href.includes("?culture=de-DE")) {
 			var userConfirmed = confirm("Warnung: Ihre Eingaben werden gelöscht. Sind Sie sicher?");
+			saveLanguagePreference("en-US");
 		}
-		// Check the user's response
+
 		if (!userConfirmed) {
-			// Prevent the default action of the link (navigating to a new page)
 			event.preventDefault();
 		}
 	})
 
+	function saveLanguagePreference(lang) {
+		$.ajax({
+			url: '@Url.Action("SetLanguagePreference", "Account")',
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				language: lang
+			},
+			success: function (response) {
+				console.log(response.message);
+			},
+			error: function (xhr, status, error) {
+				console.error('Error:', error);
+			}
+		});
+	}
 
 
-	let currentIndex = -1; //-1 represents intro page
+
+	let currentIndex = 0;
 
 	// Get the modal elements
 	const modal = document.getElementById("myModal");
@@ -507,16 +528,7 @@
 		modal.style.display = 'flex';
 		// Add a small delay to trigger the animation
 		setTimeout(() => modal.classList.add('show'), 10);
-		if (currentIndex === -1) {
-			$('#intro').show();
-			$('.help-about').show();
-			$('#modalImage').hide();
-		}
-		else {
-			$('#intro').hide();
-			$('.help-about').hide();
-			showImage(currentIndex);
-		}
+		showImage(currentIndex);
 	}
 
 	// Function to close the popup
@@ -534,32 +546,14 @@
 
 	// Show the previous image
 	prevBtn.onclick = function () {
-		currentIndex = (currentIndex > -1) ? currentIndex - 1 : currentIndex;
-		if (currentIndex === -1) {
-			$('#intro').show();
-			$('.help-about').show();
-			$('#modalImage').hide();
-		}
-		else {
-			$('#intro').hide();
-			$('.help-about').hide();
-			showImage(currentIndex);
-		}
+		currentIndex = (currentIndex > 0) ? currentIndex - 1 : currentIndex;
+		showImage(currentIndex);
 	}
 
 	// Show the next image
 	nextBtn.onclick = function () {
 		currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : currentIndex;
-		if (currentIndex === -1) {
-			$('#intro').show();
-			$('.help-about').show();
-			$('#modalImage').hide();
-		}
-		else {
-			$('#intro').hide();
-			$('.help-about').hide();
-			showImage(currentIndex);
-		}
+		showImage(currentIndex);
 	}
 
 	// Function to display the image
