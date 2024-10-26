@@ -309,6 +309,9 @@
   <data name="ToAgeLowerOrEqualToFFPAge" xml:space="preserve">
     <value>Bis zum Alter muss kleiner oder gleich dem FFP-Alter sein</value>
   </data>
+  <data name="ToAgePrevLowerThanFromAgeCurrent" xml:space="preserve">
+    <value>muss niedriger sein als</value>
+  </data>
   <data name="ValidStageNumber" xml:space="preserve">
     <value>Die gültige Anzahl der Ebenen liegt zwischen 1 und 3</value>
   </data>

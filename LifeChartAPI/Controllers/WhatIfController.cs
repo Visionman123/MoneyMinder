@@ -60,10 +60,9 @@ namespace LifeChartAPI.Controllers
 			//init with no attribute
 			WhatIfModel model = new();
 			int stages = 0;
-			stages += (saveWhatIf.StartStage1 != null && saveWhatIf.StartStage1 != 0) ? 1 : 0;
-			stages += (saveWhatIf.StartStage2 != null && saveWhatIf.StartStage2 != 0) ? 1 : 0;
-			stages += (saveWhatIf.StartStage3 != null && saveWhatIf.StartStage3 != 0) ? 1 : 0;
-
+			stages += (saveWhatIf.StartStage1 != null && saveWhatIf.StartStage1 != 0 && saveWhatIf.EndStage1!= null && saveWhatIf.EndStage1!= 0) ? 1 : 0;
+			stages += (saveWhatIf.StartStage2 != null && saveWhatIf.StartStage2 != 0 && saveWhatIf.EndStage2 != null && saveWhatIf.EndStage2 != 0) ? 1 : 0;
+			stages += (saveWhatIf.StartStage3 != null && saveWhatIf.StartStage3 != 0 && saveWhatIf.EndStage3 != null && saveWhatIf.EndStage3 != 0) ? 1 : 0;
 
 			string status = model.SaveWhatIf(connectionString, userId, 
 				saveWhatIf.CurrentAge, saveWhatIf.FFPAge, saveWhatIf.MonthlySpending, saveWhatIf.Inflation, 

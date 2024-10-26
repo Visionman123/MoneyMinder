@@ -658,6 +658,11 @@
 		if (increase3) {
 			document.getElementById("increase-input-3").value = Number.parseFloat(increase3) % 1 == 0 ? Number.parseFloat(increase3).toFixed(0) : Number.parseFloat(increase3).toFixed(2);
 		}
+
+		const stageNumber = parseInt(document.getElementById("stage-number-input").value);
+		if (stageNumber) {
+			bulkAddToListInit();
+		}
 	});
 
 	//autonumeric
@@ -709,10 +714,6 @@
 
 	document.getElementById("stage-number-input").addEventListener("input", (e) => {
 		e.target.value = Math.round(e.target.value);
-	})
-
-	document.getElementById("btn-list-stages").addEventListener("click", (e) => {
-		bulkAddToList();
 	})
 
 	const inputs = document.querySelectorAll('#input-container input[required]');
@@ -838,7 +839,7 @@
 		const myList = document.getElementById("myList");
 		//clear list
 		myList.innerHTML = "";
-		//reset all stages
+
 		resetAllStages();
 
 		for (let i = 0; i < stageNumber; i++) {
@@ -856,7 +857,47 @@
 			//appear
 			document.getElementById(i + 1).style.display = "";
 		}
+
+		hideDeletedStages(stageNumber);
+		addClickEffectsToActiveStage(stageNumber);
+		autoCompleteBulk(stageNumber);
+
+		document.getElementById("calculate").style.display = "block";
+		document.getElementById("save").style.display = "block";
 		
+	}
+
+	function bulkAddToListInit() {
+		if (!validateTopMostInput()) return false;
+		document.getElementById("error-line").innerText = "";
+
+		let stageNumber = parseInt(document.getElementById("stage-number-input").value);
+		if (stageNumber < 1 || stageNumber > 3) {
+			document.getElementById("error-line").innerText = "@Localizer["ValidStageNumber"]";
+			return;
+		}
+		document.getElementById("error-line").innerText = "";
+
+		const myList = document.getElementById("myList");
+		//clear list
+		myList.innerHTML = "";
+
+		for (let i = 0; i < stageNumber; i++) {
+			const newListItem = document.createElement("li");
+			const linkElement = document.createElement("a");
+			linkElement.setAttribute("id", "a-stage-" + (i + 1));
+			linkElement.innerText = "@Localizer["Stage"] " + (i + 1);
+			linkElement.href = "#" + (i + 1);
+			linkElement.style.color = "gray";
+
+			newListItem.appendChild(linkElement);
+			newListItem.setAttribute("id", "li-stage-" + (i + 1));
+			myList.appendChild(newListItem);
+
+			//appear
+			document.getElementById(i + 1).style.display = "";
+		}
+
 		hideDeletedStages(stageNumber);
 		addClickEffectsToActiveStage(stageNumber);
 		autoCompleteBulk(stageNumber);
@@ -868,9 +909,9 @@
 	function resetAllStages() {
 		for (let i = 1; i <= 3; i++) {
 			// document.getElementById("current-age-input-" + i).value = "";
-			// document.getElementById("ffp-age-input-" + i).value = "";
-			// document.getElementById("increase-input-" + i).value = "";
-			// document.getElementById("save-monthly-" + i).value = "";
+			document.getElementById("ffp-age-input-" + i).value = "";
+			document.getElementById("increase-input-" + i).value = "";
+			document.getElementById("save-monthly-" + i).value = "";
 		}
 
 	}
@@ -928,6 +969,10 @@
 			}
 			if (parseInt(document.getElementById("ffp-age-input-" + j).value) > parseInt(document.getElementById("ffp-age-input").value)) {
 				document.getElementById("error-line").innerText = "@Localizer["ToAgeLowerOrEqualToFFPAge"]" + ` (Stage ${j})`;
+				return false;
+			}
+			if (j < i && parseInt(document.getElementById("ffp-age-input-" + j).value) >= parseInt(document.getElementById("current-age-input-" + (j+1)).value)) {
+				document.getElementById("error-line").innerText = "@Localizer["ToAge"]" + ` (Stage ${j})` + " @Localizer["ToAgePrevLowerThanFromAgeCurrent"]" + " @Localizer["FromAge"]" + ` (Stage ${j+1})`;
 				return false;
 			}
 		}
@@ -1313,6 +1358,7 @@
 			moneyFFP, inflation, bankROI, bankAsset, stages, life, moneyAnnual, moneyCreated, goal,
 			totalMoneyNeed, moneyToSavePerMonth, saveAtFirstMonth, saveAtStage, saveEnough, ffpAtAge
 		} = calculate();
+
 
 		$.ajax({
 			url: '@Url.Action("SaveWhatIf", "Home")',

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Data;
+using LifeChartAPI.Controllers;
 
 namespace LifeChartAPI.Models
 {
@@ -123,7 +124,7 @@ namespace LifeChartAPI.Models
 				cmd.Parameters.AddWithValue("@SaveFirstMonth", (saveFirstMonth != null && !double.IsNaN((double) saveFirstMonth) ? saveFirstMonth : DBNull.Value));
 				cmd.Parameters.AddWithValue("@SaveAtStage", (saveAtStage != null && saveAtStage != 0 && saveFirstMonth != 0) ? saveAtStage : DBNull.Value);
 				cmd.Parameters.AddWithValue("@SaveEnough", (saveEnough != null && saveEnough == true) ? 1 : 0);
-				cmd.Parameters.AddWithValue("@FFPAtAge", (ffpAtAge != null) ? ffpAtAge : DBNull.Value);
+				cmd.Parameters.AddWithValue("@FFPAtAge", (ffpAtAge != null && ffpAtAge != 0) ? ffpAtAge : DBNull.Value);
 				cmd.ExecuteNonQuery();
 
 				return "200";

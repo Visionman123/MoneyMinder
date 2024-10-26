@@ -309,6 +309,9 @@
   <data name="ToAgeLowerOrEqualToFFPAge" xml:space="preserve">
     <value>To Age must be lower or equal to FFP Age</value>
   </data>
+  <data name="ToAgePrevLowerThanFromAgeCurrent" xml:space="preserve">
+    <value>must be lower than</value>
+  </data>
   <data name="ValidStageNumber" xml:space="preserve">
     <value>Number of stages from 1-3</value>
   </data>
