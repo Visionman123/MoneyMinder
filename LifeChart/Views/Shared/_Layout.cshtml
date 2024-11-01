@@ -27,7 +27,8 @@
 	}
 
 	nav {
-		background-color: black;
+		/* background-color: black; */
+		background-color: midnightblue;
 		border-bottom: 1px solid white;
 		display: flex;
 		flex-direction: row;
@@ -46,6 +47,19 @@
 		flex-direction: row;
 		align-items: center;
 		width: 30%;
+	}
+
+	.authors {
+		color: white;
+		width: 45%;
+		margin-left: -170px;
+		margin-top: 12px;
+		font-size: 12px;
+	}
+	
+	.authors p {
+		margin: 0;
+		padding: 0;
 	}
 
 	.navbar-collapse {
@@ -73,7 +87,8 @@
 
 	.dropbtn {
 		background-color: white;
-		color: black;
+		/* color: black; */
+		color: midnightblue;
 		padding: 10px;
 		font-size: 16px;
 		border: none;
@@ -102,7 +117,8 @@
 	}
 
 	.dropdown-content li a {
-		color: black;
+		/* color: black; */
+		color: midnightblue;
 		text-decoration: none;
 		display: block;
 		padding-left: 5px;
@@ -134,6 +150,7 @@
 
 	.nav-link-help {
 		background-color: white;
+		color: midnightblue;
 		padding: 5px 10px 5px 10px;
 		border: none;
 		border-radius: 20px;
@@ -153,10 +170,11 @@
 
 	.nav-link-logout {
 		background-color: white;
+		/* color: black; */
+		color: midnightblue;
 		padding: 5px 10px 5px 10px;
 		border-radius: 20px;
-		font-size: large;
-		color: black;
+		font-size: large
 	}
 
 	.nav-link-logout:hover {
@@ -309,6 +327,11 @@
 			<div class="logo-space">
 				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative">
 				<a class="navbar-brand" asp-area="" asp-page="" style="text-decoration:none">MoneyMinder</a>
+			</div>
+			<div class="authors">
+				<p>Dung H. Dinh*, Nam H. Nguyen**, Tri N. M. Nguyen**, Ngoc H. Tran**</p>
+				<p>* Business Information Systems, Vietnamese-German University, Vietnam</p>
+				<p>** Computer Science, Vietnamese-German University, Vietnam</p>
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">

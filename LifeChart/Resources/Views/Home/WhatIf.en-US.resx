@@ -139,7 +139,7 @@
     <value>, you will need to save </value>
   </data>
   <data name="BankInput" xml:space="preserve">
-    <value>Bank Asset (VND)</value>
+    <value>Current Bank Asset (VND)</value>
   </data>
   <data name="ButtonCalculate" xml:space="preserve">
     <value>Calculate</value>
@@ -151,7 +151,7 @@
     <value>Save</value>
   </data>
   <data name="CurrentAge" xml:space="preserve">
-    <value>Current Age</value>
+    <value>Your Current Age</value>
   </data>
   <data name="ErrorCurrentAge1" xml:space="preserve">
     <value>Current Age should be at least 1</value>
@@ -169,7 +169,7 @@
     <value>Expected Spending should not be negative</value>
   </data>
   <data name="FFPAge" xml:space="preserve">
-    <value>Financial Freedom Point (FFP) Age </value>
+    <value>Desired Retirement Age</value>
   </data>
   <data name="FromAge" xml:space="preserve">
     <value>From Age</value>
@@ -178,13 +178,13 @@
     <value>Inflation (%)</value>
   </data>
   <data name="LabelGenerated" xml:space="preserve">
-    <value>Money generated</value>
+    <value>Your accumulated wealth</value>
   </data>
   <data name="LabelGoal" xml:space="preserve">
-    <value>Goal</value>
+    <value>Required savings</value>
   </data>
   <data name="LabelToSaveAnnually" xml:space="preserve">
-    <value>Money to save annually</value>
+    <value>Financial savings</value>
   </data>
   <data name="MissingValueOnInputFields" xml:space="preserve">
     <value>Missing value on required input fields</value>
@@ -196,13 +196,13 @@
     <value>There is an error with your request</value>
   </data>
   <data name="RoI" xml:space="preserve">
-    <value>Interest Rate (%)</value>
+    <value>Average Interest Rate (%)</value>
   </data>
   <data name="SavePerMonth" xml:space="preserve">
     <value>Save Per Month</value>
   </data>
   <data name="Spending" xml:space="preserve">
-    <value>Expected Spending (VND)</value>
+    <value>Desired Expected Spending (VND)</value>
   </data>
   <data name="Stage" xml:space="preserve">
     <value>Stage</value>

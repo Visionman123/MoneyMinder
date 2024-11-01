@@ -14,7 +14,7 @@
 
 <div class="what-if" id="what-if" style="display: none">
 	<div id="input-container" class="input-container">
-		<p>@Localizer["TitleInput"]</p>
+		<p style="color: midnightblue">@Localizer["TitleInput"]</p>
 		<label title="@Localizer["TitleCurrentAge"]" for="current-age-input" class="whatif-labels">@Localizer["CurrentAge"]</label>
 		@if (Model.CurrentAge != -1)
 		{
@@ -319,7 +319,8 @@
 	}
 
 	body {
-		background-color: #03030F;
+		/* background-color: #03030F; */
+		background-color: midnightblue;
 	}
 	
 	p {
@@ -338,6 +339,10 @@
 		padding-top: 5vh;
 	}
 
+	.whatif-labels {
+		color: midnightblue;
+	}
+
 	.whatif-labels:hover {
 		cursor: pointer
 	}
@@ -354,8 +359,10 @@
 	}
 
 	.input-container input {
+		color: midnightblue;
 		border: none;
-		border-bottom: 1px solid black;
+		/* border-bottom: 1px solid black; */
+		border-bottom: 1px solid midnightblue;
 		margin-bottom: 10px;
 		font-family: "Outfit";
 		margin-left: 10%;

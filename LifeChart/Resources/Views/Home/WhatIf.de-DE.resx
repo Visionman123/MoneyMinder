@@ -139,7 +139,7 @@
     <value>ausgeben möchten, müssen Sie im ersten Monat der Phase</value>
   </data>
   <data name="BankInput" xml:space="preserve">
-    <value>Bankguthaben (VND)</value>
+    <value>aktuelles Bankguthaben (VND)</value>
   </data>
   <data name="ButtonCalculate" xml:space="preserve">
     <value>Berechnen</value>
@@ -151,7 +151,7 @@
     <value>Speichern</value>
   </data>
   <data name="CurrentAge" xml:space="preserve">
-    <value>aktuelles Alter</value>
+    <value>Ihr aktuelles Alter</value>
   </data>
   <data name="ErrorCurrentAge1" xml:space="preserve">
     <value>aktuelles Alter sollte mindestens 1 Jahr betragen</value>
@@ -169,7 +169,7 @@
     <value>erwartete Ausgabe sollte nicht negativ sein</value>
   </data>
   <data name="FFPAge" xml:space="preserve">
-    <value>FFP-Alter</value>
+    <value>gewünschtes Rentenalter</value>
   </data>
   <data name="FromAge" xml:space="preserve">
     <value>vom Alter</value>
@@ -178,13 +178,13 @@
     <value>Inflation (%)</value>
   </data>
   <data name="LabelGenerated" xml:space="preserve">
-    <value>Geld eingebracht</value>
+    <value>Ihr angesammeltes Vermögen</value>
   </data>
   <data name="LabelGoal" xml:space="preserve">
-    <value>Ziel</value>
+    <value>erforderliche Einsparungen</value>
   </data>
   <data name="LabelToSaveAnnually" xml:space="preserve">
-    <value>Geld, das jährlich gespart werden muss</value>
+    <value>finanzielle Einsparungen</value>
   </data>
   <data name="MissingValueOnInputFields" xml:space="preserve">
     <value>Fehlender Wert in den erforderlichen Eingabefeldern</value>
@@ -196,13 +196,13 @@
     <value>Bei Ihrer Anfrage ist ein Fehler aufgetreten</value>
   </data>
   <data name="RoI" xml:space="preserve">
-    <value>Zinssatz (%)</value>
+    <value>durchschnittlicher Zinssatz (%)</value>
   </data>
   <data name="SavePerMonth" xml:space="preserve">
     <value>Erspanis pro Monat</value>
   </data>
   <data name="Spending" xml:space="preserve">
-    <value>erwartete Ausgabe (VND)</value>
+    <value>gewünschte erwartete Ausgabe (VND)</value>
   </data>
   <data name="Stage" xml:space="preserve">
     <value>Phase</value>
