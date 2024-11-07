@@ -42,6 +42,12 @@
 		important
 	}
 
+	.logo-author-wrapper {
+		display: flex;
+		flex-direction: row;
+		gap: 30px;
+	}
+
 	.logo-space {
 		display: flex;
 		flex-direction: row;
@@ -52,9 +58,10 @@
 	.authors {
 		color: white;
 		width: 45%;
-		margin-left: -170px;
-		margin-top: 12px;
+		/* margin-left: -170px; */
+		/* margin-top: 12px; */
 		font-size: 12px;
+		min-width: 380px;
 	}
 	
 	.authors p {
@@ -324,14 +331,16 @@
 	<header>
 		<iframe src="../Home/Portfolio" id="externalFrame"> </iframe>
 		<nav class="nav">
-			<div class="logo-space">
-				<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative">
-				<a class="navbar-brand" asp-area="" asp-page="" style="text-decoration:none">MoneyMinder</a>
-			</div>
-			<div class="authors">
-				<p>Dung H. Dinh*, Nam H. Nguyen**, Tri N. M. Nguyen**, Ngoc H. Tran**</p>
-				<p>* Business Information Systems, Vietnamese-German University, Vietnam</p>
-				<p>** Computer Science, Vietnamese-German University, Vietnam</p>
+			<div class="logo-author-wrapper">
+				<div class="logo-space">
+					<img src="/Assets/logo.png" alt="logo" width="40" height="40" style="position:relative">
+					<a class="navbar-brand" asp-area="" asp-page="" style="text-decoration:none">MoneyMinder</a>
+				</div>
+				<div class="authors">
+					<p>Dung H. Dinh*, Nam H. Nguyen**, Tri N. M. Nguyen**, Ngoc H. Tran**</p>
+					<p>* Business Information Systems, Vietnamese-German University, Vietnam</p>
+					<p>** Computer Science, Vietnamese-German University, Vietnam</p>
+				</div>
 			</div>
 			<div class="navbar-collapse">
 				<ul class="navbar-nav">
