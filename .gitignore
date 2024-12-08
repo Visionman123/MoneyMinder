@@ -364,7 +364,7 @@ FodyWeavers.xsd
 
 
 #appsettings
-LifeChart/appsettings.json
-LifeChart/appsettings.Development.json
-LifeChartAPI/appsettings.json
-LifeChartAPI/appsettings.Development.json
+/LifeChart/appsettings.json
+/LifeChart/appsettings.Development.json
+/LifeChartAPI/appsettings.json
+/LifeChartAPI/appsettings.Development.json
