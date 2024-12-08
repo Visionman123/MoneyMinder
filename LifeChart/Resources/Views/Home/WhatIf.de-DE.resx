@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnnualIncrease" xml:space="preserve">
+    <value>jährliche Steigerung</value>
+  </data>
+  <data name="AnswerFirstPart" xml:space="preserve">
+    <value>Wenn Sie nach Ihrem</value>
+  </data>
+  <data name="AnswerInfinity" xml:space="preserve">
+    <value>Im gewünschten Alter werden Sie den Financial Freedom Point nicht erreichen</value>
+  </data>
+  <data name="AnswerLastPart" xml:space="preserve">
+    <value>sparen</value>
+  </data>
+  <data name="AnswerMinusInfinity" xml:space="preserve">
+    <value>Jahren erreichen Sie den Financial Freedom Point</value>
+  </data>
+  <data name="AnswerSecondPart" xml:space="preserve">
+    <value>. Lebensjahr jeden Monat</value>
+  </data>
+  <data name="AnswerThirdPart" xml:space="preserve">
+    <value>ausgeben möchten, müssen Sie im ersten Monat der Phase</value>
+  </data>
+  <data name="BankInput" xml:space="preserve">
+    <value>aktuelles Bankguthaben (VND)</value>
+  </data>
+  <data name="ButtonCalculate" xml:space="preserve">
+    <value>Berechnen</value>
+  </data>
+  <data name="ButtonExpand" xml:space="preserve">
+    <value>Expandieren</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="CurrentAge" xml:space="preserve">
+    <value>Ihr aktuelles Alter</value>
+  </data>
+  <data name="ErrorCurrentAge1" xml:space="preserve">
+    <value>aktuelles Alter sollte mindestens 1 Jahr betragen</value>
+  </data>
+  <data name="ErrorCurrentAge2" xml:space="preserve">
+    <value>aktuelles Alter sollte 100 Jahre nicht überschreiten</value>
+  </data>
+  <data name="ErrorFFPAge1" xml:space="preserve">
+    <value>FFP-Alter sollte mindestens 1 Jahr betragen</value>
+  </data>
+  <data name="ErrorFFPAge2" xml:space="preserve">
+    <value>FFP-Alter sollte 100 Jahre nicht überschreiten</value>
+  </data>
+  <data name="ErrorSpending" xml:space="preserve">
+    <value>erwartete Ausgabe sollte nicht negativ sein</value>
+  </data>
+  <data name="FFPAge" xml:space="preserve">
+    <value>gewünschtes Rentenalter</value>
+  </data>
+  <data name="FromAge" xml:space="preserve">
+    <value>vom Alter</value>
+  </data>
+  <data name="Inflation" xml:space="preserve">
+    <value>Inflation (%)</value>
+  </data>
+  <data name="LabelGenerated" xml:space="preserve">
+    <value>Ihr angesammeltes Vermögen</value>
+  </data>
+  <data name="LabelGoal" xml:space="preserve">
+    <value>erforderliche Einsparungen</value>
+  </data>
+  <data name="LabelToSaveAnnually" xml:space="preserve">
+    <value>finanzielle Einsparungen</value>
+  </data>
+  <data name="MissingValueOnInputFields" xml:space="preserve">
+    <value>Fehlender Wert in den erforderlichen Eingabefeldern</value>
+  </data>
+  <data name="NumberOfStages" xml:space="preserve">
+    <value>Anzahl der Phasen</value>
+  </data>
+  <data name="RequestError" xml:space="preserve">
+    <value>Bei Ihrer Anfrage ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="RoI" xml:space="preserve">
+    <value>durchschnittlicher Zinssatz (%)</value>
+  </data>
+  <data name="SavePerMonth" xml:space="preserve">
+    <value>Erspanis pro Monat</value>
+  </data>
+  <data name="Spending" xml:space="preserve">
+    <value>gewünschte erwartete Ausgabe (VND)</value>
+  </data>
+  <data name="Stage" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="SurveyAchieveFFPOption1" xml:space="preserve">
+    <value>Vor 40</value>
+  </data>
+  <data name="SurveyAchieveFFPOption4" xml:space="preserve">
+    <value>Nach 60</value>
+  </data>
+  <data name="SurveyAppreciation" xml:space="preserve">
+    <value>Vielen Dank, dass Sie unsere App ausprobiert haben. Wir würden auch gerne etwas über Sie erfahren.</value>
+  </data>
+  <data name="SurveyButtonNext" xml:space="preserve">
+    <value>Nächste</value>
+  </data>
+  <data name="SurveyButtonPrev" xml:space="preserve">
+    <value>Vorherig</value>
+  </data>
+  <data name="SurveyButtonSubmit" xml:space="preserve">
+    <value>Einreichen</value>
+  </data>
+  <data name="SurveyFFPStratOption1" xml:space="preserve">
+    <value>Ja, ich habe einen detaillierten Plan</value>
+  </data>
+  <data name="SurveyFFPStratOption2" xml:space="preserve">
+    <value>Ich habe eine allgemeine Idee, aber keinen formellen Plan</value>
+  </data>
+  <data name="SurveyFFPStratOption3" xml:space="preserve">
+    <value>Nein, ich habe überhaupt keinen Plan</value>
+  </data>
+  <data name="SurveyGenderOptionFemale" xml:space="preserve">
+    <value>Weiblich</value>
+  </data>
+  <data name="SurveyGenderOptionMale" xml:space="preserve">
+    <value>Männlich</value>
+  </data>
+  <data name="SurveyGenderOptionOther" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="SurveyLabelGender" xml:space="preserve">
+    <value>Geschlecht</value>
+  </data>
+  <data name="SurveyLabelIntake" xml:space="preserve">
+    <value>Immatrikulationsjahr</value>
+  </data>
+  <data name="SurveyLabelMajor" xml:space="preserve">
+    <value>Hauptfach</value>
+  </data>
+  <data name="SurveyTitle" xml:space="preserve">
+    <value>Umfrage</value>
+  </data>
+  <data name="SurveyTitleAchieveFFP" xml:space="preserve">
+    <value>In welchem ​​Alter erhoffen Sie sich finanzielle Freiheit?</value>
+  </data>
+  <data name="SurveyTitleFFPStrat" xml:space="preserve">
+    <value>Haben Sie einen klaren Plan oder eine klare Strategie, um finanzielle Freiheit zu erreichen?</value>
+  </data>
+  <data name="TitleAnnualIncrease" xml:space="preserve">
+    <value>Erwarteter jährlicher Anstieg Ihrer monatlichen Ersparnisse in dieser Phase</value>
+  </data>
+  <data name="TitleBankInput" xml:space="preserve">
+    <value>Aktueller Geldbetrag auf Ihrer Bank</value>
+  </data>
+  <data name="TitleCurrentAge" xml:space="preserve">
+    <value>Ihr aktuelles Alter</value>
+  </data>
+  <data name="TitleFFPAge" xml:space="preserve">
+    <value>Das Alter, in dem Sie planen, nicht mehr zu arbeiten oder kein Einkommen zu erwirtschaften</value>
+  </data>
+  <data name="TitleFromAge" xml:space="preserve">
+    <value>Ihr Einstiegsalter in dieser Phase</value>
+  </data>
+  <data name="TitleInflation" xml:space="preserve">
+    <value>Inflationsrate in Ihrem Land</value>
+  </data>
+  <data name="TitleInput" xml:space="preserve">
+    <value>What-If Szenario</value>
+  </data>
+  <data name="TitleNumberOfStages" xml:space="preserve">
+    <value>Verschiedene Lebensabschnitte (maximal 3)</value>
+  </data>
+  <data name="TitleRoI" xml:space="preserve">
+    <value>Der Zinssatz für Ihre Bankersparnisse</value>
+  </data>
+  <data name="TitleSavePerMonth" xml:space="preserve">
+    <value>Dies ist der Geldbetrag, den Sie jeden Monat im Ruhestand ausgeben möchten. Wenn Sie dieses Feld leer lassen, berechnet die App automatisch den Betrag basierend auf Ihren eingegebenen Daten und finanziellen Zielen. Wenn Sie mit mehreren Stufen arbeiten, stellen Sie bitte sicher, dass mindestens eine Phase leer bleibt, um genaue Berechnungen zu ermöglichen.</value>
+  </data>
+  <data name="TitleSpending" xml:space="preserve">
+    <value>Erwartete monatliche Ausgaben nach der Pensionierung</value>
+  </data>
+  <data name="TitleToAge" xml:space="preserve">
+    <value>Ihr letztes Alter in dieser Phase</value>
+  </data>
+  <data name="ToAge" xml:space="preserve">
+    <value>bis zum Alter</value>
+  </data>
+  <data name="ToAgeEqualToFFPAge" xml:space="preserve">
+    <value>Bis zum Alter muss dem FFP-Alter entsprechen</value>
+  </data>
+  <data name="ToAgeHigherThanFromAge" xml:space="preserve">
+    <value>Bis zum Alter muss höher sein als Von Alter</value>
+  </data>
+  <data name="ToAgeLowerOrEqualToFFPAge" xml:space="preserve">
+    <value>Bis zum Alter muss kleiner oder gleich dem FFP-Alter sein</value>
+  </data>
+  <data name="ToAgePrevLowerThanFromAgeCurrent" xml:space="preserve">
+    <value>muss niedriger sein als</value>
+  </data>
+  <data name="ValidStageNumber" xml:space="preserve">
+    <value>Die gültige Anzahl der Ebenen liegt zwischen 1 und 3</value>
+  </data>
+</root>

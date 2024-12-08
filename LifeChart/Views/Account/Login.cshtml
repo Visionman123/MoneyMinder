@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 
@@ -10,54 +7,66 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
 <link rel="icon" href="/Assets/logo.png">
 
-
-
 <p class="word">MONEY</p>
 
 <div class="app-logo">
     <img src="/Assets/logo.png" alt="logo" width="100%" height="60%">
-    <p class="app-name">MoneyMinder</p>
-    <p style="margin-top:-50px">Money works not you</p>
+    <p class="app-name">MoneyMinder ©</p>
+    <p style="margin-top:-50px">For a secured financial future</p>
+    <p style="margin-top:-10px">How much money should be saved?</p>
 </div>
 
 <div class="login-form">
     <p style="font-size:30px;">Welcome to</p>
-    <p style="font-size:45px;margin-top:-20px;font-weight:bold;">MoneyMinder</p>
-    <form asp-controller="Account" asp-action="Login" class="form" method="post">
+    <p style="font-size:45px;margin-top:-20px;font-weight:bold;">MoneyMinder ©</p>
+    <form asp-controller="Account" asp-action="Login" class="form" method="post" style="margin-top: -20px;">
         <label for="username-input" asp-for="Username">Username</label><br />
         <input type="text" id="username-input" asp-for="Username" required/><br />
         <label for="password-input" class="label" asp-for="Password">Password</label><br />
         <input type="password" id="password-input" asp-for="Password" required/><br /><br />
         <button class="loginBtn" type="submit">Login</button>
         <p id="login-error">@ViewBag.LoginErrorMessage</p>
-        <p style="font-weight:lighter;" >Don't have an account? <a style="text-decoration:none" id="register-account" asp-controller="Account" asp-action="Register">Register</a> </p>
+        <p id="login-intro">
+            This is a simplified login page. If you already have an account, please enter your username
+            and password to access your data. New users can create an account by providing a username and
+            password. Let’s get started on your journey to financial freedom!
+        </p>
     </form>
 </div>
 
 <style>
-    html{
+    html {
         height:100vh;
     }
-    label{
+
+    label {
         color:white;
+        /* color: black; */
         font-family:"Outfit";
         font-size:small;
     }
-    header{
+
+    header {
         display: none;
     }
-    body{
-        background-color: #03030F;
+
+    body {
+        /* background-color: #03030F; */
+       background-color: midnightblue;
     }
-    a{
+
+    a {
         color:white;
+        /* color: black; */
         font-weight:bold;
     }
-    p{
+    p {
         color:white;
+        /* color: black; */
         font-family:"Outfit";
     }
-    .word{
+
+    .word {
         font-size:180px;
         color: #ffffff26;
         font-family: "Outfit";
@@ -66,15 +75,14 @@
         transform: rotate(90deg);
         top: 0;
         left: -300px;
-
     }
-    .container{
+
+    .container {
         display:flex;
         flex-direction:row;
     }
 
     .app-logo {
-
         width: 30vw;
         height: 90vh;
         margin-top: 5vh;
@@ -84,44 +92,56 @@
         align-items: center;
         justify-content: center;
     }
-    .app-name{
+
+    .app-name {
         color:white;
+        /* color: black; */
         font-size:50px;
     }
 
-    .login-form{
+    .login-form {
         border: 1px solid white;
+        /* border: 1px solid black; */
         border-radius: 50px;
         width: 30vw;
-        height: 90vh;
+        height: 85vh;
         margin-top: 4vh;
         margin-left: 25vw;
         display: flex;
-        flex-direction: column;
+        flex-direction: column; 
         align-items: center;
- 
+        overflow:hidden
+    }
 
+    #login-intro {
+        max-width: 260px;
+        font-size: 12px;
+        /* margin-left: -35px; */
     }
 
     input {
         width: 300px;
         color: white;
+        /* color: black; */
         height: 30px;
         border: 1px solid white;
+        /* border: 1px solid black; */
         border-radius: 50px;
         background: none;
         padding-left:10px;
     }
-    .loginBtn{
+
+    .loginBtn {
         border-radius:50px;
-        width: 200px;
+        width: 300px;
         height: 30px;
-       
     }
+
     #login-error {
         color: red
     }
-    .footer{
+
+    .footer {
         display: none;
     }
 </style>

@@ -4,17 +4,35 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using LifeChartAPI.Models;
+using LifeChartAPI.Controllers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
+using OpenIddict.Server.AspNetCore;
+using static OpenIddict.Abstractions.OpenIddictConstants;
+using System.Security.Claims;
+using OpenIddict.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 // db
-//builder.Services.AddDbContextPool<ApplicationDbContext>(
-//    options => options.UseSqlServer(builder.Configuration.GetConnectionString("LifeChartDatabase"))
-//);
-//builder.Services.AddDbContextPool<ApplicationUserDbContext>(
-//    options => options.UseSqlServer(builder.Configuration.GetConnectionString("LifeChartDatabase"))
-//);
+builder.Services.AddDbContextPool<ApplicationDbContext>(
+	options => options.UseSqlServer(builder.Configuration.GetConnectionString("LifeChartDatabase"))
+);
+
+//identity
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(
+	options =>
+	{
+		options.Password.RequireNonAlphanumeric = false;
+		options.Password.RequireDigit = false;
+		options.Password.RequireLowercase = false;
+		options.Password.RequireUppercase = false;
+		options.Password.RequiredLength = 1;
+	}
+)
+	.AddRoles<IdentityRole>()
+	.AddEntityFrameworkStores<ApplicationDbContext>()
+	.AddDefaultTokenProviders();
 
 
 builder.Services.AddControllers();
@@ -22,21 +40,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddTransient<AccountController>();
+
 //auth
 builder.Services.AddAuthentication(options =>
 {
 }).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        //ValidAudience = null,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
+	options.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuer = true,
+		ValidateAudience = false,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+		ClockSkew = TimeSpan.Zero,
+		ValidIssuer = builder.Configuration["Jwt:Issuer"],
+		ValidAudience = builder.Configuration["Jwt:Audience"],
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+	};
 });
 
 

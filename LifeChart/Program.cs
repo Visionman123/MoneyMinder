@@ -1,65 +1,54 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Localization;
 using LifeChart.Models;
 using LifeChartServices.Models;
 using LifeChartServices.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 var gglClientID = builder.Configuration["GGL:ClientID"];
 var gglSecret = builder.Configuration["GGL:Secret"];
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
+// Add services to the container.
+builder.Services.AddControllersWithViews()
+    .AddMvcLocalization()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("de-DE")
+    };
+    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.SupportedUICultures = supportedCultures;
+});
 // db
 builder.Services.AddDbContextPool<ApplicationDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("LifeChartDatabase"))
 );
 
 //identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(
-    options =>
-    {
-        options.SignIn.RequireConfirmedEmail = false;
-        options.SignIn.RequireConfirmedPhoneNumber = false;
-    }
-)
-        .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 //email
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
-builder.Services.AddSingleton(emailConfig);
+builder.Services.AddSingleton(emailConfig!);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
-
-builder.Services.Configure<IdentityOptions>(
-    options =>
-    {
-        options.SignIn.RequireConfirmedEmail = true;
-        options.User.RequireUniqueEmail = true;
-    }
-);
-
-//auth
-builder.Services.AddAuthentication(options =>
-{
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = null,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
 
 
 //session
@@ -74,6 +63,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
+app.UseRequestLocalization();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -96,17 +86,17 @@ app.UseSession();
 app.Use(async (context, next) =>
 {
     var token = context.Session.GetString("jwtoken");
-    Console.WriteLine("Token here = " + token);
     if (!string.IsNullOrEmpty(token))
     {
-        context.Request.Headers.Add("Authorization", "Bearer " + token);
-    }
+        context.Request.Headers.Append("Authorization", "Bearer " + token);
+		Console.WriteLine("Token added");
+	}
     await next();
 });
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Dashboard}/{id?}"
+    pattern: "{controller=Account}/{action=Login}"
 );
 
 
