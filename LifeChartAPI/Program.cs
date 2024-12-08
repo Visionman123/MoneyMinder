@@ -41,7 +41,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<AccountController>();
-builder.Services.AddTransient<SpendingBehaviorController>();
 
 //auth
 builder.Services.AddAuthentication(options =>
